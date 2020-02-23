@@ -1,0 +1,7 @@
+{
+  "name": "PictureLearning",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
