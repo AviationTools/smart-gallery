@@ -1,72 +1,82 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Picture Learning
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size-md>
-        <div>
-          <ion-list>
-            <ion-list-header>
-              <ion-label>
-               Select Your Schedule
-              </ion-label>
-            </ion-list-header>
-          
-            <ion-item>
-              <ion-label>Day</ion-label>
-              <ion-select placeholder="Select One" [(ngModel)]="weekDay">
-                <ion-select-option value="Monday">Monday</ion-select-option>
-                <ion-select-option value="Tuesday">Tuesday</ion-select-option>
-                <ion-select-option value="Wednesday">Wednesday</ion-select-option>
-                <ion-select-option value="Thursday">Thursday</ion-select-option>
-                <ion-select-option value="Friday">Friday</ion-select-option>
-                <ion-select-option value="Saturday">Saturday</ion-select-option>
-                <ion-select-option value="Sunday">Sunday</ion-select-option>
-              </ion-select>
-            </ion-item>
-            
-            <ion-item>
-              <ion-label>Subject:</ion-label>
-              <ion-input type="text" [(ngModel)]="subject" text-right id="input" ></ion-input>
-            </ion-item>
-          
-            <ion-item>
-              <ion-label>From</ion-label>
-              <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label>To</ion-label>
-              <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
-            </ion-item>
-            
-            <ion-button (click)="setText()" expand="block">Add</ion-button>
-
-          </ion-list>
-        </div>
-
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{weekDay}}</ion-card-title>
-          </ion-card-header>
-          <ion-card color="primary">
-            <ion-card-header>
-              <ion-card-title>{{subject}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              {{fromTime | date:'H:mm'}} - {{toTime | date:'H:mm'}}
-            </ion-card-content>
-          </ion-card>
-        </ion-card>
-        
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-app>
   
-</ion-content>
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>
+        Picture Learning
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <app-tabs></app-tabs>
+
+  <ion-content [fullscreen]="true">
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md>
+          <div>
+            <ion-list>
+              <ion-list-header>
+                <ion-label>
+                Select Your Schedule
+                </ion-label>
+              </ion-list-header>
+            
+              <ion-item>
+                <ion-label>Day</ion-label>
+                <ion-select placeholder="Select One" [(ngModel)]="weekDay" (ionChange)="getTableDay()" >
+                  <ion-select-option value="Monday">Monday</ion-select-option>
+                  <ion-select-option value="Tuesday">Tuesday</ion-select-option>
+                  <ion-select-option value="Wednesday">Wednesday</ion-select-option>
+                  <ion-select-option value="Thursday">Thursday</ion-select-option>
+                  <ion-select-option value="Friday">Friday</ion-select-option>
+                  <ion-select-option value="Saturday">Saturday</ion-select-option>
+                  <ion-select-option value="Sunday">Sunday</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              
+              <ion-item>
+                <ion-label>Subject:</ion-label>
+                <ion-input type="text" [(ngModel)]="subject" text-right id="input" ></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label>From</ion-label>
+                <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-label>To</ion-label>
+                <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
+              </ion-item>
+              
+              <ion-button (click)="setStorage()" expand="block">Set</ion-button>
+              <ion-button (click)="getTableDay()" expand="block">Get</ion-button>
+              <ion-button (click)="clearStorage()" expand="block">Clear</ion-button>
+              
+            </ion-list>
+          </div>
+          
+          <ion-card >
+            <ion-card-header>
+              <ion-card-title>{{ weekDay }}</ion-card-title>
+            </ion-card-header>
+            <ion-card color="primary" *ngFor="let item of array">
+              <ion-card-header>
+                <ion-card-title>{{ item.subject }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{item.timeFrame.fromTime | date:'H:mm'}} - {{item.timeFrame.toTime | date:'H:mm'}}
+              </ion-card-content>
+            </ion-card>
+          </ion-card>
+          
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </ion-content>
+
+</ion-app>
