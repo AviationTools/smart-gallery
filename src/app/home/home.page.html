@@ -30,8 +30,10 @@
                 Select The Day
                 </ion-label>
               </ion-list-header>
-            
-              <ion-item>
+              
+              <ion-button expand="block" (click)="setWeekDay()">{{ weekDay }}</ion-button>
+
+              <!-- <ion-item>
                 <ion-label>Day</ion-label>
                 <ion-select placeholder="Select One" [(ngModel)]="weekDay" (ionChange)="getTableDay()" >
                   <ion-select-option value="Monday">Monday</ion-select-option>
@@ -42,9 +44,9 @@
                   <ion-select-option value="Saturday">Saturday</ion-select-option>
                   <ion-select-option value="Sunday">Sunday</ion-select-option>
                 </ion-select>
-              </ion-item>
+              </ion-item> -->
 
-              
+<!--               
               <ion-item>
                 <ion-label>Subject:</ion-label>
                 <ion-input type="text" [(ngModel)]="subject" text-right id="input" ></ion-input>
@@ -61,7 +63,7 @@
               
               <ion-button (click)="setStorage()" expand="block">Set</ion-button>
               <ion-button (click)="getTableDay()" expand="block">Get</ion-button>
-              <ion-button (click)="clearStorage()" expand="block">Clear</ion-button>
+              <ion-button (click)="clearStorage()" expand="block">Clear</ion-button> -->
               
             </ion-list>
           </div>
@@ -85,5 +87,11 @@
     </ion-grid>
     
   </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-button expand="block" (click)="presentModal()">Add</ion-button>
+    </ion-toolbar>
+  </ion-footer>
 
 </ion-app>

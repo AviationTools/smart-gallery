@@ -10,14 +10,17 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage';
+import {ModalAddPageModule} from './modal/modal-add/modal-add.module';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     IonicModule.forRoot(), 
     AppRoutingModule,
+    ModalAddPageModule,
     IonicStorageModule.forRoot()
   ],
   providers: [
