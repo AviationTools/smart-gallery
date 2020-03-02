@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { TableStorageService } from '../../service/table-storage.service';
 
 @Component({
   selector: 'app-modal-add',
@@ -8,7 +9,13 @@ import { ModalController } from '@ionic/angular';
 })
 export class ModalAddPage implements OnInit {
 
-  constructor(public modalController: ModalController) { }
+  weekDay:string;
+  subject:string;
+  fromTime:Date;
+  toTime:Date;
+  array:[];
+
+  constructor(public modalController: ModalController, public tableStorageService: TableStorageService) { }
 
   ngOnInit() {
   }
@@ -19,6 +26,18 @@ export class ModalAddPage implements OnInit {
     this.modalController.dismiss({
       'dismissed': true
     });
+  }
+
+  setStorage(){
+    this.tableStorageService.setStorage(this.subject, this.weekDay, this.fromTime, this.toTime);
+  }
+
+  getTableDay(){
+    this.tableStorageService.getTableDay(this.weekDay);
+  }
+
+  clearStorage(){
+    this.tableStorageService.clearStorage();
   }
 
 }

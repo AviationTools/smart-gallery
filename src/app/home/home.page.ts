@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { PickerController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
+import { TableStorageService } from '../service/table-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -17,98 +17,63 @@ export class HomePage{
   toTime:Date;
   array:[];
 
-  constructor(private storage: Storage, private pickerController: PickerController, public modalController: ModalController) {
+  constructor(private pickerController: PickerController, public modalController: ModalController,public tableStorageService: TableStorageService) {
     this.weekDay = "Choose Day";
   }
 
-  async getTableDay(){
-    const value = await this.storage.get(this.weekDay);
-    this.array = value;
-    console.log(this.array);
-  }
-
-  clearStorage(){
-    this.storage.clear().then((element) => {
-      console.log(element);
-    });
-  }
-
-  async setStorage() {
-    var array = {
-      'subject':this.subject,
-      'weekDay':this.weekDay,
-      'timeFrame':{
-        'fromTime':this.fromTime,
-        'toTime':this.toTime,
-      }
-    }
-    const value = await this.storage.get(this.weekDay);
-
-    if (value) {
-      value.push(array); 
-      this.storage.set(this.weekDay, value).catch(e => {
-        console.log("error: " + e);
-        });
-    } else {
-      this.storage.set(this.weekDay, [ array ]).catch(e => {
-        console.log("error: " + e);
-        });
-    }
-  }
-
-  async setWeekDay(){
-    const picker = await this.pickerController.create({
-      columns: [
-        {
-          name: 'weekDayList',
-          options: [
-            {
-              text: 'Monday',
-            },
-            {
-              text: 'Tuesday'
-            },
-            {
-              text: 'Wednesday'
-            },
-            {
-              text: 'Thursday'
-            },
-            {
-              text: 'Friday'
-            },
-            {
-              text: 'Saturday'
-            },
-            {
-              text: 'Sunday'
-            }
-          ]
-        }
-    ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Confirm',
-          handler: (value) => {
-            this.weekDay = value.weekDayList.text;
-            this.getTableDay();
+    async setWeekDay(){
+      const picker = await this.pickerController.create({
+        columns: [
+          {
+            name: 'weekDayList',
+            options: [
+              {
+                text: 'Monday',
+              },
+              {
+                text: 'Tuesday'
+              },
+              {
+                text: 'Wednesday'
+              },
+              {
+                text: 'Thursday'
+              },
+              {
+                text: 'Friday'
+              },
+              {
+                text: 'Saturday'
+              },
+              {
+                text: 'Sunday'
+              }
+            ]
           }
-        }
-      ]
-    });
+      ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel'
+          },
+          {
+            text: 'Confirm',
+            handler: (value) => {
+              this.weekDay = value.weekDayList.text;
+              this.tableStorageService.getTableDay(this.weekDay);
+            }
+          }
+        ]
+      });
 
-    await picker.present();
-  }
-  
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: ModalAddPage
-    });
-    return await modal.present();
-  }
+      await picker.present();
+    }
+    
+    async presentModal() {
+      const modal = await this.modalController.create({
+        component: ModalAddPage
+      });
+      return await modal.present();
+    }
   
 }
