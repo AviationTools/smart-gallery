@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TableStorageService } from '../../service/table-storage.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-modal-add',
@@ -14,30 +15,28 @@ export class ModalAddPage implements OnInit {
   fromTime:Date;
   toTime:Date;
   array:[];
+  
 
-  constructor(public modalController: ModalController, public tableStorageService: TableStorageService) { }
+  constructor(
+    public modalController: ModalController,
+    public tableStorageService: TableStorageService) { }
 
   ngOnInit() {
   }
 
   dismissModal() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.modalController.dismiss({
-      'dismissed': true
+      'dismissed': true,
+      "array": "adfsdgw"
     });
   }
 
   setStorage(){
-    this.tableStorageService.setStorage(this.subject, this.weekDay, this.fromTime, this.toTime);
-  }
-
-  getTableDay(){
-    this.tableStorageService.getTableDay(this.weekDay);
-  }
-
-  clearStorage(){
-    this.tableStorageService.clearStorage();
+    this.modalController.dismiss({
+      'dismissed': false,
+      "array": "adfsdgw"
+    });
+    // this.tableStorageService.setStorage(this.subject, this.fromTime, this.toTime);
   }
 
 }

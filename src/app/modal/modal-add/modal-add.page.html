@@ -24,26 +24,23 @@
         <ion-select-option value="Sunday">Sunday</ion-select-option>
       </ion-select>
     </ion-item> -->
-      <ion-item>
-        <ion-label>Subject:</ion-label>
-        <ion-input type="text" [(ngModel)]="subject" text-right id="input" ></ion-input>
-      </ion-item>
       
-      <ion-item>
-        <ion-label>From</ion-label>
-        <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
-      </ion-item>
+    <ion-item>
+      <ion-label>Subject:</ion-label>
+      <ion-input type="text" [(ngModel)]="subject" text-right id="input" ></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>From</ion-label>
+      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>To</ion-label>
+      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
+    </ion-item>
+    
+    <ion-button (click)="setStorage()" expand="block">Set</ion-button>
       
-      <ion-item>
-        <ion-label>To</ion-label>
-        <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
-      </ion-item>
-      
-      <ion-button (click)="setStorage()" expand="block">Set</ion-button>
-      <ion-button (click)="getTableDay()" expand="block">Get</ion-button>
-      <ion-button (click)="clearStorage()" expand="block">Clear</ion-button>
-    
-    
-    
-    </ion-list>
-  </ion-content>
+  </ion-list>
+</ion-content>
