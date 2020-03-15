@@ -1,0 +1,8 @@
+<ion-card color="primary" (click)="presentAlert($event)" [id]="id">
+  <ion-card-header>
+    <ion-card-title>{{ item.subject }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    {{item.timeFrame.fromTime | date:'H:mm'}} - {{item.timeFrame.toTime | date:'H:mm'}}
+  </ion-card-content>
+</ion-card>

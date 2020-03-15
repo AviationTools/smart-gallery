@@ -5,6 +5,7 @@ import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
 import { TimeTable } from '../timetable/timetable';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -17,6 +18,9 @@ export class HomePage{
   fromTime: Date;
   toTime: Date;
   timetable: TimeTable;
+  lessonList:any[];
+  
+
 
   constructor(
     private pickerController: PickerController,
@@ -25,7 +29,6 @@ export class HomePage{
 
     this.weekDay = "Choose Day";
   }
-
   async setWeekDay() {
     const picker = await this.pickerController.create({
       columns: [
@@ -65,8 +68,8 @@ export class HomePage{
           text: 'Confirm',
           handler: (value) => {
             this.weekDay = value.weekDayList.text;
-            // this.tableStorageService.setDay(this.weekDay);
-            // this.tableStorageService.getTableDay();
+            
+            this.getTableDay();
           }
         }
       ]
@@ -77,17 +80,29 @@ export class HomePage{
     
   async presentModal() {
     const modal = await this.modalController.create({
-      component: ModalAddPage
+      component: ModalAddPage,
+      componentProps: {
+        'weekDay': this.weekDay
+      }
     });
-    modal.addEventListener("ionModalDidDismiss", (e) => {
-      console.log(e);
-    })
+    modal.onDidDismiss()
+      .then((data) => {
+        const dataObject = data['data'];
+        
+        //Send Data to Storage
+        this.timetable.addLesson(dataObject.object);
+        this.tableStorageService.updateTimeTable(this.timetable);
+        this.getTableDay();
+
+    });
     return await modal.present();
   }
 
   getTableDay() {
     this.timetable = this.tableStorageService.getTimeTable();
-    console.log(this.timetable);
+    this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+    console.log(this.lessonList);
+
   }
 
   clearStorage() {

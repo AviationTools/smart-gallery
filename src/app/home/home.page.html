@@ -39,14 +39,7 @@
             <ion-card-header>
               <ion-card-title>{{ weekDay }}</ion-card-title>
             </ion-card-header>
-            <ion-card color="primary" *ngFor="let item of array">
-              <ion-card-header>
-                <ion-card-title>{{ item.subject }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                {{item.timeFrame.fromTime }} - {{item.timeFrame.toTime | date:'H:mm'}}
-              </ion-card-content>
-            </ion-card>
+            <app-lesson *ngFor="let item of lessonList" [item]="item" [lessonList]="lessonList" [weekDay]="weekDay" [id]="item.id" [timeTable]="timeTable"></app-lesson>
           </ion-card>
           
         </ion-col>
@@ -59,7 +52,8 @@
     <ion-toolbar>
       <ion-button (click)="getTableDay()" expand="block">Get</ion-button>
       <ion-button (click)="clearStorage()" expand="block">Clear</ion-button>
-      <ion-button expand="block" (click)="presentModal()">Add</ion-button>
+      <ion-button (click)="presentModal()" expand="block" >Add</ion-button>
+      <!-- <ion-button (click)="presentAlertMultipleButtons()" expand="block" >Test</ion-button> -->
     </ion-toolbar>
   </ion-footer>
 

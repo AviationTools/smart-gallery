@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TableStorageService } from '../../service/table-storage.service';
-import { EventEmitter } from '@angular/core';
+// import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-modal-add',
@@ -10,11 +10,10 @@ import { EventEmitter } from '@angular/core';
 })
 export class ModalAddPage implements OnInit {
 
-  weekDay:string;
+  @Input() weekDay:string;
   subject:string;
   fromTime:Date;
   toTime:Date;
-  array:[];
   
 
   constructor(
@@ -26,17 +25,30 @@ export class ModalAddPage implements OnInit {
 
   dismissModal() {
     this.modalController.dismiss({
-      'dismissed': true,
-      "array": "adfsdgw"
+      'dismissed': true
     });
   }
 
   setStorage(){
-    this.modalController.dismiss({
-      'dismissed': false,
-      "array": "adfsdgw"
-    });
+    if(this.weekDay != null){
+      this.modalController.dismiss({
+        'dismissed': false,
+        "object": {
+          "id": this.getRandomInt(),
+          "subject":this.subject,
+          "weekDay":this.weekDay,
+          "timeFrame":{
+            "fromTime":this.fromTime,
+            "toTime":this.toTime
+          }
+        }
+      });
+    }
     // this.tableStorageService.setStorage(this.subject, this.fromTime, this.toTime);
+  }
+  
+  getRandomInt() {
+    return Math.floor(Math.random() * Math.floor(99999999));
   }
 
 }
