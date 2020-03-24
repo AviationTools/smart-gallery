@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TabsPageRoutingModule } from './tabs.router.module';
+import { TabsPageRoutingModule } from './home-routing.module';
 import { LessonComponent } from '../lesson/lesson.component';
 
 import { HomePage } from './home.page';
+
 
 @NgModule({
   imports: [
@@ -21,6 +22,6 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage, LessonComponent ]
+  declarations: [HomePage, LessonComponent]
 })
 export class HomePageModule {}

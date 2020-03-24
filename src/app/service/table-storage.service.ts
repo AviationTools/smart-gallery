@@ -44,28 +44,8 @@ export class TableStorageService {
     return await this.storage.clear();
   }
 
-
-  // async setStorage(subject:string, fromTime:Date, toTime:Date) {
-  //   var array = {
-  //     'subject':subject,
-  //     'weekDay':this.weekDay,
-  //     'timeFrame':{
-  //       'fromTime':fromTime,
-  //       'toTime':toTime,
-  //     }
-  //   }
-  //   const value = await this.storage.get(this.weekDay);
-
-  //   if (value) {
-  //     value.push(array); 
-  //     this.storage.set(this.weekDay, value).catch(e => {
-  //       console.log("error: " + e);
-  //       });
-  //   } else {
-  //     this.storage.set(this.weekDay, [ array ]).catch(e => {
-  //       console.log("error: " + e);
-  //       });
-  //   }
-  //   console.log(array);
-  // }
+  async removeFromStorage(){
+    return await this.storage.remove("timetable");
+  }
+  
 }

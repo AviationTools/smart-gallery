@@ -25,16 +25,25 @@ export class TimeTable {
     //Später filter() einbauen.
     let object = [];
     for (let i = 0; i < this.lessons.length; i++) {
-      if( this.lessons[i].weekDay == weekDay ){
-        object.push(this.lessons[i]);
+      if(this.lessons[i] != null){
+        if( this.lessons[i].weekDay == weekDay ){
+          object.push(this.lessons[i]);
+        }
       }
     }
     return object;
   }
 
   removeSpecificLesson(id: number){
-    var temp = this.lessons.filter(el => el.id == id);
-    console.log(temp);
+    // console.log(this.lessons);
+    let currentLessons = this.lessons.filter(el => el.id != id);
+    this.lessons = [];
+    return currentLessons;
+  }
+
+  getLessonById(id: number){
+    console.log(this.lessons);
+    return this.lessons.filter(el => el.id == id);
   }
 }
 

@@ -11,9 +11,9 @@ import { TableStorageService } from '../../service/table-storage.service';
 export class ModalAddPage implements OnInit {
 
   @Input() weekDay:string;
-  subject:string;
-  fromTime:Date;
-  toTime:Date;
+  @Input() subject:string;
+  @Input() fromTime:Date;
+  @Input() toTime:Date;
   
 
   constructor(
@@ -44,7 +44,10 @@ export class ModalAddPage implements OnInit {
         }
       });
     }
-    // this.tableStorageService.setStorage(this.subject, this.fromTime, this.toTime);
+  }
+
+  setValues(array: any[]){
+    console.log(array);
   }
   
   getRandomInt() {

@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { TimeTable } from '../timetable/timetable';
 
 @Component({
   selector: 'app-lesson',
@@ -12,18 +11,16 @@ export class LessonComponent implements OnInit {
   @Input("lessonList") lessonList:any[];
   @Input("item") item:{};
   @Input("id") id:number;
-  timeTable:TimeTable;
+  @Output() removingCurrentLesson = new EventEmitter();
+  @Output() changeCurrentLesson = new EventEmitter();
 
   constructor(public alertController: AlertController) {}
 
   ngOnInit() {
-    console.log(this.lessonList);
+    // console.log(this.lessonList);
   }
 
   async presentAlert(event: any) {
-    let tempTimeTable = this.timeTable;
-    let tempId = this.id;
-
     const alertct = await this.alertController.create({
       header: this.weekDay,
       subHeader: 'Configure',
@@ -38,13 +35,14 @@ export class LessonComponent implements OnInit {
           text: 'Change',
           handler: () => {
             console.log('Change');
+            this.changeCurrentLesson.emit(this.id);
           }
         },
         {
           text: 'Delete',
           handler: () => {
             console.log('Delete');
-            tempTimeTable.removeSpecificLesson(tempId);
+            this.removingCurrentLesson.emit(this.id);
           }
         }
       ]
