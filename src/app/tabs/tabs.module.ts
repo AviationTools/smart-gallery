@@ -8,6 +8,7 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
 import { HomePage } from '../home/home.page';
+import { CameraPage } from '../camera/camera.page';
 import { LessonComponent } from '../lesson/lesson.component'
 
 @NgModule({
@@ -17,6 +18,6 @@ import { LessonComponent } from '../lesson/lesson.component'
     IonicModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage, HomePage, LessonComponent]
+  declarations: [TabsPage, HomePage, LessonComponent, CameraPage]
 })
 export class TabsPageModule {}
