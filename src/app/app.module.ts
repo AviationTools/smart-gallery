@@ -12,6 +12,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import {ModalAddPageModule} from './modal/modal-add/modal-add.module';
 
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +30,8 @@ import {ModalAddPageModule} from './modal/modal-add/modal-add.module';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Camera
   ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
-import { TimeTable } from '../timetable/timetable';
+import { TimeTable } from '../models/timetable';
 
 
 @Component({
