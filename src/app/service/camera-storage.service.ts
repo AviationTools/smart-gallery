@@ -7,8 +7,8 @@ import { ImageTable } from '../models/imagetable';
   providedIn: 'root'
 })
 export class CameraStorageService {
-  private static readonly Image_TABLE_STORAGE_KEY: string = "images";
-  imageTable:ImageTable;
+  private static readonly IMAGE_TABLE_STORAGE_KEY: string = "images";
+  private imageTable: ImageTable;
 
   constructor(private storage: Storage) { 
     storage.ready().then(() => {
@@ -17,13 +17,13 @@ export class CameraStorageService {
   }
 
   private async pullFromStorage() {
-    let currentImagetable = await this.storage.get(CameraStorageService.Image_TABLE_STORAGE_KEY);
+    let currentImagetable = await this.storage.get(CameraStorageService.IMAGE_TABLE_STORAGE_KEY);
 
     if (currentImagetable) {
-      this.imageTable = new ImageTable(currentImagetable.name, currentImagetable.creationDate, currentImagetable.images);
+      this.imageTable = new ImageTable(currentImagetable);
     }
     else {
-      this.imageTable = new ImageTable("test");
+      this.imageTable = new ImageTable();
     }
   }
 
@@ -32,11 +32,11 @@ export class CameraStorageService {
   }
 
   private async pushToStorage() {
-    await this.storage.set(CameraStorageService.Image_TABLE_STORAGE_KEY, this.imageTable.toJSON());
+    await this.storage.set(CameraStorageService.IMAGE_TABLE_STORAGE_KEY, this.imageTable.toJSON());
   }
 
-  async updateImageTable(newTimeTable: ImageTable) {
-    this.imageTable = newTimeTable;
+  async updateImageTable(newImageTimeTable: ImageTable) {
+    this.imageTable = newImageTimeTable;
     this.pushToStorage();
   }
 

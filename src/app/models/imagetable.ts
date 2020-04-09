@@ -1,5 +1,6 @@
 export interface Image {
   id:  number;
+  subject:string;
   weekDay: string;
   src: string;
   creationDate: string;
@@ -40,8 +41,8 @@ export class ImageTable {
       return result;
     }
   
-    addImage(images: Image) {
-      this.images.push(images);
+    addImage(image: Image) {
+      this.images.push(image);
     }
   
     getSpecificImages(weekDay:string){
@@ -67,6 +68,21 @@ export class ImageTable {
     getLessonById(id: number){
       console.log(this.images);
       return this.images.filter(el => el.id == id);
+    }
+
+    getImages(){
+      return this.images;
+    }
+
+    getAllImages(){
+      let allImages = [];
+      for (const image of this.images) {
+       allImages.push({
+         "src": image.src,
+         "subject": image.subject
+        });
+      }
+      return allImages;
     }
   }
   

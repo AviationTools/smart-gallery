@@ -45,16 +45,32 @@ export class TimeTable {
     console.log(this.lessons);
     return this.lessons.filter(el => el.id == id);
   }
+
+  getSubjectList(){
+    let subjectList = [];
+    for (const lesson of this.lessons) {
+      if(!subjectList.includes(lesson.subject)){
+        subjectList.push(lesson.subject);
+      }
+    }
+    return subjectList;
+  }
 }
 
 export interface Lesson {
-  id:  number,
+  id:  number;
   subject: string;
   weekDay: string;
   timeframe: TimeFrame;
+  codeTimeFrame:CodeTimeFrame;
 }
 
 export interface TimeFrame {
   fromTime: number;
   toTime: number;
+}
+
+export interface CodeTimeFrame {
+  fromTime: string;
+  toTime: string;
 }

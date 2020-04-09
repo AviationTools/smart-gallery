@@ -31,7 +31,8 @@ export class TableStorageService {
     await this.storage.set(TableStorageService.TIME_TABLE_STORAGE_KEY, this.timetable.toJSON());
   }
 
-  getTimeTable() : TimeTable {
+
+  getTimeTable() : TimeTable{
     return this.timetable;
   }
 

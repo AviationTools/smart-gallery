@@ -11,20 +11,7 @@
 
 <ion-content>
   <ion-list>
-   
-    <!-- <ion-item>
-      <ion-label>Day</ion-label>
-      <ion-select placeholder="Select One" [(ngModel)]="weekDay" (ionChange)="getTableDay()" >
-        <ion-select-option value="Monday">Monday</ion-select-option>
-        <ion-select-option value="Tuesday">Tuesday</ion-select-option>
-        <ion-select-option value="Wednesday">Wednesday</ion-select-option>
-        <ion-select-option value="Thursday">Thursday</ion-select-option>
-        <ion-select-option value="Friday">Friday</ion-select-option>
-        <ion-select-option value="Saturday">Saturday</ion-select-option>
-        <ion-select-option value="Sunday">Sunday</ion-select-option>
-      </ion-select>
-    </ion-item> -->
-      
+
     <ion-item>
       <ion-label>Subject:</ion-label>
       <ion-input type="text" [(ngModel)]="subject" text-right id="input" ></ion-input>
@@ -38,6 +25,18 @@
     <ion-item>
       <ion-label>To</ion-label>
       <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Color</ion-label>
+        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+          <ion-select-option selected value="blue"><p >Blue</p></ion-select-option>
+          <ion-select-option value="purple">Purple</ion-select-option>
+          <ion-select-option value="yellow">Yellow</ion-select-option>
+          <ion-select-option value="orange">Orange</ion-select-option>
+          <ion-select-option value="green">Green</ion-select-option>
+          <!-- [ngStyle]="{'background-color': }" -->
+        </ion-select>
     </ion-item>
     
     <ion-button (click)="setStorage()" expand="block">Set</ion-button>

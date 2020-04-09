@@ -5,6 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
 import { TimeTable } from '../models/timetable';
+import * as moment from 'moment';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { TimeTable } from '../models/timetable';
 export class HomePage{
   
   weekDay: string;
+  todayDay: string;
   subject: string;
   fromTime: Date;
   toTime: Date;
@@ -29,11 +31,18 @@ export class HomePage{
     public tableStorageService: TableStorageService,
     public toastController: ToastController
   ){
-    this.weekDay = "Choose Day!";
+    this.todayDay = this.getTodaysDay();
+    this.weekDay = this.getTodaysDay();
+    this.getTableDay();
+  }
+
+  getTodaysDay(){
+    var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    return nameWeekDays[moment().isoWeekday()-1]; 
   }
   
   // ngOnInit(){
-  //   this.getTableDay();
+  //   this.tableStorageService.initialgetTimeTable();
   // } 
 
   async setWeekDay() {
@@ -43,7 +52,7 @@ export class HomePage{
           name: 'weekDayList',
           options: [
             {
-              text: 'Monday',
+              text: 'Monday'
             },
             {
               text: 'Tuesday'
@@ -138,9 +147,16 @@ export class HomePage{
     this.getTableDay();
   }
 
-  async getTableDay() {
+  getTableDay() {
     this.timetable = this.tableStorageService.getTimeTable();
-    this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+    if(this.timetable == undefined){
+      setTimeout( () => {
+        this.timetable = this.tableStorageService.getTimeTable();
+        this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+      }, 500 );
+    }else{
+      this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+    }
   }
 
   clearStorage() {
