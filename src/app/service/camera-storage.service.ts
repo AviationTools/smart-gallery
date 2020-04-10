@@ -20,7 +20,7 @@ export class CameraStorageService {
     let currentImagetable = await this.storage.get(CameraStorageService.IMAGE_TABLE_STORAGE_KEY);
 
     if (currentImagetable) {
-      this.imageTable = new ImageTable(currentImagetable);
+      this.imageTable = new ImageTable(JSON.parse(currentImagetable));
     }
     else {
       this.imageTable = new ImageTable();

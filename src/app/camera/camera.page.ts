@@ -54,7 +54,7 @@ export class CameraPage{
     }
     
     this.camera.getPicture(options).then((imageData) => {
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
       //Later text: "Description",
       let imageObject = {
         "id": getRandomInt(),

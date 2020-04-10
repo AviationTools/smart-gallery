@@ -42,6 +42,7 @@ export class ImageTable {
     }
   
     addImage(image: Image) {
+      console.log(this.images);
       this.images.push(image);
     }
   
