@@ -1,6 +1,5 @@
-import { Component, OnInit  } from '@angular/core';
-import { CameraStorageService } from '../service/camera-storage.service';
-import { ImageTable } from '../models/imagetable';
+import { Component } from '@angular/core';
+import { ImageStorageService } from '../service/image-storage.service';
 import { TableStorageService } from '../service/table-storage.service';
 import { TimeTable } from '../models/timetable';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -15,36 +14,36 @@ import * as moment from 'moment';
 export class CameraPage{
   pictureArray: any[];
   clickedImage: string;
-  imageTable: ImageTable = new ImageTable();
-  imagesList:any[];
+  imageTable: any;
+  imagesList: any[];
   weekDay: string;
   timetable: TimeTable;
-  lessonList:any[];
+  lessonList: any[];
   
   constructor(
     public tableStorageService: TableStorageService,
-    private cameraStorageService: CameraStorageService,
+    private imageStorageService: ImageStorageService,
     private camera: Camera,
     private router: Router
     ) { 
       this.weekDay = this.getTodaysDay();
       this.timetable = this.tableStorageService.getTimeTable();
       setTimeout( () => {
-        this.imageTable = this.cameraStorageService.getImageTable();
+        this.imageTable = this.imageStorageService.getImageTable();
       }, 1000 );
     }
   
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getTableSubjectList();
     // this.uspdateImageSujects(base64Image);
   }
 
-  getTodaysDay(){
+  getTodaysDay() {
     var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     return nameWeekDays[moment().isoWeekday()-1]; 
   }
 
-  takePicture(){
+  takePicture() {
 
     const options: CameraOptions = {
       quality: 100,
@@ -63,9 +62,7 @@ export class CameraPage{
         "src": base64Image,
         "creationDate": new Date().toISOString()
       }
-      console.log(this.imageTable);
-      this.imageTable.addImage(imageObject);
-      this.cameraStorageService.updateImageTable(this.imageTable);
+      this.imageStorageService.updateImageTable(imageObject);
       }, (err) => {
         console.log(err);
       });
@@ -76,30 +73,18 @@ export class CameraPage{
     this.lessonList = this.timetable.getSubjectList();
   }
 
-  navigateToImageFolder($event){
+  navigateToImageFolder($event: any) {
     
-      this.imageTable = this.cameraStorageService.getImageTable();
-      
-      console.log(this.imageTable);
-      
-      let subjectImageList = [];
-      for (const images of this.imageTable.getImages()) {
-        if(images.subject == $event.target.innerText){
-          subjectImageList.push(images.src);
-        }
+    let navigationExtras: NavigationExtras = {
+      state: {
+        weekDay: this.weekDay,
+        subjectFromList: $event.target.innerText,
       }
-      let navigationExtras: NavigationExtras = {
-        state: {
-          weekDay: this.weekDay,
-          subject: $event.target.innerText,
-          imageList: subjectImageList
-        }
-      };
-      this.router.navigate(['/image-folder'], navigationExtras);
-    
+    };
+    this.router.navigate(['/image-folder'], navigationExtras);
   }
 
-  updateImageSubjects(base64Image){
+  updateImageSubjects(base64Image) {
     //Not Implimented yet. Reloads every tab click
     let imageObject = {
       "id": getRandomInt(),
@@ -108,9 +93,7 @@ export class CameraPage{
       "src": base64Image,
       "creationDate": new Date().toISOString()
     }
-    console.log(imageObject);
-    this.imageTable.addImage(imageObject);
-    this.cameraStorageService.updateImageTable(this.imageTable);
+    this.imageStorageService.updateImageTable(imageObject);
   }
 }
 
@@ -120,6 +103,7 @@ function getRandomInt() {
 
 function determineSubjectForImage(table){
   let timeNow = moment();
+  let returnValue;
   // let timeNow = moment({hour: 0, minute: 0});
 
   for (const lesson of table.lessons) {
@@ -134,7 +118,7 @@ function determineSubjectForImage(table){
 
     if(checkDay(timeNow.isoWeekday(), lesson.weekDay)){
       if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)){
-        return lesson.subject;
+        returnValue = lesson.subject;
       }else{
         // if(moment(timeNow).isBetween(start, end)){
         //   console.log("worked")
@@ -146,6 +130,11 @@ function determineSubjectForImage(table){
       }
     }
   }
+  if(returnValue == undefined){
+    return "Other";
+  }else{
+    return returnValue;
+  }
 }
 
 function checkDay(timeNow, weekDay){
@@ -153,7 +142,7 @@ function checkDay(timeNow, weekDay){
   if(nameWeekDays[timeNow-1] == weekDay){
     return true;
   }else{
-    console.log("checkDay" + timeNow + "/" + weekDay + "/" + nameWeekDays[timeNow-1]);
+    console.log("checkDay /" + timeNow + "/" + weekDay + "/" + nameWeekDays[timeNow-1]);
     return false;
   }
 }

@@ -1,0 +1,25 @@
+GalarieManagementService
+- getAllImages
+- getImageById
+- getAllImages
+- getImagesBySubject
+
+
+
+/**
+* Returns the average of two numbers.
+*
+* @remarks
+* This method is part of the {@link core-library#Statistics | Statistics subsystem}.
+*
+* @param weekDay - The weekday
+* @returns The arithmetic mean of `x` and `y`
+*/
+
+//Fix todo
+
+- problems with 0:00 - 0:15 
+- clean up code image storage service
+
+//Testing Command 
+npm run ng test

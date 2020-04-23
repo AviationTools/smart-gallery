@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { HomePage } from '../home/home.page';
 import { CameraPage } from '../camera/camera.page';
+import { SettingsPage } from '../settings/settings.page';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
       component: CameraPage
     },
     {
+      path:'settings',
+      component: SettingsPage
+    },
+    {
       path: '',
       redirectTo: '/tabs/home',
       pathMatch: 'full'
@@ -25,6 +30,11 @@ const routes: Routes = [
     {
       path: '',
       redirectTo: '/tabs/camera',
+      pathMatch: 'full'
+    },
+    {
+      path: '',
+      redirectTo: '/tabs/settings',
       pathMatch: 'full'
     }
     ]
@@ -37,6 +47,11 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/tabs/camera',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    redirectTo: '/tabs/settings',
     pathMatch: 'full'
   }
 ];

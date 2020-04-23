@@ -1,15 +1,32 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { ImageFolderComponent } from './image-folder/image-folder.component';
+import { ImageFolderPage } from './image-folder/image-folder.page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'tabs', pathMatch: 'full' },
   { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  { path: 'image-folder', component: ImageFolderComponent },
+  // { path: 'image-folder', page: ImageFolderPage },
   {
     path: 'camera',
     loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule)
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'images',
+    loadChildren: () => import('./images/images.component').then( m => m.ImagesComponent)
+  },
+  {
+    path: 'image-folder',
+    loadChildren: () => import('./image-folder/image-folder.module').then( m => m.ImageFolderPageModule)
+  },  {
+    path: 'modal-fullscreen',
+    loadChildren: () => import('./modal/modal-fullscreen/modal-fullscreen.module').then( m => m.ModalFullscreenPageModule)
+  },
+
+
 
   // {
   //   path: 'tabs',

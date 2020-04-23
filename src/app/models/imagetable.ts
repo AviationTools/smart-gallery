@@ -46,6 +46,15 @@ export class ImageTable {
       this.images.push(image);
     }
   
+    /**
+     * Returns the average of two numbers.
+     *
+     * @remarks
+     * This method is part of the {@link core-library#Statistics | Statistics subsystem}.
+     *
+     * @param weekDay - The weekday
+     * @returns The arithmetic mean of `x` and `y`
+     */
     getSpecificImages(weekDay:string){
       //Später filter() einbauen.
       let object = [];

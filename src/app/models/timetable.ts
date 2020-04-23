@@ -53,6 +53,7 @@ export class TimeTable {
         subjectList.push(lesson.subject);
       }
     }
+    subjectList.push("Other");
     return subjectList;
   }
 }

@@ -153,15 +153,10 @@ export class HomePage{
       setTimeout( () => {
         this.timetable = this.tableStorageService.getTimeTable();
         this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
-      }, 500 );
+      }, 750);
     }else{
       this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
     }
-  }
-
-  clearStorage() {
-    this.tableStorageService.clearStorage();
-    console.log("Storage Cleared");
   }
 
   removeSpecificLesson(id: number){

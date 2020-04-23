@@ -8,16 +8,6 @@
 
 <ion-content>
   
-
-<!-- <ion-list>
-  <ion-item *ngFor="let image of imagesList">
-    <ion-thumbnail slot="start">
-      <ion-img [src]="image"></ion-img>
-    </ion-thumbnail>
-    <ion-label>{{image.text}}</ion-label>
-  </ion-item>
-</ion-list> -->
-
 <ion-list>
   <ion-item *ngFor="let list of lessonList" (click)="navigateToImageFolder($event)" routerDirection="forward" >
     <ion-label>{{ list }}</ion-label>

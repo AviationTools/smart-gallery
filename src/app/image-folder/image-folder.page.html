@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ subject }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let image of imagesList" size="6">
+        <app-images (removingCurrentLesson)='removeSpecificLesson($event)' (showCurrentLesson)='showSpecificLesson($event)' [image]="image" [subject]="subject" [imagesList]="imagesList" [id]="image.id"></app-images>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
