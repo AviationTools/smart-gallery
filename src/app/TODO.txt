@@ -1,11 +1,3 @@
-GalarieManagementService
-- getAllImages
-- getImageById
-- getAllImages
-- getImagesBySubject
-
-
-
 /**
 * Returns the average of two numbers.
 *
@@ -17,9 +9,33 @@ GalarieManagementService
 */
 
 //Fix todo
-
 - problems with 0:00 - 0:15 
 - clean up code image storage service
 
 //Testing Command 
 npm run ng test
+
+//Removing Pakage npm
+https://stackoverflow.com/questions/21932758/removing-cordova-plugins-from-the-project
+
+//Ion-Slides Template 
+import { IonSlides } from '@ionic/angular';
+
+@ViewChild(IonSlides, {static: false}) ionSlides: IonSlides;
+
+slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+  };
+
+ionViewDidEnter(){
+this.ionSlides.update()
+.then(() => {
+    this.ionSlides.slideTo(this.index);
+});
+}
+<ion-slides pager="true" [options]="slideOpts">
+    <ion-slide *ngFor="let image of imagesList">
+      <img width="100%" height="50%" [src]="image.src"/>
+    </ion-slide>
+  </ion-slides>

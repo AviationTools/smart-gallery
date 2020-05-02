@@ -31,7 +31,7 @@
           <ion-card-header>
             <ion-card-title>{{ weekDay }}</ion-card-title>
           </ion-card-header>
-          <app-lesson *ngFor="let item of lessonList" (removingCurrentLesson)='removeSpecificLesson($event)' (changeCurrentLesson)="changeCurrentLesson($event)" [item]="item" [lessonList]="lessonList" [weekDay]="weekDay" [id]="item.id"></app-lesson>
+          <app-lesson *ngFor="let item of lessonList" (removingCurrentLesson)='removeSpecificLesson($event)' (changeCurrentLesson)="changeCurrentLesson($event)" [item]="item" [lessonList]="lessonList" [weekDay]="weekDay" [id]="item.id" [color]="item.color"></app-lesson>
         </ion-card>
         
       </ion-col>

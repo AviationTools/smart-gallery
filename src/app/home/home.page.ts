@@ -96,10 +96,11 @@ export class HomePage{
     
   async presentModal(array?: any) {
     let modalObject: any;
-    //When Changes are made
+    //When Changes are made for Lesson
     if(array){
       modalObject = {
         component: ModalAddPage,
+        cssClass: 'my-custom-modal-css',
         componentProps: {
           'weekDay': this.weekDay,
           'subject': array.subject,
@@ -109,8 +110,10 @@ export class HomePage{
       }
     this.removeSpecificLesson(array.id);
     }else{
+      //New Lesson 
       modalObject = {
         component: ModalAddPage,
+        cssClass: 'my-custom-modal-css',
         componentProps: {
           'weekDay': this.weekDay
         }

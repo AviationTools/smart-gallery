@@ -10,7 +10,7 @@
   <ion-grid>
     <ion-row>
       <ion-col *ngFor="let image of imagesList" size="6">
-        <app-images (removingCurrentLesson)='removeSpecificLesson($event)' (showCurrentLesson)='showSpecificLesson($event)' [image]="image" [subject]="subject" [imagesList]="imagesList" [id]="image.id"></app-images>
+        <app-images (showCurrentLesson)='showSpecificLesson($event)' [image]="image" [subject]="subject" [imagesList]="imagesList" [id]="image.id" [index]="image.index"></app-images>
       </ion-col>
     </ion-row>
   </ion-grid>

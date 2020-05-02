@@ -13,7 +13,6 @@ export class ImageFolderPage {
   weekDay:string;
   subject:string;
   imagesList:any[];
-  id:number;
   
   constructor(
     private route: ActivatedRoute, 
@@ -39,28 +38,33 @@ export class ImageFolderPage {
     this.getImagesForSubject(this.subject);
   }
 
-  getImagesForSubject(subject: string){
+  getImagesForSubject(subject: string) {
     let imageTable = this.imageStorageService.getImageTable();
     let subjectImageList = [];
+    let i = 0;
 
     for (const images of imageTable) {
+      i++;
+      // console.log(images.src);
       if(images.subject == subject) {
         subjectImageList.push({
           "src": images.src,
-          "id": images.id
+          "id": images.id,
+          "index": i
         });
       }
     }
     this.imagesList = subjectImageList;
   }
 
-  async showSpecificLesson(image: string, subject: string) {
+  async showSpecificLesson(input: any) {
     let modalObject: any;
       modalObject = {
         component: ModalFullscreenPage,
         componentProps: {
-          'image': image,
-          'subject': this.subject
+          'subject': this.subject,
+          'image': input.image,
+          'id': input.id
         }
       }
       const modal = await this.modalController.create(modalObject);
@@ -68,7 +72,10 @@ export class ImageFolderPage {
       modal.onDidDismiss()
       .then((data) => {
         const dataObject = data['data'];
-        if(dataObject.object != null){
+        if(dataObject.action == "delete"){
+          this.removeSpecificLesson(dataObject.id);
+        }
+        if(dataObject.action == "share"){
           console.log(dataObject);
         }
       });

@@ -1,12 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ subject }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="presentActionSheet()"><ion-icon name="cog-outline"></ion-icon></ion-button>
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-align-items-center">
   <img width="100%" height="50%" [src]="image.src"/>
 </ion-content>

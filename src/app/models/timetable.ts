@@ -50,10 +50,16 @@ export class TimeTable {
     let subjectList = [];
     for (const lesson of this.lessons) {
       if(!subjectList.includes(lesson.subject)){
-        subjectList.push(lesson.subject);
+        subjectList.push({
+          "subject": lesson.subject,
+          "color": lesson.color
+        });
       }
     }
-    subjectList.push("Other");
+    subjectList.push({
+      "subject": "Other",
+      "color": "primary"
+    });
     return subjectList;
   }
 }
@@ -62,6 +68,7 @@ export interface Lesson {
   id:  number;
   subject: string;
   weekDay: string;
+  color: string;
   timeframe: TimeFrame;
   codeTimeFrame:CodeTimeFrame;
 }

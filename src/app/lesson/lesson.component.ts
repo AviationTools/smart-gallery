@@ -7,10 +7,11 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./lesson.component.scss'],
 })
 export class LessonComponent implements OnInit {
-  @Input("weekDay") weekDay:string;
-  @Input("lessonList") lessonList:any[];
-  @Input("item") item:{};
-  @Input("id") id:number;
+  @Input("weekDay") weekDay: string;
+  @Input("lessonList") lessonList: any[];
+  @Input("item") item: {};
+  @Input("id") id: number;
+  @Input("color") color: string;
   @Output() removingCurrentLesson = new EventEmitter();
   @Output() changeCurrentLesson = new EventEmitter();
 

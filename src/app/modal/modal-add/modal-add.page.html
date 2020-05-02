@@ -1,7 +1,7 @@
 <ion-header>
   
   <ion-toolbar>
-    <ion-title>Add-Element</ion-title>
+    <ion-title>{{ weekDay }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
@@ -14,7 +14,7 @@
 
     <ion-item>
       <ion-label>Subject:</ion-label>
-      <ion-input type="text" [(ngModel)]="subject" text-right id="input" ></ion-input>
+      <ion-input type="text" [(ngModel)]="subject" text-right id="input" minLength></ion-input>
     </ion-item>
     
     <ion-item>
@@ -26,20 +26,56 @@
       <ion-label>To</ion-label>
       <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
     </ion-item>
-
     <ion-item>
-      <ion-label>Color</ion-label>
-        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
-          <ion-select-option selected value="blue"><p >Blue</p></ion-select-option>
-          <ion-select-option value="purple">Purple</ion-select-option>
-          <ion-select-option value="yellow">Yellow</ion-select-option>
-          <ion-select-option value="orange">Orange</ion-select-option>
-          <ion-select-option value="green">Green</ion-select-option>
-          <!-- [ngStyle]="{'background-color': }" -->
-        </ion-select>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button (click)="setLessonColor('checkedBlue')" color="secondary" shape="round" size="large">
+              <ng-template [ngIf]="checkedBlue"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedBlue"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+
+            <ion-button (click)="setLessonColor('checkedRed')" color="danger" shape="round" size="large">
+              <ng-template [ngIf]="checkedRed"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedRed"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+
+            <ion-button (click)="setLessonColor('checkedBlack')" color="dark" shape="round" size="large">
+              <ng-template [ngIf]="checkedBlack"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedBlack"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+
+            <ion-button (click)="setLessonColor('checkedPink')" color="tertiary" shape="round" size="large">
+              <ng-template [ngIf]="checkedPink"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedPink"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button (click)="setLessonColor('checkedGreen')" color="success" shape="round" size="large">
+              <ng-template [ngIf]="checkedGreen"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedGreen"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+
+            <ion-button (click)="setLessonColor('checkedYellow')" color="warning" shape="round" size="large">
+              <ng-template [ngIf]="checkedYellow"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedYellow"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+
+            <ion-button (click)="setLessonColor('checkedGrey')" color="medium" shape="round" size="large">
+              <ng-template [ngIf]="checkedGrey"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedGrey"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+
+            <ion-button (click)="setLessonColor('checkedOrange')" color="light" shape="round" size="large">
+              <ng-template [ngIf]="checkedOrange"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
+              <ng-template [ngIf]="!checkedOrange"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-item>
-    
-    <ion-button (click)="setStorage()" expand="block">Set</ion-button>
-      
+    <ion-button (click)="setStorage()" expand="block">Set</ion-button> 
   </ion-list>
 </ion-content>
