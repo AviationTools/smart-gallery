@@ -25,7 +25,14 @@ export class ModalFullscreenPage {
   }
 
   settings(action: string) {
-    if(action == "delete"){
+    if (action == "delete"){
+      this.modalController.dismiss({
+        'dismissed': true,
+        'action': action,
+        'id': this.id
+      });
+    } 
+    if (action == "share"){
       this.modalController.dismiss({
         'dismissed': true,
         'action': action,

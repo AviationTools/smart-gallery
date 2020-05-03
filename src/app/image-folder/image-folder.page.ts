@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ImageStorageService } from '../service/image-storage.service';
 import { ModalController } from '@ionic/angular';
 import { ModalFullscreenPage } from '../modal/modal-fullscreen/modal-fullscreen.page';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-image-folder',
@@ -18,6 +19,7 @@ export class ImageFolderPage {
     private route: ActivatedRoute, 
     private router: Router,
     public modalController: ModalController,
+    private socialSharing: SocialSharing,
     private imageStorageService: ImageStorageService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -36,6 +38,22 @@ export class ImageFolderPage {
     }
     this.imagesList = [];
     this.getImagesForSubject(this.subject);
+  }
+
+  shareSpecificLesson(id: number){
+    // Check if sharing via email is supported
+    this.socialSharing.canShareViaEmail().then(() => {
+      // Sharing via email is possible
+    }).catch(() => {
+      // Sharing via email is not possible
+    });
+
+    // Share via email
+    this.socialSharing.shareViaEmail('Body', 'Subject', ['recipient@example.org']).then(() => {
+      // Success!
+    }).catch(() => {
+      // Error!
+    });
   }
 
   getImagesForSubject(subject: string) {
@@ -76,7 +94,7 @@ export class ImageFolderPage {
           this.removeSpecificLesson(dataObject.id);
         }
         if(dataObject.action == "share"){
-          console.log(dataObject);
+          this.shareSpecificLesson(dataObject.id);
         }
       });
       return await modal.present();

@@ -15,6 +15,8 @@ import { ModalAddPageModule } from './modal/modal-add/modal-add.module';
 import { ModalFullscreenPageModule } from './modal/modal-fullscreen/modal-fullscreen.module';
 
 import { Camera } from '@ionic-native/camera/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 @NgModule({
@@ -33,6 +35,8 @@ import { Camera } from '@ionic-native/camera/ngx';
     StatusBar,
     SplashScreen,
     Camera,
+    AndroidPermissions,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

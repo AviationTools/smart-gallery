@@ -4,6 +4,7 @@ import { TableStorageService } from '../service/table-storage.service';
 import { TimeTable } from '../models/timetable';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, NavigationExtras } from '@angular/router';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import * as moment from 'moment';
 
 @Component({
@@ -23,6 +24,7 @@ export class CameraPage{
   constructor(
     public tableStorageService: TableStorageService,
     private imageStorageService: ImageStorageService,
+    private androidPermissions: AndroidPermissions,
     private camera: Camera,
     private router: Router
     ) { 
@@ -44,6 +46,13 @@ export class CameraPage{
   }
 
   takePicture() {
+
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
+      result => console.log('Has permission?',result.hasPermission),
+      err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
+    );
+    
+    this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.CAMERA, this.androidPermissions.PERMISSION.GET_ACCOUNTS]);
 
     const options: CameraOptions = {
       quality: 100,

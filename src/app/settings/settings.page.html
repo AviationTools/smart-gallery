@@ -7,15 +7,22 @@
   <ion-list>
 
     <ion-item>
-      <ion-label>Delete TimeTable</ion-label>
-      <ion-button (click)="deleteTableStorage()">
+      <ion-label>App teilen</ion-label>
+      <ion-button (click)="appTeilen()">
+        <ion-icon name="share"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="danger">Reset TimeTable</ion-label>
+      <ion-button color="danger" (click)="deleteTableStorage()">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>
 
     <ion-item>
-      <ion-label>Delete Images</ion-label>
-      <ion-button (click)="deleteImageStorage()">
+      <ion-label color="danger">Reset Images</ion-label>
+      <ion-button color="danger" (click)="deleteImageStorage()">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-button>
     </ion-item>
