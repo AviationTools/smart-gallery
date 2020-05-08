@@ -12,11 +12,11 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { ModalAddPageModule } from './modal/modal-add/modal-add.module';
-import { ModalFullscreenPageModule } from './modal/modal-fullscreen/modal-fullscreen.module';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 
 @NgModule({
@@ -27,7 +27,6 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     IonicModule.forRoot(), 
     AppRoutingModule,
     ModalAddPageModule,
-    ModalFullscreenPageModule,
     HttpClientModule,
     IonicStorageModule.forRoot()
   ],
@@ -36,6 +35,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
     SplashScreen,
     Camera,
     AndroidPermissions,
+    PhotoViewer,
     SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -36,8 +36,9 @@ export class CameraPage{
     }
   
   ionViewWillEnter() {
-    this.getTableSubjectList();
-    // this.uspdateImageSujects(base64Image);
+    setTimeout( () => {
+      this.getTableSubjectList();
+    }, 1000 );
   }
 
   getTodaysDay() {
@@ -46,9 +47,8 @@ export class CameraPage{
   }
 
   takePicture() {
-
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
-      result => console.log('Has permission?',result.hasPermission),
+      result => console.log('Has permission?', result.hasPermission),
       err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.CAMERA)
     );
     
@@ -58,18 +58,19 @@ export class CameraPage{
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      allowEdit: true
+      mediaType: this.camera.MediaType.PICTURE
     }
+    //allowEdit: true
     
     this.camera.getPicture(options).then((imageData) => {
+      //base64Image for Browser
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       //Later text: "Description",
       let imageObject = {
         "id": getRandomInt(),
         "subject":determineSubjectForImage(this.tableStorageService.getTimeTable()),
         "weekDay": this.weekDay,
-        "src": base64Image,
+        "src": imageData,
         "creationDate": new Date().toISOString()
       }
       this.imageStorageService.updateImageTable(imageObject);

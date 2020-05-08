@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageStorageService } from '../service/image-storage.service';
 import { ModalController } from '@ionic/angular';
-import { ModalFullscreenPage } from '../modal/modal-fullscreen/modal-fullscreen.page';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
@@ -57,6 +56,7 @@ export class ImageFolderPage {
   }
 
   getImagesForSubject(subject: string) {
+    let win: any = window; //Necessary!
     let imageTable = this.imageStorageService.getImageTable();
     let subjectImageList = [];
     let i = 0;
@@ -65,39 +65,16 @@ export class ImageFolderPage {
       i++;
       // console.log(images.src);
       if(images.subject == subject) {
+        //safeURL for DOM/Android
+        let safeURL = win.Ionic.WebView.convertFileSrc(images.src);
         subjectImageList.push({
           "src": images.src,
+          "safeURL": safeURL,
           "id": images.id,
           "index": i
         });
       }
     }
     this.imagesList = subjectImageList;
-  }
-
-  async showSpecificLesson(input: any) {
-    let modalObject: any;
-      modalObject = {
-        component: ModalFullscreenPage,
-        componentProps: {
-          'subject': this.subject,
-          'image': input.image,
-          'id': input.id
-        }
-      }
-      const modal = await this.modalController.create(modalObject);
-      
-      modal.onDidDismiss()
-      .then((data) => {
-        const dataObject = data['data'];
-        if(dataObject.action == "delete"){
-          this.removeSpecificLesson(dataObject.id);
-        }
-        if(dataObject.action == "share"){
-          this.shareSpecificLesson(dataObject.id);
-        }
-      });
-      return await modal.present();
-
   }
 }

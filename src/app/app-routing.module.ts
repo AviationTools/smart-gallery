@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { ImageFolderPage } from './image-folder/image-folder.page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'tabs', pathMatch: 'full' },
   { path: 'tabs', loadChildren: './tabs/tabs.module#TabsPageModule' },
-  // { path: 'image-folder', page: ImageFolderPage },
   {
     path: 'camera',
     loadChildren: () => import('./camera/camera.module').then( m => m.CameraPageModule)
@@ -21,9 +19,6 @@ const routes: Routes = [
   {
     path: 'image-folder',
     loadChildren: () => import('./image-folder/image-folder.module').then( m => m.ImageFolderPageModule)
-  },  {
-    path: 'modal-fullscreen',
-    loadChildren: () => import('./modal/modal-fullscreen/modal-fullscreen.module').then( m => m.ModalFullscreenPageModule)
   },
 
 
