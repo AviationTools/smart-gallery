@@ -39,3 +39,21 @@ this.ionSlides.update()
       <img width="100%" height="50%" [src]="image.src"/>
     </ion-slide>
   </ion-slides>
+
+  //ionic cordova android back button not working 
+   in the App (Home) press Android back button should return out of the App.
+
+  //Credits 
+  <div>Icons erstellt von <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
+  Icons erstellt von <a href="https://www.flaticon.com/de/autoren/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/de/" title="Flaticon"> www.flaticon.com</a>
+
+  //New APP Idea
+  https://ionicframework.com/docs/native/nfc
+  NFC to locate certain objects.
+  Reasearch:
+  https://medium.com/blue-bite/your-questions-answered-7-common-misconceptions-about-nfc-9c580fd66635
+
+  //NEXT
+  - ADMOB temporary inclusion..
+  - REGEX for Inputs (PatternValidator)
+  - Describtion for Modal.

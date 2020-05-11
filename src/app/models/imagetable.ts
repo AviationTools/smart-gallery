@@ -55,7 +55,7 @@ export class ImageTable {
      * @param weekDay - The weekday
      * @returns The arithmetic mean of `x` and `y`
      */
-    getSpecificImages(weekDay:string){
+    getSpecificImages(weekDay:string) {
       //Später filter() einbauen.
       let object = [];
       for (let i = 0; i < this.images.length; i++) {
@@ -68,23 +68,23 @@ export class ImageTable {
       return object;
     }
   
-    removeSpecificImage(id: number){
+    removeSpecificImage(id: number) {
       // console.log(this.lessons);
       let currentImage = this.images.filter(el => el.id != id);
       this.images = [];
       return currentImage;
     }
   
-    getLessonById(id: number){
+    getLessonById(id: number) {
       console.log(this.images);
       return this.images.filter(el => el.id == id);
     }
 
-    getImages(){
+    getImages() {
       return this.images;
     }
 
-    getAllImages(){
+    getAllImages() {
       let allImages = [];
       for (const image of this.images) {
        allImages.push({

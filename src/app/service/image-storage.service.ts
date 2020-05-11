@@ -62,6 +62,16 @@ export class ImageStorageService {
   //   return object;
   // }
 
+  getImageCountForSubject(subject: string){
+    let count = 0;
+    for (const image of this.images) {
+      if(image.subject == subject){
+        count++;
+      }
+    }
+    return count;
+  }
+
   removeSpecificImage(id: number){
     let currentImage = this.images.filter(el => el.id != id);
     this.images = [];
@@ -114,11 +124,11 @@ export class ImageStorageService {
     this.pushToStorage();
   }
 
-  async clearStorage(){
+  async clearStorage() {
     return await this.storage.clear();
   }
 
-  async removeFromStorage(){
+  async removeFromStorage() {
     return await this.storage.remove("images");
   }
 }

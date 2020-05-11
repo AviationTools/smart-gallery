@@ -20,6 +20,8 @@ export class CameraPage{
   weekDay: string;
   timetable: TimeTable;
   lessonList: any[];
+  pattern: string | RegExp;
+
   
   constructor(
     public tableStorageService: TableStorageService,
@@ -74,22 +76,32 @@ export class CameraPage{
         "creationDate": new Date().toISOString()
       }
       this.imageStorageService.updateImageTable(imageObject);
+      this.getTableSubjectList();
       }, (err) => {
         console.log(err);
       });
   }
 
   getTableSubjectList() {
+    let tableList = [];
     this.timetable = this.tableStorageService.getTimeTable();
-    this.lessonList = this.timetable.getSubjectList();
+    for(const lesson of this.timetable.getSubjectList()){
+      tableList.push({
+        "subject": lesson.subject,
+        "color": lesson.color,
+        "count": this.imageStorageService.getImageCountForSubject(lesson.subject)
+      });
+    }
+    this.lessonList = tableList;
   }
 
   navigateToImageFolder($event: any) {
-    
+    var regex = /(\w+)$/;
+    const subjectString = $event.target.innerText;
     let navigationExtras: NavigationExtras = {
       state: {
         weekDay: this.weekDay,
-        subjectFromList: $event.target.innerText,
+        subjectFromList: regex.exec(subjectString)[0],
       }
     };
     this.router.navigate(['/image-folder'], navigationExtras);
@@ -127,10 +139,10 @@ function determineSubjectForImage(table){
       // console.log(start.hour());
     }
 
-    if(checkDay(timeNow.isoWeekday(), lesson.weekDay)){
-      if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)){
+    if(checkDay(timeNow.isoWeekday(), lesson.weekDay)) {
+      if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
         returnValue = lesson.subject;
-      }else{
+      } else {
         // if(moment(timeNow).isBetween(start, end)){
         //   console.log("worked")
         // }else{
