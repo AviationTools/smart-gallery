@@ -18,6 +18,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { AppRate } from '@ionic-native/app-rate/ngx';
+import { Vibration } from '@ionic-native/vibration/ngx';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { AppRate } from '@ionic-native/app-rate/ngx';
     AndroidPermissions,
     PhotoViewer,
     AppRate,
+    Vibration,
     SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

@@ -48,14 +48,13 @@ this.ionSlides.update()
 
   //NEXT
   - Description for Images.
-  - Haptik Virbration (new Lesson or image)
   - Fix Time problems with 00:00 - 00:15 
   - clean up code image storage service
   - add Slides explaining app & letting Users know that everything is stored localy.
 
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
-  - ADMOB temporary inclusion (First SignUp on ADMOB)
+  - ADMOB temporary inclusion (First SignUp on ADMOB) (command line/last)
   - Pay for No Adverstisement option (2,29€)
   - Kauf Wiederherstellen Function (Button)
 
@@ -63,4 +62,5 @@ this.ionSlides.update()
   - REGEX for Inputs (PatternValidator) [DONE!]
   - add Label/Message for Folders with no Images [DONE!]
   - Finish Settings Tab and add Design [Done!]
-  - Add Credits [Done!]
+  - Add Credits & Privacy Policy [Done!]
+  - Haptik Virbration for (imageOptions & lessonAlert) [Done!]

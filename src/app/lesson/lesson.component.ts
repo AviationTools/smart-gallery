@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { Vibration } from '@ionic-native/vibration/ngx';
+
 
 @Component({
   selector: 'app-lesson',
@@ -15,13 +17,17 @@ export class LessonComponent implements OnInit {
   @Output() removingCurrentLesson = new EventEmitter();
   @Output() changeCurrentLesson = new EventEmitter();
 
-  constructor(public alertController: AlertController) {}
+  constructor(
+    public alertController: AlertController,
+    private vibration: Vibration
+    ) {}
 
   ngOnInit() {
     // console.log(this.lessonList);
   }
 
   async presentAlert(event: any) {
+    this.vibration.vibrate(1000);
     const alertct = await this.alertController.create({
       header: this.weekDay,
       subHeader: 'Configure',
