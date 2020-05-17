@@ -20,7 +20,6 @@ export class CameraPage{
   weekDay: string;
   timetable: TimeTable;
   lessonList: any[];
-  pattern: string | RegExp;
 
   
   constructor(
@@ -97,7 +96,7 @@ export class CameraPage{
 
   navigateToImageFolder($event: any) {
     var regex = /(\w+)$/;
-    const subjectString = $event.target.innerText;
+    let subjectString = $event.target.innerText;
     let navigationExtras: NavigationExtras = {
       state: {
         weekDay: this.weekDay,

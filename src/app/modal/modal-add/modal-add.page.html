@@ -14,7 +14,7 @@
 
     <ion-item>
       <ion-label>Subject:</ion-label>
-      <ion-input type="text" [(ngModel)]="subject" text-right id="input" minLength></ion-input>
+      <ion-input type="text" [(ngModel)]="subject" text-right id="input" ngModel pattern="[a-zA-Z ]*"></ion-input>
     </ion-item>
     
     <ion-item>

@@ -17,6 +17,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { AppRate } from '@ionic-native/app-rate/ngx';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
     Camera,
     AndroidPermissions,
     PhotoViewer,
+    AppRate,
     SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

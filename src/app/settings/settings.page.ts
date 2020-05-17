@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableStorageService } from '../service/table-storage.service';
 import { ImageStorageService } from '../service/image-storage.service';
 import { AlertController } from '@ionic/angular';
+import { AppRate } from '@ionic-native/app-rate/ngx';
 
 @Component({
   selector: 'app-settings',
@@ -13,11 +14,11 @@ export class SettingsPage implements OnInit {
   constructor(
     public tableStorageService: TableStorageService,
     public imageStorageService: ImageStorageService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private appRate: AppRate
     ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   async deleteTableStorage() {
     const alert = await this.alertController.create({
@@ -66,5 +67,28 @@ export class SettingsPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  rateApp() {
+    // set certain preferences
+    this.appRate.preferences.storeAppURL = {
+      ios: '<app_id>',
+      android: 'market://details?id=<package_name>',
+      windows: 'ms-windows-store://review/?ProductId=<store_id>'
+    }
+
+    this.appRate.promptForRating(true);
+
+    // or, override the whole preferences object
+    this.appRate.preferences = {
+      usesUntilPrompt: 3,
+      storeAppURL: {
+      ios: '<app_id>',
+      android: 'market://details?id=<package_name>',
+      windows: 'ms-windows-store://review/?ProductId=<store_id>'
+      }
+    }
+
+    this.appRate.promptForRating(false);
   }
 }

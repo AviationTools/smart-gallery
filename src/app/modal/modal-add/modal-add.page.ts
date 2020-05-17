@@ -16,7 +16,10 @@ export class ModalAddPage implements OnInit {
   @Input() fromTime:Date;
   @Input() toTime:Date;
 
-  validator: boolean;
+  validatorText: boolean;
+  validatorTime: boolean;
+  validatorColor: boolean;
+  pattern: string | RegExp;
 
   checkedBlue: boolean;
   checkedRed: boolean;
@@ -45,7 +48,9 @@ export class ModalAddPage implements OnInit {
     this.checkedPink = false;
     this.checkedOrange = false;
 
-    this.validator = true;
+    this.validatorText = true;
+    this.validatorTime = true;
+    this.validatorColor = true;
   }
 
   dismissModal() {
@@ -73,7 +78,7 @@ export class ModalAddPage implements OnInit {
       }
     }
 
-    if(this.weekDay != null && this.validator == false){
+    if(this.weekDay != null && !this.validatorText && !this.validatorTime && !this.validatorColor){
       this.modalController.dismiss(returnObject);
     }
   }
@@ -227,30 +232,30 @@ export class ModalAddPage implements OnInit {
 
   validateText(text: any){
     if(text){
-      this.validator = false
+      this.validatorText = false
       return text;
     }else{
-      this.validator = true
+      this.validatorText = true
       this.presentToast("Please enter a Subject!");
     }
   }
 
   validateTime(time: Date){
     if(time){
-      this.validator = false
+      this.validatorTime = false
       return time;
     }else{
-      this.validator = true
+      this.validatorTime = true
       this.presentToast("Please pick the Time!");
     }
   }
 
   validateColor(color :string){
     if(color){
-      this.validator = false
+      this.validatorColor = false
       return color;
     }else{
-      this.validator = true
+      this.validatorColor = true
       this.presentToast("Please choose a Color!");
     }
   }

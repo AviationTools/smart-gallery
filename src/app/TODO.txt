@@ -8,10 +8,6 @@
 * @returns The arithmetic mean of `x` and `y`
 */
 
-//Fix todo
-- problems with 0:00 - 0:15 
-- clean up code image storage service
-
 //Testing Command 
 npm run ng test
 
@@ -35,17 +31,10 @@ this.ionSlides.update()
 });
 }
 <ion-slides pager="true" [options]="slideOpts">
-    <ion-slide *ngFor="let image of imagesList">
-      <img width="100%" height="50%" [src]="image.src"/>
-    </ion-slide>
-  </ion-slides>
-
-  //ionic cordova android back button not working 
-   in the App (Home) press Android back button should return out of the App.
-
-  //Credits 
-  <div>Icons erstellt von <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
-  Icons erstellt von <a href="https://www.flaticon.com/de/autoren/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/de/" title="Flaticon"> www.flaticon.com</a>
+  <ion-slide *ngFor="let image of imagesList">
+    <img width="100%" height="50%" [src]="image.src"/>
+  </ion-slide>
+</ion-slides>
 
   //New APP Idea
   https://ionicframework.com/docs/native/nfc
@@ -53,7 +42,22 @@ this.ionSlides.update()
   Reasearch:
   https://medium.com/blue-bite/your-questions-answered-7-common-misconceptions-about-nfc-9c580fd66635
 
+  //Problems & Bugs
+   - ionic cordova android back button not working 
+     in the App (Home) press Android back button should return out of the App.
+
   //NEXT
-  - ADMOB temporary inclusion..
-  - REGEX for Inputs (PatternValidator)
-  - Describtion for Modal.
+  - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
+  - ADMOB temporary inclusion (First SignUp on ADMOB)
+  - Description for Images.
+  - Haptik Virbration (new Lesson or image)
+  - Pay for No Adverstisement option (2,29€)
+  - Kauf Wiederherstellen Function (Button)
+  - Fix Time problems with 00:00 - 00:15 
+  - clean up code image storage service
+  - Add Credits
+  - Finish Settings Tab and add Design
+  - add Slides explaining app & letting Users know that everything is stored localy.
+
+  //Finished 
+  - REGEX for Inputs (PatternValidator) [DONE!]

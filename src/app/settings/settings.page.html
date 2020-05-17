@@ -14,6 +14,13 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>Rate this App</ion-label>
+      <ion-button (click)="rateApp()">
+        <ion-icon name="star-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item>
       <ion-label color="danger">Reset TimeTable</ion-label>
       <ion-button color="danger" (click)="deleteTableStorage()">
         <ion-icon name="trash-outline"></ion-icon>
