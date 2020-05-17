@@ -9,10 +9,19 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col *ngFor="let image of imagesList" size="6">
-        <app-images (removeCurrentLesson)='removeSpecificLesson($event)' [image]="image.safeURL" [subject]="subject" [imagesList]="imagesList" [id]="image.id" [index]="image.index"
-        [rawImage]="image.src"></app-images>
-      </ion-col>
+      <div *ngIf="imageAvailable; then ifBlock else elseBlock"></div>
+      <ng-template #ifBlock>
+        <ion-col *ngFor="let image of imagesList" size="6">
+          <app-images (removeCurrentLesson)='removeSpecificLesson($event)' [image]="image.safeURL" [subject]="subject" [imagesList]="imagesList" [id]="image.id" [index]="image.index"
+          [rawImage]="image.src"></app-images>
+        </ion-col>
+      </ng-template>
+      <ng-template #elseBlock>
+        <ion-text color="danger">
+          <h4>No Images for this Subject!</h4>
+        </ion-text>
+      </ng-template>
+      
     </ion-row>
   </ion-grid>
 </ion-content>

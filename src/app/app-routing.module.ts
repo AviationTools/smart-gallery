@@ -19,7 +19,11 @@ const routes: Routes = [
   {
     path: 'image-folder',
     loadChildren: () => import('./image-folder/image-folder.module').then( m => m.ImageFolderPageModule)
+  },  {
+    path: 'credits',
+    loadChildren: () => import('./credits/credits.module').then( m => m.CreditsPageModule)
   },
+
 
 
 

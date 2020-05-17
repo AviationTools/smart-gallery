@@ -10,9 +10,10 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
   styleUrls: ['./image-folder.page.scss'],
 })
 export class ImageFolderPage {
-  weekDay:string;
-  subject:string;
-  imagesList:any[];
+  weekDay: string;
+  subject: string;
+  imageAvailable: boolean;
+  imagesList: any[];
   
   constructor(
     private route: ActivatedRoute, 
@@ -75,6 +76,12 @@ export class ImageFolderPage {
         });
       }
     }
-    this.imagesList = subjectImageList;
+    
+    if(subjectImageList.length >= 1) {
+      this.imagesList = subjectImageList;
+      this.imageAvailable = true;
+    } else {
+      this.imageAvailable = false;
+    }
   }
 }

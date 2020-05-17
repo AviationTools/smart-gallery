@@ -47,17 +47,20 @@ this.ionSlides.update()
      in the App (Home) press Android back button should return out of the App.
 
   //NEXT
-  - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
-  - ADMOB temporary inclusion (First SignUp on ADMOB)
   - Description for Images.
   - Haptik Virbration (new Lesson or image)
-  - Pay for No Adverstisement option (2,29€)
-  - Kauf Wiederherstellen Function (Button)
   - Fix Time problems with 00:00 - 00:15 
   - clean up code image storage service
-  - Add Credits
-  - Finish Settings Tab and add Design
   - add Slides explaining app & letting Users know that everything is stored localy.
 
-  //Finished 
+  //Added but not Finished
+  - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
+  - ADMOB temporary inclusion (First SignUp on ADMOB)
+  - Pay for No Adverstisement option (2,29€)
+  - Kauf Wiederherstellen Function (Button)
+
+   //Finished 
   - REGEX for Inputs (PatternValidator) [DONE!]
+  - add Label/Message for Folders with no Images [DONE!]
+  - Finish Settings Tab and add Design [Done!]
+  - Add Credits [Done!]

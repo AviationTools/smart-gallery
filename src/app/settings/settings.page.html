@@ -5,33 +5,64 @@
 </ion-header>
 <ion-content>
   <ion-list>
+  
+    <ion-item-divider color="medium">
+      <div style="width: 100%; text-align: center;">
+        <ion-icon slot="start" name="share"></ion-icon>
+      </div>
+    </ion-item-divider>
 
-    <ion-item>
-      <ion-label>App teilen</ion-label>
-      <ion-button (click)="appTeilen()">
-        <ion-icon name="share"></ion-icon>
-      </ion-button>
+    <ion-item button (click)="appTeilen()" class="ion-text-center">
+      <ion-label color="primary">App teilen</ion-label>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Rate this App</ion-label>
-      <ion-button (click)="rateApp()">
-        <ion-icon name="star-outline"></ion-icon>
-      </ion-button>
+    <ion-item  button (click)="rateApp()" class="ion-text-center">
+      <ion-label color="primary">Rate this App</ion-label>
     </ion-item>
 
-    <ion-item>
+    <ion-item-divider color="medium">
+      <div style="width: 100%; text-align: center;">
+        <ion-icon name="pricetag"></ion-icon>
+      </div>
+    </ion-item-divider>
+
+    <ion-item button class="ion-text-center">
+      <ion-label color="primary">
+        Remove Advertisement
+        <ion-badge color="primary">2.29$</ion-badge>
+      </ion-label>
+    </ion-item>
+
+    <ion-item  button class="ion-text-center">
+      <ion-label color="primary">Restore Purchases</ion-label>
+    </ion-item>
+  
+    <ion-item-divider color="medium">
+      <div style="width: 100%; text-align: center;">
+        <ion-icon name="trash"></ion-icon>
+      </div>
+    </ion-item-divider>
+    
+    <ion-item button (click)="deleteTableStorage()" class="ion-text-center">
       <ion-label color="danger">Reset TimeTable</ion-label>
-      <ion-button color="danger" (click)="deleteTableStorage()">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
+    </ion-item>
+  
+    <ion-item button (click)="deleteImageStorage()" class="ion-text-center">
+      <ion-label color="danger">Reset Images</ion-label>
     </ion-item>
 
-    <ion-item>
-      <ion-label color="danger">Reset Images</ion-label>
-      <ion-button color="danger" (click)="deleteImageStorage()">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
+    <ion-item-divider color="medium">
+      <div style="width: 100%; text-align: center;">
+        <ion-icon name="information-circle"></ion-icon>
+      </div>
+    </ion-item-divider>
+
+    <ion-item detail="true" button class="ion-text-center" routerDirection="forward" [routerLink]="['/credits']">
+      <ion-label>Credits & Privacy Policy</ion-label>
+    </ion-item>
+
+    <ion-item detail="true" href="https://smartgallery.app" class="ion-text-center">
+      <ion-label><u>smartgallery.app</u></ion-label>
     </ion-item>
 
   </ion-list>
