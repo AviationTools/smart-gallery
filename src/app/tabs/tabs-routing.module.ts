@@ -10,13 +10,14 @@ const routes: Routes = [
   {
     path: '',
     component: TabsPage,
-    children:[{
-      path:'home',
-      component: HomePage
-    },
+    children:[
     {
       path:'camera',
       component: CameraPage
+    },
+    {
+      path:'home',
+      component: HomePage
     },
     {
       path:'settings',
@@ -24,12 +25,12 @@ const routes: Routes = [
     },
     {
       path: '',
-      redirectTo: '/tabs/home',
+      redirectTo: '/tabs/camera',
       pathMatch: 'full'
     },
     {
       path: '',
-      redirectTo: '/tabs/camera',
+      redirectTo: '/tabs/home',
       pathMatch: 'full'
     },
     {

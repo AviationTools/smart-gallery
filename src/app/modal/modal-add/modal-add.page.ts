@@ -65,6 +65,7 @@ export class ModalAddPage implements OnInit {
       "object": {
         "id": this.getRandomInt(),
         "subject": this.validateText(this.subject),
+        "subjectID": this.subject.toUpperCase(),
         "weekDay": this.weekDay,
         "color": this.validateColor(this.colorPicked),
         "timeFrame":{
@@ -233,7 +234,7 @@ export class ModalAddPage implements OnInit {
   validateText(text: any){
     if(text){
       this.validatorText = false
-      return text;
+      return text.charAt(0).toUpperCase() + text.slice(1);
     }else{
       this.validatorText = true
       this.presentToast("Please enter a Subject!");

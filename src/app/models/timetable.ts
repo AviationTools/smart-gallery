@@ -47,17 +47,21 @@ export class TimeTable {
   }
 
   getSubjectList(){
+    let subjectListCounter = [];
     let subjectList = [];
     for (const lesson of this.lessons) {
-      if(!subjectList.includes(lesson.subject)){
+      if(!subjectListCounter.includes(lesson.subjectID)){
         subjectList.push({
           "subject": lesson.subject,
+          "id": lesson.subjectID,
           "color": lesson.color
         });
+        subjectListCounter.push(lesson.subjectID);
       }
     }
     subjectList.push({
       "subject": "Other",
+      "id": "OTHER",
       "color": "primary"
     });
     return subjectList;
@@ -67,6 +71,7 @@ export class TimeTable {
 export interface Lesson {
   id:  number;
   subject: string;
+  subjectID: string;
   weekDay: string;
   color: string;
   timeframe: TimeFrame;
