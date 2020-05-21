@@ -51,10 +51,14 @@ this.ionSlides.update()
   - Fix Time problems with 00:00 - 00:15 
   - clean up code image storage service
   - add Slides explaining app & letting Users know that everything is stored localy.
+  - try to set camera btn at the bottom.
+  - add toggle to Display smaller increments (time)
+  - check operation with a couple Devices exp (Tablets etc)
+  - FAQ Topic: when subject names arent identical !
 
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
-  - ADMOB temporary inclusion (First SignUp on ADMOB) (command line/last)
+  - ADMOB temporary inclusion (First SignUp on ADMOB) (not fully installed yet)
   - Pay for No Adverstisement option (2,29€)
   - Kauf Wiederherstellen Function (Button)
 
@@ -64,3 +68,5 @@ this.ionSlides.update()
   - Finish Settings Tab and add Design [Done!]
   - Add Credits & Privacy Policy [Done!]
   - Haptik Virbration for (imageOptions & lessonAlert) [Done!]
+  - set camera as Default Page. [Done!]
+  - same subjects but not same spelling (problem: german/German) [Done!]

@@ -87,11 +87,13 @@ export class CameraPage{
     for(const lesson of this.timetable.getSubjectList()){
       tableList.push({
         "subject": lesson.subject,
+        "id": lesson.id,
         "color": lesson.color,
         "count": this.imageStorageService.getImageCountForSubject(lesson.subject)
       });
     }
     this.lessonList = tableList;
+    console.log(this.lessonList);
   }
 
   navigateToImageFolder($event: any) {
@@ -101,6 +103,7 @@ export class CameraPage{
       state: {
         weekDay: this.weekDay,
         subjectFromList: regex.exec(subjectString)[0],
+        id: $event.target.id
       }
     };
     this.router.navigate(['/image-folder'], navigationExtras);
@@ -123,7 +126,7 @@ function getRandomInt() {
   return Math.floor(Math.random() * Math.floor(99999999));
 }
 
-function determineSubjectForImage(table){
+function determineSubjectForImage(table) {
   let timeNow = moment();
   let returnValue;
   // let timeNow = moment({hour: 0, minute: 0});
@@ -140,7 +143,7 @@ function determineSubjectForImage(table){
 
     if(checkDay(timeNow.isoWeekday(), lesson.weekDay)) {
       if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
-        returnValue = lesson.subject;
+        returnValue = lesson.subjectID;
       } else {
         // if(moment(timeNow).isBetween(start, end)){
         //   console.log("worked")

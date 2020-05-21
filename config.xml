@@ -2,8 +2,8 @@
 <widget id="com.smartgallery.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Smart Gallery</name>
     <description>This App lets Students sort their images for learning puposes.</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <author email="info@smartgallery.app" href="http://smartgallery.app/">Smart Gallery Team</author>
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

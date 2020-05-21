@@ -12,6 +12,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 export class ImageFolderPage {
   weekDay: string;
   subject: string;
+  subjectId: string;
   imageAvailable: boolean;
   imagesList: any[];
   
@@ -26,8 +27,9 @@ export class ImageFolderPage {
       let inputObject = this.router.getCurrentNavigation().extras.state;
       this.weekDay = inputObject.weekDay;
       this.subject = inputObject.subjectFromList;
+      this.subjectId = inputObject.id;
       
-      this.getImagesForSubject(this.subject);
+      this.getImagesForSubject(this.subjectId);
     });
   }
 
@@ -37,7 +39,7 @@ export class ImageFolderPage {
       this.imageStorageService.updateImageTable(newImage);
     }
     this.imagesList = [];
-    this.getImagesForSubject(this.subject);
+    this.getImagesForSubject(this.subjectId);
   }
 
   shareSpecificLesson(id: number){
@@ -56,7 +58,7 @@ export class ImageFolderPage {
     });
   }
 
-  getImagesForSubject(subject: string) {
+  getImagesForSubject(subjectId: string) {
     let win: any = window; //Necessary!
     let imageTable = this.imageStorageService.getImageTable();
     let subjectImageList = [];
@@ -65,7 +67,7 @@ export class ImageFolderPage {
     for (const images of imageTable) {
       i++;
       // console.log(images.src);
-      if(images.subject == subject) {
+      if(images.subject == subjectId) {
         //safeURL for DOM/Android
         let safeURL = win.Ionic.WebView.convertFileSrc(images.src);
         subjectImageList.push({
