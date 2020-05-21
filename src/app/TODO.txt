@@ -9,7 +9,8 @@
 */
 
 //Testing Command 
-npm run ng test
+- npm run ng test
+- npm list --depth=0
 
 //Removing Pakage npm
 https://stackoverflow.com/questions/21932758/removing-cordova-plugins-from-the-project
@@ -44,7 +45,7 @@ this.ionSlides.update()
 
   //Problems & Bugs
    - ionic cordova android back button not working 
-     in the App (Home) press Android back button should return out of the App.
+     in the App (Tab Home) press Android back button should return out of the App.
 
   //NEXT
   - Description for Images.
@@ -55,8 +56,9 @@ this.ionSlides.update()
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
   - ADMOB temporary inclusion (First SignUp on ADMOB) (command line/last)
-  - Pay for No Adverstisement option (2,29€)
+  - Pay for No Adverstisement option (2,29€) (Not Implimented yet)
   - Kauf Wiederherstellen Function (Button)
+  - Logo (Android) has to scale bigger
 
    //Finished 
   - REGEX for Inputs (PatternValidator) [DONE!]
