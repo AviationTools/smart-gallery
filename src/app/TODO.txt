@@ -46,16 +46,13 @@ this.ionSlides.update()
   //Problems & Bugs
    - ionic cordova android back button not working 
      in the App (Tab Home) press Android back button should return out of the App.
+     https://ionicframework.com/docs/developing/hardware-back-button
 
   //NEXT
-  - Description for Images.
-  - Fix Time problems with 00:00 - 00:15 
-  - clean up code image storage service
-  - add Slides explaining app & letting Users know that everything is stored localy.
-  - try to set camera btn at the bottom.
-  - add toggle to Display smaller increments (time)
+  - Description for Images. [No Priority!]
   - check operation with a couple Devices exp (Tablets etc)
-  - FAQ Topic: when subject names arent identical !
+  - FAQ Topic: when subject names arent identical ! [When Website is ready!]
+  - check coliding Lessons (same time) [No Priority!]
 
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
@@ -72,3 +69,10 @@ this.ionSlides.update()
   - Haptik Virbration for (imageOptions & lessonAlert) [Done!]
   - set camera as Default Page. [Done!]
   - same subjects but not same spelling (problem: german/German) [Done!]
+  - try to set camera btn at the bottom. [Done!]
+  - add toggle to Display smaller increments (time) [Done!]
+  - Possible Problem with Folder $event not registering ID (Undefined) [Done!]
+  - clean up code image storage service [Done!]
+  - Fix Time problems with 00:00 - 00:15 [Done!]
+  - sort image manualy. [Done!]
+  - add Slides explaining app & letting Users know that everything is stored localy. [Done!]

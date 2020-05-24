@@ -1,24 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TableStorageService } from '../service/table-storage.service';
 import { ImageStorageService } from '../service/image-storage.service';
+import { SettingsService } from '../service/settings.service';
 import { AlertController } from '@ionic/angular';
 import { AppRate } from '@ionic-native/app-rate/ngx';
+import { ToastController } from '@ionic/angular';
+
+import { ModalSlidesPage } from '../modal/modal-slides/modal-slides.page';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage {
+  defaultTime: boolean;
 
   constructor(
     public tableStorageService: TableStorageService,
     public imageStorageService: ImageStorageService,
+    public settingsService: SettingsService,
     public alertController: AlertController,
+    public modalController: ModalController,
+    public toastController: ToastController,
     private appRate: AppRate
-    ) { }
-
-  ngOnInit() {}
+    ) {}
 
   async deleteTableStorage() {
     const alert = await this.alertController.create({
@@ -35,7 +42,7 @@ export class SettingsPage implements OnInit {
           text: 'Ok',
           handler: () => {
             this.tableStorageService.removeFromStorage();
-            console.log("Storage Table Cleared");
+            this.presentToast("Storage Schedule Cleared");
           }
         }
       ]
@@ -59,8 +66,8 @@ export class SettingsPage implements OnInit {
         }, {
           text: 'Ok',
           handler: () => {
-            this.imageStorageService.removeFromStorage();
-            console.log("Storage Images Cleared");
+            this.imageStorageService.removeAllFromStorage();
+            this.presentToast("Storage Images Cleared");
           }
         }
       ]
@@ -90,5 +97,28 @@ export class SettingsPage implements OnInit {
     }
 
     this.appRate.promptForRating(false);
+  }
+
+  timeToggle($event){
+    let settings = {
+      "defaultTime": $event.detail.checked,
+      "firstStart": true
+    }
+    this.settingsService.updateSettings(settings);
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500
+    });
+    toast.present();
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalSlidesPage
+    });
+    return await modal.present();
   }
 }

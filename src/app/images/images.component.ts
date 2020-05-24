@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@
 import { AlertController } from '@ionic/angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { Gesture, GestureController } from '@ionic/angular';
+import { ImageStorageService } from '../service/image-storage.service';
 import { Vibration } from '@ionic-native/vibration/ngx';
 
 @Component({
@@ -16,8 +17,9 @@ export class ImagesComponent {
   @Input("image") image: string;
   @Input("rawImage") rawImage: string;
   @Input("id") id: number;
-  @Input("index") index: number;
+  @Input("lessonList") lessonList: any[];
   @Output() removeCurrentLesson = new EventEmitter();
+  @Output() editCurrentLesson = new EventEmitter();
 
   @ViewChild("img", {read: ElementRef, static: true}) imgElement: ElementRef;
   
@@ -25,6 +27,7 @@ export class ImagesComponent {
     public alertController: AlertController,
     private photoViewer: PhotoViewer,
     private gestureCtrl: GestureController,
+    private imageStorageService: ImageStorageService,
     private vibration: Vibration
   ) {}
   
@@ -71,13 +74,42 @@ export class ImagesComponent {
   }
 
   async presentAlert() {
+    let newSubject;
+    let input = []
+    for (const lesson of this.lessonList) {
+
+      if(lesson.subject != this.subject) {
+        input.push({
+          name: lesson.subject,
+          type: 'radio',
+          label: lesson.subject,
+          value: lesson.id,
+          checked: false,
+          handler: (el) => {
+            newSubject = el.value;
+          }
+        })
+      }
+      
+    }
+    
     const alertct = await this.alertController.create({
-      header: 'Configure',
+      header: 'Edit',
       buttons: [
         {
           text: 'Cancel',
           handler: () => {
             console.log('Cancel');
+          }
+        },
+        {
+          text: 'Save',
+          handler: () => {
+            console.log('Save');
+            let emitObject = [this.id, newSubject]
+            if(emitObject[1] != undefined){
+              this.editCurrentLesson.emit(emitObject);
+            }
           }
         },
         {
@@ -87,9 +119,9 @@ export class ImagesComponent {
             this.removeCurrentLesson.emit(this.id);
           }
         }
-      ]
+      ],
+      inputs: input
     });
     await alertct.present();
   }
-
 }

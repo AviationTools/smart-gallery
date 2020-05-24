@@ -14,17 +14,19 @@
 
     <ion-item>
       <ion-label>Subject:</ion-label>
-      <ion-input type="text" [(ngModel)]="subject" text-right id="input" ngModel pattern="[a-zA-Z ]*"></ion-input>
+      <ion-input type="text" [(ngModel)]="subject" id="input" ngModel pattern="[a-zA-Z ]*"></ion-input>
     </ion-item>
     
     <ion-item>
       <ion-label>From</ion-label>
-      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
+      <ion-datetime *ngIf="!defaultTime" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
+      <ion-datetime *ngIf="defaultTime" displayFormat="HH:mm" [(ngModel)]="fromTime"></ion-datetime>
     </ion-item>
     
     <ion-item>
       <ion-label>To</ion-label>
-      <ion-datetime displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
+      <ion-datetime *ngIf="!defaultTime" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
+      <ion-datetime *ngIf="defaultTime" displayFormat="HH:mm" [(ngModel)]="toTime"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-grid>
@@ -76,6 +78,6 @@
         </ion-row>
       </ion-grid>
     </ion-item>
-    <ion-button (click)="setStorage()" expand="block">Set</ion-button> 
+    <ion-button (click)="setStorage()" expand="block">Save</ion-button> 
   </ion-list>
 </ion-content>

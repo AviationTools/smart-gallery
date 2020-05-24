@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 
@@ -8,6 +8,8 @@ import { Storage } from '@ionic/storage';
 })
 export class ImageStorageService {
   private images: Image[];
+  public isReady = new EventEmitter();
+  public updated = new EventEmitter();
   private static readonly IMAGE_TABLE_STORAGE_KEY: string = "images";
 
   constructor(private storage: Storage) {
@@ -15,53 +17,8 @@ export class ImageStorageService {
       this.pullFromStorage();
     });
   }
-
-  // toJSON() {
-  //   return JSON.stringify(this.images);
-  // }
-
-  // getImageSourceById(id: number) {
-  //   const filtered = this.images.filter(image => image.id === id);
-
-  //   if (filtered.length < 1) {
-  //     throw `no image with id ${id} found`;
-  //   }
-
-  //   return filtered;
-  // }
-
-  // getListOfImageMetadata() {
-  //   let result = [];
-
-  //   for (const image of this.images) {
-  //     result.push({
-  //       "id": image.id,
-  //       "weekDay": image.weekDay,
-  //       "creationDate" : image.creationDate
-  //     })
-  //   }
-
-  //   return result;
-  // }
-
-  // addImage(image: Image) {
-  //   this.images.push(image);
-  //   this.updateImageTable(this.images);
-  // }
-
-  // getSpecificImages(weekDay:string){
-  //   //Später filter() einbauen.
-  //   let object = [];
-  //   for (let i = 0; i < this.images.length; i++) {
-  //     if(this.images[i] != null){
-  //       if( this.images[i].weekDay == weekDay ){
-  //         object.push(this.images[i]);
-  //       }
-  //     }
-  //   }
-  //   return object;
-  // }
-
+  
+  //Image Methodes
   getImageCountForSubject(subject: string){
     let count = 0;
     for (const image of this.images) {
@@ -79,25 +36,9 @@ export class ImageStorageService {
     return currentImage;
   }
 
-  // getLessonById(id: number){
-  //   console.log(this.images);
-  //   return this.images.filter(el => el.id == id);
-  // }
-
-  // getImages(){
-  //   return this.images;
-  // }
-
-  // getAllImages(){
-  //   let allImages = [];
-  //   for (const image of this.images) {
-  //    allImages.push({
-  //      "src": image.src,
-  //      "subject": image.subject
-  //     });
-  //   }
-  //   return allImages;
-  // }
+  getSpecificImage(id: number){
+    return this.images.filter(el => el.id == id);
+  }
 
   //Storage Methodes
   private async pullFromStorage() {
@@ -109,6 +50,7 @@ export class ImageStorageService {
     else {
       this.images = [];
     }
+    this.isReady.emit();
   }
 
   getImageTable() {
@@ -122,6 +64,7 @@ export class ImageStorageService {
   async updateImageTable(newImageTimeTable) {
     this.images.push(newImageTimeTable);
     this.pushToStorage();
+    this.updated.emit();
   }
 
   async clearStorage() {
@@ -129,7 +72,14 @@ export class ImageStorageService {
   }
 
   async removeFromStorage() {
-    return await this.storage.remove("images");
+    await this.storage.remove("images");
+    this.updated.emit();
+  }
+
+  async removeAllFromStorage() {
+    await this.storage.remove("images");
+    this.images = [];
+    this.updated.emit();
   }
 }
 

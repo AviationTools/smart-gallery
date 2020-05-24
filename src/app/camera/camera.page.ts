@@ -12,7 +12,7 @@ import * as moment from 'moment';
   templateUrl: './camera.page.html',
   styleUrls: ['./camera.page.scss'],
 })
-export class CameraPage{
+export class CameraPage {
   pictureArray: any[];
   clickedImage: string;
   imageTable: any;
@@ -31,17 +31,21 @@ export class CameraPage{
     ) { 
       this.weekDay = this.getTodaysDay();
       this.timetable = this.tableStorageService.getTimeTable();
-      setTimeout( () => {
+      
+      this.imageStorageService.isReady.subscribe(() => {
         this.imageTable = this.imageStorageService.getImageTable();
-      }, 1000 );
+        this.getTableSubjectList();
+      });
+      
+      this.imageStorageService.updated.subscribe(() => {
+        this.getTableSubjectList();
+      });
+
+      this.tableStorageService.updated.subscribe(() => {
+        this.getTableSubjectList();
+      });
     }
   
-  ionViewWillEnter() {
-    setTimeout( () => {
-      this.getTableSubjectList();
-    }, 1000 );
-  }
-
   getTodaysDay() {
     var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     return nameWeekDays[moment().isoWeekday()-1]; 
@@ -84,26 +88,25 @@ export class CameraPage{
   getTableSubjectList() {
     let tableList = [];
     this.timetable = this.tableStorageService.getTimeTable();
+
     for(const lesson of this.timetable.getSubjectList()){
       tableList.push({
         "subject": lesson.subject,
         "id": lesson.id,
         "color": lesson.color,
-        "count": this.imageStorageService.getImageCountForSubject(lesson.subject)
+        "count": this.imageStorageService.getImageCountForSubject(lesson.id)
       });
     }
     this.lessonList = tableList;
-    console.log(this.lessonList);
   }
 
-  navigateToImageFolder($event: any) {
-    var regex = /(\w+)$/;
-    let subjectString = $event.target.innerText;
+  navigateToImageFolder(id, subject) {
     let navigationExtras: NavigationExtras = {
       state: {
         weekDay: this.weekDay,
-        subjectFromList: regex.exec(subjectString)[0],
-        id: $event.target.id
+        subjectFromList: subject,
+        id: id,
+        subjectList: this.lessonList
       }
     };
     this.router.navigate(['/image-folder'], navigationExtras);
@@ -127,36 +130,33 @@ function getRandomInt() {
 }
 
 function determineSubjectForImage(table) {
-  let timeNow = moment();
   let returnValue;
-  // let timeNow = moment({hour: 0, minute: 0});
 
   for (const lesson of table.lessons) {
+
+    let timeNow = moment();
+    let todayWeekNr = timeNow.isoWeekday()
+  // let timeNow = moment({hour: 0, minute: 30});
     
-    // .subtract(1, 'days')
     let end = moment(lesson.codeTimeFrame.toTime, "hhmm");
     let start = moment(lesson.codeTimeFrame.fromTime, "hhmm");
 
-    if(start.hour() >= end.hour()){
-      // console.log(start.hour());
-    }
-
-    if(checkDay(timeNow.isoWeekday(), lesson.weekDay)) {
+    if(checkDay(todayWeekNr, lesson.weekDay)) {
+      
+      if(start.hour() > end.hour()) {
+        end.add(1, "day");
+        timeNow.add(1, "day");
+      }
+      
       if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
         returnValue = lesson.subjectID;
-      } else {
-        // if(moment(timeNow).isBetween(start, end)){
-        //   console.log("worked")
-        // }else{
-        //   console.log(start)
-        //   console.log(timeNow)
-        //   console.log(end)
-        // }
-      }
+      } 
+
     }
   }
-  if(returnValue == undefined){
-    return "Other";
+
+  if(returnValue == undefined) {
+    return "OTHER";
   }else{
     return returnValue;
   }

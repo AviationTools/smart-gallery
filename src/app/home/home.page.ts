@@ -34,6 +34,11 @@ export class HomePage{
     this.todayDay = this.getTodaysDay();
     this.weekDay = this.getTodaysDay();
     this.getTableDay();
+
+    this.tableStorageService.remove.subscribe(() => {
+      this.lessonList = [];
+      this.timetable = new TimeTable("test");
+    });
   }
 
   getTodaysDay(){
@@ -153,10 +158,10 @@ export class HomePage{
   getTableDay() {
     this.timetable = this.tableStorageService.getTimeTable();
     if(this.timetable == undefined){
-      setTimeout( () => {
+      this.tableStorageService.isReady.subscribe(() => {
         this.timetable = this.tableStorageService.getTimeTable();
         this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
-      }, 750);
+      });
     }else{
       this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
     }
@@ -169,7 +174,6 @@ export class HomePage{
   changeCurrentLesson(id: number){
     let currentLesson = this.timetable.getLessonById(id);
     this.presentModal(currentLesson[0]);
-
   }
 
   async presentToast(message: string) {

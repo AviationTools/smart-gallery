@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { ModalAddPageModule } from './modal/modal-add/modal-add.module';
+import { ModalSlidesPageModule } from './modal/modal-slides/modal-slides.module';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
@@ -29,6 +30,7 @@ import { Vibration } from '@ionic-native/vibration/ngx';
     IonicModule.forRoot(), 
     AppRoutingModule,
     ModalAddPageModule,
+    ModalSlidesPageModule,
     HttpClientModule,
     IonicStorageModule.forRoot()
   ],

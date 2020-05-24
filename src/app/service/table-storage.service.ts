@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TimeTable } from '../models/timetable';
 
@@ -7,6 +7,9 @@ import { TimeTable } from '../models/timetable';
 })
 export class TableStorageService {
   private static readonly TIME_TABLE_STORAGE_KEY: string = "timetable";
+  public isReady = new EventEmitter();
+  public updated = new EventEmitter();
+  public remove = new EventEmitter();
 
   timetable: TimeTable;
 
@@ -25,6 +28,8 @@ export class TableStorageService {
     else {
       this.timetable = new TimeTable("test");
     }
+
+    this.isReady.emit();
   }
 
   private async pushToStorage() {
@@ -39,6 +44,7 @@ export class TableStorageService {
   async updateTimeTable(newTimeTable: TimeTable) {
     this.timetable = newTimeTable;
     this.pushToStorage();
+    this.updated.emit();
   }
 
   async clearStorage(){
@@ -46,6 +52,7 @@ export class TableStorageService {
   }
 
   async removeFromStorage(){
+    this.remove.emit();
     return await this.storage.remove("timetable");
   }
   

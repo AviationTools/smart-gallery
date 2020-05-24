@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { TableStorageService } from '../../service/table-storage.service';
+import { SettingsService  } from '../../service/settings.service';
 import { ToastController } from '@ionic/angular';
 import * as moment from 'moment';
 
@@ -30,13 +30,19 @@ export class ModalAddPage implements OnInit {
   checkedPink: boolean;
   checkedOrange: boolean;
   colorPicked: string;
+
+  defaultTime: boolean;
   
 
   constructor(
     public modalController: ModalController,
-    public tableStorageService: TableStorageService,
+    public settingsService: SettingsService,
     public toastController: ToastController
-    ) { }
+    ) { 
+      this.settingsService.isReady.subscribe(() => {
+        this.defaultTime = this.settingsService.getSettings().defaultTime;
+      });
+    }
 
   ngOnInit() {
     this.checkedBlue = false;
@@ -51,6 +57,8 @@ export class ModalAddPage implements OnInit {
     this.validatorText = true;
     this.validatorTime = true;
     this.validatorColor = true;
+
+    this.defaultTime = false;
   }
 
   dismissModal() {
@@ -72,10 +80,10 @@ export class ModalAddPage implements OnInit {
           "fromTime": this.validateTime(this.fromTime),
           "toTime": this.validateTime(this.toTime)
         },
-        "codeTimeFrame":{
+        "codeTimeFrame": {
           "fromTime": new Date(this.fromTime).getHours() + ":" + new Date(this.fromTime).getMinutes(),
           "toTime": new Date(this.toTime).getHours() +":" + new Date(this.toTime).getMinutes()
-        }
+         }
       }
     }
 

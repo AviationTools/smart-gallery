@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Quick Guide</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides pager="true" [options]="slideOpts">
+
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <img id="firstSlide" src="assets/slides/welcome.svg"/>
+          <div class="ion-margin">
+            <h2><u>Welcome!</u></h2>
+            <p>Smart Gallery lets you sort your <b>new</b> images by using your created Schedule. All of the images and lessons are stored locally!</p>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <img src="assets/slides/add.png"/>
+          <div class="ion-margin">
+            <h2 class="ion-margin"><u>Add a lesson</u></h2>
+            <p class="ion-margin">Fill out the form, choose a lesson color and press save.</p>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <img src="assets/slides/shedule.png"/>
+          <div class="ion-margin">
+            <h2 class="ion-margin"><u>Schedule</u></h2>
+            <p class="ion-margin">Change or Delete lessons by (tapping) them.</p>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <img src="assets/slides/camera.png"/>
+          <div class="ion-margin">
+            <h2 class="ion-margin"><u>Camera</u></h2>
+            <p class="ion-margin">Create & manage your sorted images by entering a folder.</p>
+          </div>
+        </ion-row>
+     </ion-grid>
+    </ion-slide>
+    
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <img src="assets/slides/folder.png"/>
+          <div class="ion-margin">
+            <h2 class="ion-margin"><u>Folder</u></h2>
+            <p class="ion-margin">View images and edit or delete them by (pressing & holding) the image.</p>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <img src="assets/slides/changeImages.png"/>
+          <div class="ion-margin">
+            <h2><u>Edit</u></h2>
+            <p>Change the images folders in order for you to customize your Gallery</p>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+
+  </ion-slides>
+</ion-content>
