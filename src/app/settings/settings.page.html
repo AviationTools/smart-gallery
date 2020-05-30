@@ -15,7 +15,13 @@
     <ion-item>
       <ion-label slot="start" class="ion-no-margin">Quick Select</ion-label>
       <ion-note class="ion-margin-vertical">select exact times e.g. 11.44</ion-note>
-      <ion-toggle slot="end" [(ngModel)]="defaultTime" (ionChange)="timeToggle($event)"></ion-toggle>
+      <ion-toggle slot="end" [(ngModel)]="defaultTime" (ionChange)="settingsToggle($event, 'defaultTime')"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label slot="start" class="ion-no-margin">Weekends</ion-label>
+      <ion-note class="ion-margin-vertical">include Saturday & Sunday</ion-note>
+      <ion-toggle slot="end" [(ngModel)]="fullWeek" (ionChange)="settingsToggle($event, 'fullWeek')"></ion-toggle>
     </ion-item>
   
     <ion-item-divider color="medium">

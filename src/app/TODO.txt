@@ -47,21 +47,25 @@ this.ionSlides.update()
    - ionic cordova android back button not working 
      in the App (Tab Home) press Android back button should return out of the App.
      https://ionicframework.com/docs/developing/hardware-back-button
+     https://stackoverflow.com/questions/51700879/handling-hardware-back-button-in-ionic3-vs-ionic4/51729093
 
   //NEXT
   - Description for Images. [No Priority!]
   - check operation with a couple Devices exp (Tablets etc)
   - FAQ Topic: when subject names arent identical ! [When Website is ready!]
   - check coliding Lessons (same time) [No Priority!]
-
+  - hardware back button should go out of APP or too root (Camera Page)
+  - evtl vor dem Foto auswählen welcher Ordner ausgewählt werden soll.
+  - 1 bis 4 wochen Table erstellen
+  - lesson (change) then Cancel deletes the lesson
+  
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
   - ADMOB temporary inclusion (First SignUp on ADMOB) (command line/last)
   - Pay for No Adverstisement option (2,29€) (Not Implimented yet)
   - Kauf Wiederherstellen Function (Button)
-  - Logo (Android) has to scale bigger
 
-   //Finished 
+  //Finished
   - REGEX for Inputs (PatternValidator) [DONE!]
   - add Label/Message for Folders with no Images [DONE!]
   - Finish Settings Tab and add Design [Done!]
@@ -74,5 +78,14 @@ this.ionSlides.update()
   - Possible Problem with Folder $event not registering ID (Undefined) [Done!]
   - clean up code image storage service [Done!]
   - Fix Time problems with 00:00 - 00:15 [Done!]
+  - Logo (Android) has to scale bigger [Done!]
   - sort image manualy. [Done!]
   - add Slides explaining app & letting Users know that everything is stored localy. [Done!]
+  - lesson gedrückt halten Kontext Menü [Done!]
+  - gedrückt halten regestrierung kürzen [Done!]
+  - quick select not working [Done!]
+  - added WeekDay option Toggle [Done!]
+  
+  //Small Fixes
+  - Slides need to be adjusted for better swipping
+  - ion-select (Day) always starts on monday

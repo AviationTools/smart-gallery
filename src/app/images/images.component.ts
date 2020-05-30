@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@
 import { AlertController } from '@ionic/angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { Gesture, GestureController } from '@ionic/angular';
-import { ImageStorageService } from '../service/image-storage.service';
 import { Vibration } from '@ionic-native/vibration/ngx';
 
 @Component({
@@ -27,7 +26,6 @@ export class ImagesComponent {
     public alertController: AlertController,
     private photoViewer: PhotoViewer,
     private gestureCtrl: GestureController,
-    private imageStorageService: ImageStorageService,
     private vibration: Vibration
   ) {}
   
@@ -51,10 +49,10 @@ export class ImagesComponent {
       }
 
       timeoutId = setTimeout(() => {
-        this.vibration.vibrate(1000);
+        this.vibration.vibrate(500);
         this.presentAlert();
         alertOpend = true;
-      }, 1500);
+      }, 1000);
     }
 
     const onEnd = (ev: any) => {

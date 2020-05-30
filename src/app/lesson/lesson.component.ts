@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { Gesture, GestureController } from '@ionic/angular';
 import { Vibration } from '@ionic-native/vibration/ngx';
 
 
@@ -17,17 +18,50 @@ export class LessonComponent implements OnInit {
   @Output() removingCurrentLesson = new EventEmitter();
   @Output() changeCurrentLesson = new EventEmitter();
 
+  @ViewChild("card", {read: ElementRef, static: true}) cardElement: ElementRef;
+
   constructor(
     public alertController: AlertController,
-    private vibration: Vibration
+    private vibration: Vibration,
+    private gestureCtrl: GestureController,
     ) {}
 
   ngOnInit() {
     // console.log(this.lessonList);
   }
 
-  async presentAlert(event: any) {
-    this.vibration.vibrate(1000);
+  ngAfterViewInit() {
+    const gesture: Gesture = this.gestureCtrl.create({
+      el: this.cardElement.nativeElement,
+      threshold: 0,
+      gestureName: 'my-gesture',
+      onStart: (ev) => { onStart(ev); },
+      onEnd: (ev) => { onEnd(ev); }
+    });
+    gesture.enable();
+    
+    let alertOpend = false;
+    let timeoutId = null;
+    const onStart = (ev: any) => {
+      alertOpend = false;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+        this.vibration.vibrate(500);
+        this.presentAlert();
+        alertOpend = true;
+      }, 1000);
+    }
+
+    const onEnd = (ev: any) => {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+  }
+
+  async presentAlert() {
     const alertct = await this.alertController.create({
       header: this.weekDay,
       subHeader: 'Configure',

@@ -16,6 +16,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class SettingsPage {
   defaultTime: boolean;
+  fullWeek: boolean;
 
   constructor(
     public tableStorageService: TableStorageService,
@@ -25,7 +26,12 @@ export class SettingsPage {
     public modalController: ModalController,
     public toastController: ToastController,
     private appRate: AppRate
-    ) {}
+    ) {
+      setTimeout(() => {
+        this.defaultTime = this.settingsService.getSettings().defaultTime;
+        this.fullWeek = this.settingsService.getSettings().fullWeek;
+      }, 500);
+    }
 
   async deleteTableStorage() {
     const alert = await this.alertController.create({
@@ -99,12 +105,23 @@ export class SettingsPage {
     this.appRate.promptForRating(false);
   }
 
-  timeToggle($event){
-    let settings = {
-      "defaultTime": $event.detail.checked,
-      "firstStart": true
+  settingsToggle($event , option: string){
+    if(option == "defaultTime") {
+      let settings = {
+        "defaultTime": $event.detail.checked,
+        "firstStart": true,
+        "fullWeek": this.fullWeek
+      }
+      this.settingsService.updateSettings(settings);
     }
-    this.settingsService.updateSettings(settings);
+    if(option == "fullWeek") {
+      let settings = {
+        "defaultTime": this.defaultTime,
+        "firstStart": true,
+        "fullWeek": $event.detail.checked
+      }
+      this.settingsService.updateSettings(settings);
+    }
   }
 
   async presentToast(message: string) {

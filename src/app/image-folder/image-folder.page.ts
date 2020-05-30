@@ -94,7 +94,7 @@ export class ImageFolderPage {
         let base64Image = 'data:image/jpeg;base64,' + images.src;
         subjectImageList.push({
           "src": images.src,
-          "safeURL": base64Image,
+          "safeURL": safeURL,
           "id": images.id,
           "index": i
         });

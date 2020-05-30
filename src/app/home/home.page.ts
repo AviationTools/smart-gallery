@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
+import { SettingsService  } from '../service/settings.service';
 import { TimeTable } from '../models/timetable';
 import * as moment from 'moment';
 
@@ -22,6 +23,7 @@ export class HomePage{
   toTime: Date;
   timetable: TimeTable;
   lessonList:any[];
+  fullWeek: boolean;
   
 
 
@@ -29,6 +31,7 @@ export class HomePage{
     private pickerController: PickerController,
     public modalController: ModalController,
     public tableStorageService: TableStorageService,
+    public settingsService: SettingsService,
     public toastController: ToastController
   ){
     this.todayDay = this.getTodaysDay();
@@ -39,45 +42,79 @@ export class HomePage{
       this.lessonList = [];
       this.timetable = new TimeTable("test");
     });
+
+    setTimeout(() => {
+      this.fullWeek = this.settingsService.getSettings().fullWeek;
+    }, 500);
+  }
+
+  ionViewDidEnter(){
+    setTimeout(() => {
+      this.fullWeek = this.settingsService.getSettings().fullWeek;
+    }, 500);
   }
 
   getTodaysDay(){
     var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     return nameWeekDays[moment().isoWeekday()-1]; 
   }
+
+
   
   // ngOnInit(){
   //   this.tableStorageService.initialgetTimeTable();
   // } 
 
   async setWeekDay() {
+    if(this.fullWeek) {
+      var weekList = [
+        {
+          text: 'Monday'
+        },
+        {
+          text: 'Tuesday'
+        },
+        {
+          text: 'Wednesday'
+        },
+        {
+          text: 'Thursday'
+        },
+        {
+          text: 'Friday'
+        },
+        {
+          text: 'Saturday'
+        },
+        {
+          text: 'Sunday'
+        }
+      ]
+    } else {
+      var weekList = [
+        {
+          text: 'Monday'
+        },
+        {
+          text: 'Tuesday'
+        },
+        {
+          text: 'Wednesday'
+        },
+        {
+          text: 'Thursday'
+        },
+        {
+          text: 'Friday'
+        }
+      ]
+    }
+
     const picker = await this.pickerController.create({
       columns: [
         {
           name: 'weekDayList',
-          options: [
-            {
-              text: 'Monday'
-            },
-            {
-              text: 'Tuesday'
-            },
-            {
-              text: 'Wednesday'
-            },
-            {
-              text: 'Thursday'
-            },
-            {
-              text: 'Friday'
-            },
-            {
-              text: 'Saturday'
-            },
-            {
-              text: 'Sunday'
-            }
-          ]
+          options: weekList
         }
     ],
       buttons: [
@@ -102,7 +139,7 @@ export class HomePage{
   async presentModal(array?: any) {
     let modalObject: any;
     //When Changes are made for Lesson
-    if(array){
+    if(array) {
       modalObject = {
         component: ModalAddPage,
         cssClass: 'my-custom-modal-css',
@@ -111,33 +148,38 @@ export class HomePage{
           'subject': array.subject,
           'fromTime': array.timeFrame.fromTime,
           'toTime': array.timeFrame.toTime,
+          'disableCloseBtn': true
         }
       }
-    this.removeSpecificLesson(array.id);
-    }else{
+      this.removeSpecificLesson(array.id);
+    } else {
       //New Lesson 
       modalObject = {
         component: ModalAddPage,
         cssClass: 'my-custom-modal-css',
         componentProps: {
-          'weekDay': this.weekDay
+          'weekDay': this.weekDay,
+          'disableCloseBtn': false
         }
       }
     }
 
-    if(this.weekDay != "Choose Day!"){
+    if(this.weekDay != "Choose Day!") {
       const modal = await this.modalController.create(modalObject);
       modal.onDidDismiss()
       .then((data) => {
         const dataObject = data['data'];
         //Send Data to Storage
-        //TODO: When Changes Clicked but cancelled !
-        if(dataObject.object != null){
-          console.log(this.timetable);
+        if(dataObject == undefined) {
+          return;
+        }
+        
+        if(dataObject.object != null) {
           this.timetable.addLesson(dataObject.object);
           this.tableStorageService.updateTimeTable(this.timetable);
           this.getTableDay();
         }
+        
       });
       return await modal.present();
     }else{

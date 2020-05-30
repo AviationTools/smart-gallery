@@ -25,6 +25,7 @@ export class SettingsService {
     else {
       this.settings;
     }
+    
     this.isReady.emit();
   }
 
@@ -37,6 +38,7 @@ export class SettingsService {
   }
 
   async updateSettings(newSettings: any) {
+    // console.log(newSettings);
     this.settings = newSettings;
     this.pushToStorage();
   }
@@ -53,4 +55,5 @@ export class SettingsService {
 export interface Settings {
   defaultTime:  boolean;
   firstStart: boolean;
+  fullWeek: boolean
 }

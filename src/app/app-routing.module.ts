@@ -27,15 +27,7 @@ const routes: Routes = [
   {
     path: 'modal-slides',
     loadChildren: () => import('./modal/modal-slides/modal-slides.module').then( m => m.ModalSlidesPageModule)
-  },
-
-
-
-
-  // {
-  //   path: 'tabs',
-  //   loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
-  // }
+  }
 ];
 
 @NgModule({

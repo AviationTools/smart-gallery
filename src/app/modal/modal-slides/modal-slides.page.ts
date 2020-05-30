@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IonSlides } from '@ionic/angular';
+// import { IonSlides } from '@ionic/angular';
 
 
 @Component({

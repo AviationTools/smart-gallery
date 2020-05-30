@@ -45,6 +45,12 @@ export class CameraPage {
         this.getTableSubjectList();
       });
     }
+
+  ionViewDidEnter() {
+    setTimeout(() => {
+      this.getTableSubjectList();
+    }, 500);
+  }
   
   getTodaysDay() {
     var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];

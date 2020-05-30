@@ -21,7 +21,6 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { AppRate } from '@ionic-native/app-rate/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
