@@ -55,5 +55,6 @@ export class SettingsService {
 export interface Settings {
   defaultTime:  boolean;
   firstStart: boolean;
-  fullWeek: boolean
+  fullWeek: boolean;
+  weekCount: number;
 }

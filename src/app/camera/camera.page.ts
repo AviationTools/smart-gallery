@@ -137,9 +137,11 @@ function getRandomInt() {
 
 function determineSubjectForImage(table) {
   let returnValue;
+  let weekofMonth = getWeekOfMonth();
 
   for (const lesson of table.lessons) {
 
+    console.log(lesson);
     let timeNow = moment();
     let todayWeekNr = timeNow.isoWeekday()
   // let timeNow = moment({hour: 0, minute: 30});
@@ -155,7 +157,9 @@ function determineSubjectForImage(table) {
       }
       
       if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
-        returnValue = lesson.subjectID;
+        if(weekofMonth == lesson.repeatWeek) {
+          returnValue = lesson.subjectID;
+        }
       } 
 
     }
@@ -168,7 +172,7 @@ function determineSubjectForImage(table) {
   }
 }
 
-function checkDay(timeNow, weekDay){
+function checkDay(timeNow, weekDay) {
   var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   if(nameWeekDays[timeNow-1] == weekDay){
     return true;
@@ -176,4 +180,17 @@ function checkDay(timeNow, weekDay){
     console.log("checkDay /" + timeNow + "/" + weekDay + "/" + nameWeekDays[timeNow-1]);
     return false;
   }
+}
+
+function getWeekOfMonth() {
+  const date = moment();
+  // .add(21, "day");
+  const weekInYear = date.isoWeek();
+  const result = weekInYear - date.startOf('month').isoWeek();
+
+  let temp = result < 0 ? weekInYear : result;
+  if(temp == 4) {
+    temp = 0;
+  }
+  return temp + 1;
 }

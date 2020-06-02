@@ -51,12 +51,12 @@ this.ionSlides.update()
 
   //NEXT
   - Description for Images. [No Priority!]
+  - repeatWeek select in Modal (maualy switching week of Month) [No Priority!]
   - check operation with a couple Devices exp (Tablets etc)
   - FAQ Topic: when subject names arent identical ! [When Website is ready!]
   - check coliding Lessons (same time) [No Priority!]
   - hardware back button should go out of APP or too root (Camera Page)
-  - evtl vor dem Foto auswählen welcher Ordner ausgewählt werden soll.
-  - 1 bis 4 wochen Table erstellen
+  - evtl vor dem Foto auswählen welcher Ordner ausgewählt werden soll. [No Priority!]
   - lesson (change) then Cancel deletes the lesson
   
   //Added but not Finished
@@ -85,6 +85,7 @@ this.ionSlides.update()
   - gedrückt halten regestrierung kürzen [Done!]
   - quick select not working [Done!]
   - added WeekDay option Toggle [Done!]
+  - 1 bis 4 wochen Table erstellen [Done!]
   
   //Small Fixes
   - Slides need to be adjusted for better swipping

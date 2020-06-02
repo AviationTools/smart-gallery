@@ -43,3 +43,16 @@
     width: 10rem;
     height: 15rem;
 }
+
+ion-segment-button {
+    --background-checked: #3880ff;
+    --color-checked: white;
+    --border-width: 1px;
+    height: 2.5rem;
+    min-height: 2.5rem;
+}
+
+.segment-ion-item {
+    --inner-padding-end: 0px;
+    --padding-start:0px;
+}

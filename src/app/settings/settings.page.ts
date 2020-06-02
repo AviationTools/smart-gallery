@@ -17,6 +17,7 @@ import { ModalController } from '@ionic/angular';
 export class SettingsPage {
   defaultTime: boolean;
   fullWeek: boolean;
+  weekCount: number;
 
   constructor(
     public tableStorageService: TableStorageService,
@@ -30,6 +31,7 @@ export class SettingsPage {
       setTimeout(() => {
         this.defaultTime = this.settingsService.getSettings().defaultTime;
         this.fullWeek = this.settingsService.getSettings().fullWeek;
+        this.weekCount = this.settingsService.getSettings().weekCount;
       }, 500);
     }
 
@@ -110,7 +112,8 @@ export class SettingsPage {
       let settings = {
         "defaultTime": $event.detail.checked,
         "firstStart": true,
-        "fullWeek": this.fullWeek
+        "fullWeek": this.fullWeek,
+        "weekCount": this.weekCount
       }
       this.settingsService.updateSettings(settings);
     }
@@ -118,7 +121,8 @@ export class SettingsPage {
       let settings = {
         "defaultTime": this.defaultTime,
         "firstStart": true,
-        "fullWeek": $event.detail.checked
+        "fullWeek": $event.detail.checked,
+        "weekCount": this.weekCount
       }
       this.settingsService.updateSettings(settings);
     }
@@ -137,5 +141,16 @@ export class SettingsPage {
       component: ModalSlidesPage
     });
     return await modal.present();
+  }
+
+  segmentChanged(ev: any) {
+    let settings = {
+      "defaultTime": this.defaultTime,
+      "firstStart": true,
+      "fullWeek": this.fullWeek,
+      "weekCount": ev.detail.value
+    }
+    // console.log(ev.detail.value);
+    this.settingsService.updateSettings(settings);
   }
 }

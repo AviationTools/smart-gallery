@@ -24,7 +24,9 @@ export class HomePage{
   timetable: TimeTable;
   lessonList:any[];
   fullWeek: boolean;
-  
+  weekCount: number;
+  weekCountArray: any[];
+  repeatWeek: number;
 
 
   constructor(
@@ -36,6 +38,7 @@ export class HomePage{
   ){
     this.todayDay = this.getTodaysDay();
     this.weekDay = this.getTodaysDay();
+    this.repeatWeek = 1;
     this.getTableDay();
 
     this.tableStorageService.remove.subscribe(() => {
@@ -45,12 +48,16 @@ export class HomePage{
 
     setTimeout(() => {
       this.fullWeek = this.settingsService.getSettings().fullWeek;
+      this.weekCount = this.settingsService.getSettings().weekCount;
+      this.segmentWeekBuilder();
     }, 500);
   }
 
   ionViewDidEnter(){
     setTimeout(() => {
       this.fullWeek = this.settingsService.getSettings().fullWeek;
+      this.weekCount = this.settingsService.getSettings().weekCount;
+      this.segmentWeekBuilder();
     }, 500);
   }
 
@@ -62,7 +69,6 @@ export class HomePage{
 
   
   // ngOnInit(){
-  //   this.tableStorageService.initialgetTimeTable();
   // } 
 
   async setWeekDay() {
@@ -148,6 +154,7 @@ export class HomePage{
           'subject': array.subject,
           'fromTime': array.timeFrame.fromTime,
           'toTime': array.timeFrame.toTime,
+          'repeatWeek': this.repeatWeek,
           'disableCloseBtn': true
         }
       }
@@ -159,6 +166,7 @@ export class HomePage{
         cssClass: 'my-custom-modal-css',
         componentProps: {
           'weekDay': this.weekDay,
+          'repeatWeek': this.repeatWeek,
           'disableCloseBtn': false
         }
       }
@@ -202,10 +210,10 @@ export class HomePage{
     if(this.timetable == undefined){
       this.tableStorageService.isReady.subscribe(() => {
         this.timetable = this.tableStorageService.getTimeTable();
-        this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+        this.lessonList = this.timetable.getSpecificLessons(this.weekDay, this.repeatWeek);
       });
     }else{
-      this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+      this.lessonList = this.timetable.getSpecificLessons(this.weekDay, this.repeatWeek);
     }
   }
 
@@ -224,5 +232,36 @@ export class HomePage{
       duration: 2000
     });
     toast.present();
+  }
+
+  segmentChanged(ev: any) {
+    this.repeatWeek = ev.detail.value;
+    this.getTableDay();
+  }
+
+  segmentWeekBuilder() {
+    let tempArray = [];
+
+    if(this.weekCount == 1) {
+      this.weekCountArray = tempArray;
+      return;
+    } else if(this.weekCount == 2) {
+      tempArray.push({
+        "i": 1,
+        "label": "first week"
+      });
+      tempArray.push({
+        "i": 2,
+        "label": "second week"
+      });
+    } else {
+      for(let i = 0; i < this.weekCount; i++) {
+        tempArray.push({
+          "i": i + 1,
+          "label": i + 1
+        });
+      }
+    }
+    this.weekCountArray = tempArray;
   }
 }

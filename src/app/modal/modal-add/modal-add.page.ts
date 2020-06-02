@@ -17,6 +17,7 @@ export class ModalAddPage implements OnInit {
   @Input() subject:string;
   @Input() fromTime:Date;
   @Input() toTime:Date;
+  @Input() repeatWeek: number;
   @Input() disableCloseBtn: boolean;
 
   validatorText: boolean;
@@ -87,6 +88,7 @@ export class ModalAddPage implements OnInit {
         "subjectID": this.subject.toUpperCase(),
         "weekDay": this.weekDay,
         "color": this.validateColor(this.colorPicked),
+        "repeatWeek": this.repeatWeek,
         "timeFrame":{
           "fromTime": this.validateTime(this.fromTime),
           "toTime": this.validateTime(this.toTime)
