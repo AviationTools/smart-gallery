@@ -55,9 +55,7 @@ this.ionSlides.update()
   - check operation with a couple Devices exp (Tablets etc)
   - FAQ Topic: when subject names arent identical ! [When Website is ready!]
   - check coliding Lessons (same time) [No Priority!]
-  - hardware back button should go out of APP or too root (Camera Page)
   - evtl vor dem Foto auswählen welcher Ordner ausgewählt werden soll. [No Priority!]
-  - lesson (change) then Cancel deletes the lesson
   
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
@@ -86,6 +84,8 @@ this.ionSlides.update()
   - quick select not working [Done!]
   - added WeekDay option Toggle [Done!]
   - 1 bis 4 wochen Table erstellen [Done!]
+  - lesson (change) then Cancel deletes the lesson [Done!]
+  - hardware back button should go out of APP or too root (Camera Page) [Done!]
   
   //Small Fixes
   - Slides need to be adjusted for better swipping

@@ -3,8 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { SettingsService  } from '../../service/settings.service';
 import { ToastController } from '@ionic/angular';
 import * as moment from 'moment';
-import { Platform } from '@ionic/angular';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-add',
@@ -42,18 +40,10 @@ export class ModalAddPage implements OnInit {
     public modalController: ModalController,
     public settingsService: SettingsService,
     public toastController: ToastController,
-    private platform: Platform,
-    private router: Router,
     ) { 
         setTimeout(() => {
           this.defaultTime = this.settingsService.getSettings().defaultTime;
         }, 500);
-
-        //Hardware Back Button (blocks unsaved changes)
-        this.platform.backButton.subscribeWithPriority(999, () => {
-          console.log(this.router.url);
-          this.presentToast("Please Save First!");
-        });
       }
 
   ngOnInit() {

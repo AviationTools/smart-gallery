@@ -6,6 +6,8 @@ import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
 import { SettingsService  } from '../service/settings.service';
 import { TimeTable } from '../models/timetable';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
 
 
@@ -27,6 +29,7 @@ export class HomePage{
   weekCount: number;
   weekCountArray: any[];
   repeatWeek: number;
+  modalOpen: boolean;
 
 
   constructor(
@@ -34,7 +37,9 @@ export class HomePage{
     public modalController: ModalController,
     public tableStorageService: TableStorageService,
     public settingsService: SettingsService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private platform: Platform,
+    private router: Router
   ){
     this.todayDay = this.getTodaysDay();
     this.weekDay = this.getTodaysDay();
@@ -51,6 +56,15 @@ export class HomePage{
       this.weekCount = this.settingsService.getSettings().weekCount;
       this.segmentWeekBuilder();
     }, 500);
+
+    //Hardware Back Button (blocks unsaved changes)
+    this.platform.backButton.subscribeWithPriority(101, (processNextHandler) => {
+      if(this.modalOpen) {
+        this.presentToast("Please Save or Close!");
+      } else {
+        processNextHandler();
+      }
+    });
   }
 
   ionViewDidEnter(){
@@ -65,11 +79,6 @@ export class HomePage{
     var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     return nameWeekDays[moment().isoWeekday()-1]; 
   }
-
-
-  
-  // ngOnInit(){
-  // } 
 
   async setWeekDay() {
     if(this.fullWeek) {
@@ -173,9 +182,11 @@ export class HomePage{
     }
 
     if(this.weekDay != "Choose Day!") {
+      this.modalOpen = true;
       const modal = await this.modalController.create(modalObject);
       modal.onDidDismiss()
       .then((data) => {
+        this.modalOpen = false;
         const dataObject = data['data'];
         //Send Data to Storage
         if(dataObject == undefined) {
