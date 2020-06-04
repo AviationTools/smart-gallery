@@ -5,6 +5,7 @@ import { TimeTable } from '../models/timetable';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, NavigationExtras } from '@angular/router';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { SettingsService } from '../service/settings.service';
 import * as moment from 'moment';
 
 @Component({
@@ -20,18 +21,24 @@ export class CameraPage {
   weekDay: string;
   timetable: TimeTable;
   lessonList: any[];
+  repeatSetting: number;
 
   
   constructor(
     public tableStorageService: TableStorageService,
     private imageStorageService: ImageStorageService,
+    public settingsService: SettingsService,
     private androidPermissions: AndroidPermissions,
     private camera: Camera,
     private router: Router
     ) { 
       this.weekDay = this.getTodaysDay();
       this.timetable = this.tableStorageService.getTimeTable();
-      
+
+      setTimeout(() => {
+        this.repeatSetting = this.settingsService.getSettings().weekCount;
+      }, 500);
+ 
       this.imageStorageService.isReady.subscribe(() => {
         this.imageTable = this.imageStorageService.getImageTable();
         this.getTableSubjectList();
@@ -48,6 +55,7 @@ export class CameraPage {
 
   ionViewDidEnter() {
     setTimeout(() => {
+      this.repeatSetting = this.settingsService.getSettings().weekCount;
       this.getTableSubjectList();
     }, 500);
   }
@@ -79,7 +87,7 @@ export class CameraPage {
       //Later text: "Description",
       let imageObject = {
         "id": getRandomInt(),
-        "subject":determineSubjectForImage(this.tableStorageService.getTimeTable()),
+        "subject":determineSubjectForImage(this.tableStorageService.getTimeTable(), this.repeatSetting),
         "weekDay": this.weekDay,
         "src": imageData,
         "creationDate": new Date().toISOString()
@@ -122,7 +130,7 @@ export class CameraPage {
     //Not Implimented yet. Reloads every tab click
     let imageObject = {
       "id": getRandomInt(),
-      "subject":determineSubjectForImage(this.tableStorageService.getTimeTable()),
+      "subject":determineSubjectForImage(this.tableStorageService.getTimeTable(), this.repeatSetting),
       "weekDay": this.weekDay,
       "src": base64Image,
       "creationDate": new Date().toISOString()
@@ -135,9 +143,8 @@ function getRandomInt() {
   return Math.floor(Math.random() * Math.floor(99999999));
 }
 
-function determineSubjectForImage(table) {
+function determineSubjectForImage(table ,repeatSetting) {
   let returnValue;
-  let weekofMonth = getWeekOfMonth();
 
   for (const lesson of table.lessons) {
 
@@ -157,9 +164,10 @@ function determineSubjectForImage(table) {
       }
       
       if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
-        if(weekofMonth == lesson.repeatWeek) {
+        if(checkLesson(lesson.repeatWeek, repeatSetting, table.creationDate)) {
           returnValue = lesson.subjectID;
         }
+
       } 
 
     }
@@ -182,15 +190,22 @@ function checkDay(timeNow, weekDay) {
   }
 }
 
-function getWeekOfMonth() {
-  const date = moment();
-  // .add(21, "day");
-  const weekInYear = date.isoWeek();
-  const result = weekInYear - date.startOf('month').isoWeek();
 
-  let temp = result < 0 ? weekInYear : result;
-  if(temp == 4) {
-    temp = 0;
-  }
-  return temp + 1;
+function checkLesson(fachrythmus: number, wochenRythmus: number, creationDate: Date) {
+    const date = moment();
+    // .add(21, "day");
+    let weekOfYear = date.isoWeek(); //Kalender Woche
+    let creationWeek = moment(creationDate).isoWeek() //Woche wann StundenPlan kreiert wurde
+    let modulo = (weekOfYear-creationWeek)+1%(wochenRythmus);
+
+    if(modulo == 0) {
+      modulo = wochenRythmus;
+    }
+
+    if(modulo == fachrythmus) {
+      return true;
+    } else {
+      return false;
+    }
+
 }

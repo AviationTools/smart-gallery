@@ -7,7 +7,6 @@ import { TableStorageService } from '../service/table-storage.service';
 import { SettingsService  } from '../service/settings.service';
 import { TimeTable } from '../models/timetable';
 import { Platform } from '@ionic/angular';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 
 
@@ -19,6 +18,7 @@ import * as moment from 'moment';
 export class HomePage{
   
   weekDay: string;
+  weekIndex: number;
   todayDay: string;
   subject: string;
   fromTime: Date;
@@ -38,8 +38,7 @@ export class HomePage{
     public tableStorageService: TableStorageService,
     public settingsService: SettingsService,
     public toastController: ToastController,
-    private platform: Platform,
-    private router: Router
+    private platform: Platform
   ){
     this.todayDay = this.getTodaysDay();
     this.weekDay = this.getTodaysDay();
@@ -80,7 +79,17 @@ export class HomePage{
     return nameWeekDays[moment().isoWeekday()-1]; 
   }
 
+  getTodaysIndex() {
+    var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    for(let i = 0; i < nameWeekDays.length; i++) {
+      if(nameWeekDays[i] == this.weekDay) {
+        return i;
+      }
+    }
+  }
+
   async setWeekDay() {
+    this.weekIndex = this.getTodaysIndex();
     if(this.fullWeek) {
       var weekList = [
         {
@@ -129,7 +138,8 @@ export class HomePage{
       columns: [
         {
           name: 'weekDayList',
-          options: weekList
+          options: weekList,
+          selectedIndex: this.weekIndex
         }
     ],
       buttons: [
