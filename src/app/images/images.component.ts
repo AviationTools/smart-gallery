@@ -49,7 +49,7 @@ export class ImagesComponent {
       }
 
       timeoutId = setTimeout(() => {
-        this.vibration.vibrate(500);
+        // this.vibration.vibrate(500);
         this.presentAlert();
         alertOpend = true;
       }, 1000);

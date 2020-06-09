@@ -23,7 +23,7 @@ export class TableStorageService {
     let timetable = await this.storage.get(TableStorageService.TIME_TABLE_STORAGE_KEY);
 
     if (timetable) {
-      this.timetable = new TimeTable(timetable.name, timetable.creationDate, timetable.lessons);
+      this.timetable = new TimeTable(timetable.name, timetable.creationDate, timetable.lessons, timetable.folder);
     }
     else {
       this.timetable = new TimeTable("test");

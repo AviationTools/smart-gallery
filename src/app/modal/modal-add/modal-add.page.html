@@ -17,17 +17,23 @@
       <ion-input type="text" [(ngModel)]="subject" id="input" ngModel pattern="[a-zA-Z ]*"></ion-input>
     </ion-item>
     
+    <ion-item lines="full" (click)="setWeekCycle($event)">
+      <ion-label class="ion-no-padding">Repeat:</ion-label>
+      <ion-text class="ion-padding-end">{{ repeatWeekText }}</ion-text><ion-icon color="primary" name="repeat"></ion-icon>
+    </ion-item>
+
     <ion-item>
-      <ion-label>From</ion-label>
+      <ion-label>From:</ion-label>
       <ion-datetime *ngIf="!defaultTime" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
       <ion-datetime *ngIf="defaultTime" displayFormat="HH:mm" [(ngModel)]="fromTime"></ion-datetime>
     </ion-item>
     
     <ion-item>
-      <ion-label>To</ion-label>
+      <ion-label>To:</ion-label>
       <ion-datetime *ngIf="!defaultTime" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
       <ion-datetime *ngIf="defaultTime" displayFormat="HH:mm" [(ngModel)]="toTime"></ion-datetime>
     </ion-item>
+    
     <ion-item>
       <ion-grid>
         <ion-row>

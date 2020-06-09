@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { SettingsService  } from '../../service/settings.service';
 import { ToastController } from '@ionic/angular';
+import { PickerController } from '@ionic/angular';
 import * as moment from 'moment';
 
 @Component({
@@ -11,12 +12,14 @@ import * as moment from 'moment';
 })
 export class ModalAddPage implements OnInit {
 
-  @Input() weekDay:string;
-  @Input() subject:string;
+  @Input() weekDay: string;
+  @Input() subject: string;
+  @Input() subjectID: number;
+  @Input() color: string;
   @Input() fromTime:Date;
-  @Input() toTime:Date;
-  @Input() repeatWeek: number;
+  @Input() toTime: Date;
   @Input() disableCloseBtn: boolean;
+  @Input() lessonList: any[];
 
   validatorText: boolean;
   validatorTime: boolean;
@@ -34,15 +37,24 @@ export class ModalAddPage implements OnInit {
   colorPicked: string;
 
   defaultTime: boolean;
+  repeatWeek: number;
+  repeatWeekText: string;
   
 
   constructor(
     public modalController: ModalController,
     public settingsService: SettingsService,
     public toastController: ToastController,
+    private pickerController: PickerController,
     ) { 
+      if(this.repeatWeek == undefined) {
+        this.repeatWeek = 1;
+      }
         setTimeout(() => {
+          console.log(this.lessonList);
+          this.setRepeatWeekText(this.repeatWeek);
           this.defaultTime = this.settingsService.getSettings().defaultTime;
+          this.setColorFromChange(this.color);
         }, 500);
       }
 
@@ -75,7 +87,7 @@ export class ModalAddPage implements OnInit {
       "object": {
         "id": this.getRandomInt(),
         "subject": this.validateText(this.subject),
-        "subjectID": this.subject.toUpperCase(),
+        "subjectID": this.checkIfSubjectExists(this.subject),
         "weekDay": this.weekDay,
         "color": this.validateColor(this.colorPicked),
         "repeatWeek": this.repeatWeek,
@@ -85,7 +97,7 @@ export class ModalAddPage implements OnInit {
         },
         "codeTimeFrame": {
           "fromTime": new Date(this.fromTime).getHours() + ":" + new Date(this.fromTime).getMinutes(),
-          "toTime": new Date(this.toTime).getHours() +":" + new Date(this.toTime).getMinutes()
+          "toTime": new Date(this.toTime).getHours() + ":" + new Date(this.toTime).getMinutes()
          }
       }
     }
@@ -95,8 +107,19 @@ export class ModalAddPage implements OnInit {
     }
   }
 
-  setValues(array: any[]) {
-    console.log(array);
+  checkIfSubjectExists(subject: string) {
+    let returnID;
+    console.log(this.lessonList);
+    for (const lesson of this.lessonList) {
+      if(lesson.subject == subject) {
+        returnID = lesson.subjectID;
+      }
+    }
+    if(returnID == undefined) {
+      return this.getRandomInt();
+    } else {
+      return returnID;
+    }
   }
   
   getRandomInt() {
@@ -242,7 +265,7 @@ export class ModalAddPage implements OnInit {
     }
   }
 
-  validateText(text: any){
+  validateText(text: any) {
     if(text){
       this.validatorText = false
       return text.charAt(0).toUpperCase() + text.slice(1);
@@ -252,7 +275,7 @@ export class ModalAddPage implements OnInit {
     }
   }
 
-  validateTime(time: Date){
+  validateTime(time: Date) {
     if(time){
       this.validatorTime = false
       return time;
@@ -262,7 +285,7 @@ export class ModalAddPage implements OnInit {
     }
   }
 
-  validateColor(color :string){
+  validateColor(color :string) {
     if(color){
       this.validatorColor = false
       return color;
@@ -278,5 +301,98 @@ export class ModalAddPage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  setColorFromChange(color: string) {
+    if(color == undefined || color == null) {
+      return;
+    }
+    if(color == "secondary") {
+      this.checkedBlue = true;
+      this.colorPicked = "secondary";
+    }
+    if(color == "danger") {
+      this.checkedRed = true;
+      this.colorPicked = "danger";
+    }
+    if(color == "dark") {
+      this.checkedBlack = true;
+      this.colorPicked = "dark";
+    }
+    if(color == "success") {
+      this.checkedGreen = true;
+      this.colorPicked = "success";
+    }
+    if(color == "medium") {
+      this.checkedGrey = true;
+      this.colorPicked = "medium";
+    }
+    if(color == "tertiary") {
+      this.checkedPink = true;
+      this.colorPicked = "tertiary";
+    }
+    if(color == "light") {
+      this.checkedOrange = true;
+      this.colorPicked = "light";
+    }
+  }
+
+  async setWeekCycle() {
+    const picker = await this.pickerController.create({
+      columns: [
+        {
+          name: 'weekCycleList',
+          options: [
+            {
+              text: 'every week',
+              value: 1
+            },
+            {
+              text: 'every second week',
+              value: 2
+            },
+            {
+              text: 'every third week',
+              value: 3
+            },
+            {
+              text: 'every fourth week',
+              value: 4
+            }
+          ],
+          selectedIndex: this.repeatWeek -1
+        }
+    ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: (value) => {
+            this.repeatWeek = value.weekCycleList.value;
+            this.repeatWeekText = value.weekCycleList.text;
+          }
+        }
+      ]
+    });
+
+    await picker.present();
+  }
+
+  setRepeatWeekText(weekNumber: number) {
+    if(weekNumber == 1) {
+      this.repeatWeekText = "every week";
+    }
+    if(weekNumber == 2) {
+      this.repeatWeekText = "every second week";
+    }
+    if(weekNumber == 3) {
+      this.repeatWeekText = "every third week";
+    }
+    if(weekNumber == 4) {
+      this.repeatWeekText = "every fourth week";
+    }
   }
 }

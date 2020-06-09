@@ -6,6 +6,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router, NavigationExtras } from '@angular/router';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { SettingsService } from '../service/settings.service';
+import { AlertController, ToastController } from '@ionic/angular';
 import * as moment from 'moment';
 
 @Component({
@@ -20,24 +21,22 @@ export class CameraPage {
   imagesList: any[];
   weekDay: string;
   timetable: TimeTable;
-  lessonList: any[];
-  repeatSetting: number;
+  folderList: any[];
+  alertOpened: boolean;
 
-  
   constructor(
     public tableStorageService: TableStorageService,
     private imageStorageService: ImageStorageService,
     public settingsService: SettingsService,
     private androidPermissions: AndroidPermissions,
+    public alertController: AlertController,
+    public toastController: ToastController,
     private camera: Camera,
     private router: Router
     ) { 
+      this.alertOpened = false;
       this.weekDay = this.getTodaysDay();
       this.timetable = this.tableStorageService.getTimeTable();
-
-      setTimeout(() => {
-        this.repeatSetting = this.settingsService.getSettings().weekCount;
-      }, 500);
  
       this.imageStorageService.isReady.subscribe(() => {
         this.imageTable = this.imageStorageService.getImageTable();
@@ -55,7 +54,6 @@ export class CameraPage {
 
   ionViewDidEnter() {
     setTimeout(() => {
-      this.repeatSetting = this.settingsService.getSettings().weekCount;
       this.getTableSubjectList();
     }, 500);
   }
@@ -87,7 +85,7 @@ export class CameraPage {
       //Later text: "Description",
       let imageObject = {
         "id": getRandomInt(),
-        "subject":determineSubjectForImage(this.tableStorageService.getTimeTable(), this.repeatSetting),
+        "subjectID": determineSubjectIDForImage(this.tableStorageService.getTimeTable(), this.folderList),
         "weekDay": this.weekDay,
         "src": imageData,
         "creationDate": new Date().toISOString()
@@ -103,39 +101,80 @@ export class CameraPage {
     let tableList = [];
     this.timetable = this.tableStorageService.getTimeTable();
 
-    for(const lesson of this.timetable.getSubjectList()){
+    for(const folder of this.timetable.getAllFolders()){
       tableList.push({
-        "subject": lesson.subject,
-        "id": lesson.id,
-        "color": lesson.color,
-        "count": this.imageStorageService.getImageCountForSubject(lesson.id)
+        "id": folder.id,
+        "subject": folder.subject,
+        "subjectID": folder.subjectID,
+        "color": folder.color,
+        "count": this.imageStorageService.getImageCountForSubject(folder.subjectID)
       });
     }
-    this.lessonList = tableList;
+    this.folderList = tableList;
   }
 
-  navigateToImageFolder(id, subject) {
+  navigateToImageFolder(subjectID, subject) {
     let navigationExtras: NavigationExtras = {
       state: {
         weekDay: this.weekDay,
         subjectFromList: subject,
-        id: id,
-        subjectList: this.lessonList
+        id: subjectID,
+        subjectList: this.folderList
       }
     };
-    this.router.navigate(['/image-folder'], navigationExtras);
+    if(!this.alertOpened) {
+      this.router.navigate(['/image-folder'], navigationExtras);
+    }
   }
 
-  updateImageSubjects(base64Image) {
-    //Not Implimented yet. Reloads every tab click
-    let imageObject = {
-      "id": getRandomInt(),
-      "subject":determineSubjectForImage(this.tableStorageService.getTimeTable(), this.repeatSetting),
-      "weekDay": this.weekDay,
-      "src": base64Image,
-      "creationDate": new Date().toISOString()
-    }
-    this.imageStorageService.updateImageTable(imageObject);
+  async presentAlert(subject: string, subjectID: number) {
+    this.alertOpened = true;
+    const alertct = await this.alertController.create({
+      header: subject,
+      message: 'images will be deleted!',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Cancel');
+            this.alertOpened = false;
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            if(subject != "Other") {
+              //Deletes Folders
+              let newFolders = this.timetable.removeFolderbySubjectID(subjectID);
+              for(let i = 0; i < newFolders.length; i++){
+                if(newFolders[i] != null){
+                  this.timetable.addFolder(newFolders[i]);
+                }
+              }
+              this.tableStorageService.updateTimeTable(this.timetable);
+              this.getTableSubjectList();
+              //Deletes Images
+              let newImageList = this.imageStorageService.removeImagesbySubectID(subjectID)
+              for (const newImage of newImageList) {
+                this.imageStorageService.updateImageTable(newImage);
+              }
+            } else {
+              this.presentToast("Cant´t delete this Folder!");
+            }
+            this.alertOpened = false;
+          }
+        }
+      ]
+    });
+    await alertct.present();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 }
 
@@ -143,14 +182,12 @@ function getRandomInt() {
   return Math.floor(Math.random() * Math.floor(99999999));
 }
 
-function determineSubjectForImage(table ,repeatSetting) {
+function determineSubjectIDForImage(table, folderList) {
   let returnValue;
 
   for (const lesson of table.lessons) {
-
-    console.log(lesson);
     let timeNow = moment();
-    let todayWeekNr = timeNow.isoWeekday()
+    let todayWeekNr = timeNow.isoWeekday();
   // let timeNow = moment({hour: 0, minute: 30});
     
     let end = moment(lesson.codeTimeFrame.toTime, "hhmm");
@@ -160,21 +197,22 @@ function determineSubjectForImage(table ,repeatSetting) {
       
       if(start.hour() > end.hour()) {
         end.add(1, "day");
-        timeNow.add(1, "day");
+        // timeNow.add(1, "day");
       }
       
       if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
-        if(checkLesson(lesson.repeatWeek, repeatSetting, table.creationDate)) {
-          returnValue = lesson.subjectID;
+        if(checkLesson(lesson.repeatWeek, table.creationDate)) {
+          if(checkIfFolderExists(folderList, lesson.subjectID)) {
+            returnValue = lesson.subjectID;
+          }
         }
 
-      } 
-
+      }
     }
   }
 
   if(returnValue == undefined) {
-    return "OTHER";
+    return 1111111;
   }else{
     return returnValue;
   }
@@ -185,27 +223,33 @@ function checkDay(timeNow, weekDay) {
   if(nameWeekDays[timeNow-1] == weekDay){
     return true;
   }else{
-    console.log("checkDay /" + timeNow + "/" + weekDay + "/" + nameWeekDays[timeNow-1]);
+    console.log("checkDay: " + timeNow + "/" + weekDay + "/" + nameWeekDays[timeNow-1]);
     return false;
   }
 }
 
 
-function checkLesson(fachrythmus: number, wochenRythmus: number, creationDate: Date) {
+function checkLesson(fachrythmus: number, creationDate: Date) {
     const date = moment();
     // .add(21, "day");
     let weekOfYear = date.isoWeek(); //Kalender Woche
     let creationWeek = moment(creationDate).isoWeek() //Woche wann StundenPlan kreiert wurde
-    let modulo = (weekOfYear-creationWeek)+1%(wochenRythmus);
+    let modulo = (weekOfYear-creationWeek)+1%(fachrythmus);
 
-    if(modulo == 0) {
-      modulo = wochenRythmus;
-    }
-
-    if(modulo == fachrythmus) {
+    if(fachrythmus == 1) {
+      return true;
+    } else if(modulo == fachrythmus) {
       return true;
     } else {
       return false;
     }
+}
 
+function checkIfFolderExists(folderList: any[], subjectID: number) {
+  for (const folder of folderList) {
+    if(folder.subjectID == subjectID) {
+      return true;
+    }
+  }
+  return false;
 }

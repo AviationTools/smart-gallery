@@ -56,5 +56,4 @@ export interface Settings {
   defaultTime:  boolean;
   firstStart: boolean;
   fullWeek: boolean;
-  weekCount: number;
 }

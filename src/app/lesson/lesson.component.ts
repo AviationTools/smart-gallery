@@ -14,7 +14,10 @@ export class LessonComponent implements OnInit {
   @Input("lessonList") lessonList: any[];
   @Input("item") item: {};
   @Input("id") id: number;
+  @Input("repeatWeek") repeatWeek: number;
   @Input("color") color: string;
+  @Input("subject") subject: string;
+  @Input("subjectID") subjectID: number;
   @Output() removingCurrentLesson = new EventEmitter();
   @Output() changeCurrentLesson = new EventEmitter();
 
@@ -49,7 +52,7 @@ export class LessonComponent implements OnInit {
       }
 
       timeoutId = setTimeout(() => {
-        this.vibration.vibrate(500);
+        // this.vibration.vibrate(500);
         this.presentAlert();
         alertOpend = true;
       }, 1000);

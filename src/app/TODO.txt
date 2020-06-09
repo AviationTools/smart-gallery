@@ -56,9 +56,10 @@ this.ionSlides.update()
   - FAQ Topic: when subject names arent identical ! [When Website is ready!]
   - check coliding Lessons (same time) [No Priority!]
   - evtl vor dem Foto auswählen welcher Ordner ausgewählt werden soll. [No Priority!]
-  - 1 bis 4 wochen Table erstellen [small Problem with Month = 3 weeks] (RepeatSetting)
-  - when lessons get changed pictures dont go into new but same folder
-  - feaute Request set add lesson and ask how lesson should be repeated.
+  - Badge showing if lesson is comming up next or is active now. [No Priority!]
+  - ion-reorder Items (Folder & Lessons) [No Priority!]
+  - check why getImageCountForSubject() & getTableSubjectList() get called that often [Performance Issue]
+  - subject suggestion (autocomplete or selection) for existing Subjects [No Priority!]
 
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
@@ -90,6 +91,8 @@ this.ionSlides.update()
   - hardware back button should go out of APP or too root (Camera Page) [Done!]
   - Slides need to be adjusted for better swipping [Done!]
   - ion-select (Day) always starts on monday [Done!]
+  - feaute Request set add lesson and ask how lesson should be repeated.[Done!]
+  - 1 bis 4 wochen Table erstellen [small Problem with Month = 3 weeks] (RepeatSetting) [Done!]
 
-  //Description
+  //Produkt Beschreibung Play Store
   - schnell und einfach Bilder finden

@@ -24,28 +24,6 @@
       <ion-toggle slot="end" [(ngModel)]="fullWeek" (ionChange)="settingsToggle($event, 'fullWeek')"></ion-toggle>
     </ion-item>
 
-    <ion-item>
-      <ion-label slot="start" class="ion-no-margin">Weeks</ion-label> 
-      <ion-note class="ion-margin-vertical">how should the schedule be repeated?</ion-note>
-    </ion-item>
-
-    <ion-item class="ion-no-padding segment-ion-item">
-      <ion-segment (ionChange)="segmentChanged($event)" value="{{ this.weekCount }}">
-        <ion-segment-button value="1">
-          <ion-label>1</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="2">
-          <ion-label>2</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="3">
-          <ion-label>3</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="4">
-          <ion-label>4</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-item>
-  
     <ion-item-divider color="medium">
       <div style="width: 100%; text-align: center;">
         <ion-icon slot="start" name="share"></ion-icon>

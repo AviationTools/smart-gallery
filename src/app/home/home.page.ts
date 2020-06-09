@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
+import { ImageStorageService } from '../service/image-storage.service';
 import { SettingsService  } from '../service/settings.service';
 import { TimeTable } from '../models/timetable';
 import { Platform } from '@ionic/angular';
@@ -24,11 +25,9 @@ export class HomePage{
   fromTime: Date;
   toTime: Date;
   timetable: TimeTable;
-  lessonList:any[];
+  lessonList: any[];
+  allLessons: any[];
   fullWeek: boolean;
-  weekCount: number;
-  weekCountArray: any[];
-  repeatWeek: number;
   modalOpen: boolean;
 
 
@@ -38,11 +37,11 @@ export class HomePage{
     public tableStorageService: TableStorageService,
     public settingsService: SettingsService,
     public toastController: ToastController,
+    private imageStorageService: ImageStorageService,
     private platform: Platform
   ){
     this.todayDay = this.getTodaysDay();
     this.weekDay = this.getTodaysDay();
-    this.repeatWeek = 1;
     this.getTableDay();
 
     this.tableStorageService.remove.subscribe(() => {
@@ -52,8 +51,6 @@ export class HomePage{
 
     setTimeout(() => {
       this.fullWeek = this.settingsService.getSettings().fullWeek;
-      this.weekCount = this.settingsService.getSettings().weekCount;
-      this.segmentWeekBuilder();
     }, 500);
 
     //Hardware Back Button (blocks unsaved changes)
@@ -69,8 +66,6 @@ export class HomePage{
   ionViewDidEnter(){
     setTimeout(() => {
       this.fullWeek = this.settingsService.getSettings().fullWeek;
-      this.weekCount = this.settingsService.getSettings().weekCount;
-      this.segmentWeekBuilder();
     }, 500);
   }
 
@@ -171,10 +166,13 @@ export class HomePage{
         componentProps: {
           'weekDay': this.weekDay,
           'subject': array.subject,
+          'subjectID': array.subjectID,
+          'color': array.color,
+          'repeatWeek': array.repeatWeek,
           'fromTime': array.timeFrame.fromTime,
           'toTime': array.timeFrame.toTime,
-          'repeatWeek': this.repeatWeek,
-          'disableCloseBtn': true
+          'disableCloseBtn': true,
+          'lessonList': this.allLessons
         }
       }
       this.removeSpecificLesson(array.id);
@@ -185,8 +183,8 @@ export class HomePage{
         cssClass: 'my-custom-modal-css',
         componentProps: {
           'weekDay': this.weekDay,
-          'repeatWeek': this.repeatWeek,
-          'disableCloseBtn': false
+          'disableCloseBtn': false,
+          'lessonList': this.allLessons
         }
       }
     }
@@ -205,6 +203,12 @@ export class HomePage{
         
         if(dataObject.object != null) {
           this.timetable.addLesson(dataObject.object);
+          this.timetable.addFolder({
+            'id': this.getRandomInt(),
+            'subject': dataObject.object.subject,
+            'subjectID': dataObject.object.subjectID,
+            'color': dataObject.object.color
+          });
           this.tableStorageService.updateTimeTable(this.timetable);
           this.getTableDay();
         }
@@ -216,14 +220,8 @@ export class HomePage{
     }
   }
 
-  addToStorage(inputArray: any){
-    for(let i = 0; i < inputArray.length; i++){
-      if(inputArray[i] != null){
-        this.timetable.addLesson(inputArray[i]);
-      }
-    }
-    this.tableStorageService.updateTimeTable(this.timetable);
-    this.getTableDay();
+  getRandomInt() {
+    return Math.floor(Math.random() * Math.floor(99999999));
   }
 
   getTableDay() {
@@ -231,17 +229,33 @@ export class HomePage{
     if(this.timetable == undefined){
       this.tableStorageService.isReady.subscribe(() => {
         this.timetable = this.tableStorageService.getTimeTable();
-        this.lessonList = this.timetable.getSpecificLessons(this.weekDay, this.repeatWeek);
+        this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+        this.allLessons = this.timetable.getAllLessons();
+        //Sort LessonList
+        let sortedArray = this.lessonList.sort((a, b) => moment(a.timeFrame.fromTime).diff(moment(b.timeFrame.fromTime)))
+        this.lessonList = sortedArray;
       });
     }else{
-      this.lessonList = this.timetable.getSpecificLessons(this.weekDay, this.repeatWeek);
+      this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
+      this.allLessons = this.timetable.getAllLessons();
+      //Sort LessonList
+      let sortedArray = this.lessonList.sort((a, b) => moment(a.timeFrame.fromTime).diff(moment(b.timeFrame.fromTime)))
+      this.lessonList = sortedArray;
     }
   }
 
-  removeSpecificLesson(id: number){
-    this.addToStorage(this.timetable.removeSpecificLesson(id));
+  removeSpecificLesson(id: number) {
+    //Delete Lesson from Storage!
+    let newLessons = this.timetable.removeSpecificLesson(id);
+    for(let i = 0; i < newLessons.length; i++){
+      if(newLessons[i] != null){
+        this.timetable.addLesson(newLessons[i]);
+      }
+    }
+    this.tableStorageService.updateTimeTable(this.timetable);
+    this.getTableDay();
   }
-  
+    
   changeCurrentLesson(id: number){
     let currentLesson = this.timetable.getLessonById(id);
     this.presentModal(currentLesson[0]);
@@ -253,36 +267,5 @@ export class HomePage{
       duration: 2000
     });
     toast.present();
-  }
-
-  segmentChanged(ev: any) {
-    this.repeatWeek = ev.detail.value;
-    this.getTableDay();
-  }
-
-  segmentWeekBuilder() {
-    let tempArray = [];
-
-    if(this.weekCount == 1) {
-      this.weekCountArray = tempArray;
-      return;
-    } else if(this.weekCount == 2) {
-      tempArray.push({
-        "i": 1,
-        "label": "first week"
-      });
-      tempArray.push({
-        "i": 2,
-        "label": "second week"
-      });
-    } else {
-      for(let i = 0; i < this.weekCount; i++) {
-        tempArray.push({
-          "i": i + 1,
-          "label": i + 1
-        });
-      }
-    }
-    this.weekCountArray = tempArray;
   }
 }

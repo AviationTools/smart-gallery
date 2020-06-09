@@ -19,24 +19,32 @@ export class ImageStorageService {
   }
   
   //Image Methodes
-  getImageCountForSubject(subject: string){
+
+  getImageCountForSubject(subjectID: number) {
     let count = 0;
     for (const image of this.images) {
-      if(image.subject == subject){
+      if(image.subjectID == subjectID){
         count++;
       }
     }
     return count;
   }
 
-  removeSpecificImage(id: number){
+  removeSpecificImage(id: number) {
     let currentImage = this.images.filter(el => el.id != id);
     this.images = [];
     this.removeFromStorage();
     return currentImage;
   }
 
-  getSpecificImage(id: number){
+  removeImagesbySubectID(subjectID: number) {
+    let currentImage = this.images.filter(el => el.subjectID != subjectID);
+    this.images = [];
+    this.removeFromStorage();
+    return currentImage;
+  }
+
+  getSpecificImage(id: number) {
     return this.images.filter(el => el.id == id);
   }
 
@@ -85,7 +93,7 @@ export class ImageStorageService {
 
 export interface Image {
   id:  number;
-  subject:string;
+  subjectID: number;
   weekDay: string;
   src: string;
   creationDate: string;

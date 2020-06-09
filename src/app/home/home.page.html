@@ -13,23 +13,13 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col size-md>
-          <ion-list>
-            <ion-segment (ionChange)="segmentChanged($event)" value="1">
-              <ion-segment-button *ngFor="let item of weekCountArray" value="{{ item.i }}">
-                <ion-label>{{ item.label }}</ion-label>
-              </ion-segment-button>
-            </ion-segment>
-            
-            <ion-button expand="block" (click)="setWeekDay()">{{ weekDay }}</ion-button>
-            
-          </ion-list>         
-        
+      <ion-col size-md>  
+        <ion-button expand="block" (click)="setWeekDay()">{{ weekDay }}</ion-button>
         <ion-card >
           <ion-card-header>
             <ion-card-title>{{ weekDay }}</ion-card-title>
           </ion-card-header>
-          <app-lesson *ngFor="let item of lessonList" (removingCurrentLesson)='removeSpecificLesson($event)' (changeCurrentLesson)="changeCurrentLesson($event)" [item]="item" [lessonList]="lessonList" [weekDay]="weekDay" [id]="item.id" [color]="item.color"></app-lesson>
+          <app-lesson *ngFor="let item of lessonList" (removingCurrentLesson)='removeSpecificLesson($event)' (changeCurrentLesson)="changeCurrentLesson($event)" [item]="item" [lessonList]="lessonList" [weekDay]="weekDay" [id]="item.id" [subjectID]="item.subjectID" [color]="item.color" [subject]="item.subject" [repeatWeek]="item.repeatWeek"></app-lesson>
         </ion-card>
         
       </ion-col>

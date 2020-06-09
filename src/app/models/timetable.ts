@@ -2,18 +2,21 @@ export class TimeTable {
   private name: string;
   private creationDate: string;
   private lessons: Lesson[];
+  private folder: Folder[];
 
-  constructor(name: string, creationDate?: string, lessons?: Lesson[]) {
+  constructor(name: string, creationDate?: string, lessons?: Lesson[], folder?: Folder[]) {
     this.name = name;
     this.creationDate = creationDate || new Date().toISOString();
     this.lessons = lessons || [];
+    this.folder = folder || [];
   }
 
   toJSON() {
     return {
       "name": this.name,
       "creationDate": this.creationDate,
-      "lessons": this.lessons
+      "lessons": this.lessons,
+      "folder": this.folder
     }
   }
 
@@ -21,12 +24,12 @@ export class TimeTable {
     this.lessons.push(lesson);
   }
 
-  getSpecificLessons(weekDay: string, repeatWeek: number){
+  getSpecificLessons(weekDay: string) {
     //Später filter() einbauen.
     let object = [];
     for (let i = 0; i < this.lessons.length; i++) {
       if(this.lessons[i] != null){
-        if(this.lessons[i].weekDay == weekDay && this.lessons[i].repeatWeek == repeatWeek){
+        if(this.lessons[i].weekDay == weekDay){
           object.push(this.lessons[i]);
         }
       }
@@ -34,8 +37,17 @@ export class TimeTable {
     return object;
   }
 
+  getAllLessons() {
+    let object = [];
+    for (let i = 0; i < this.lessons.length; i++) {
+      if(this.lessons[i] != null){
+        object.push(this.lessons[i]);
+      }
+    }
+    return object;
+  }
+
   removeSpecificLesson(id: number){
-    // console.log(this.lessons);
     let currentLessons = this.lessons.filter(el => el.id != id);
     this.lessons = [];
     return currentLessons;
@@ -46,37 +58,45 @@ export class TimeTable {
     return this.lessons.filter(el => el.id == id);
   }
 
-  getSubjectList(){
-    let subjectListCounter = [];
-    let subjectList = [];
-    for (const lesson of this.lessons) {
-      if(!subjectListCounter.includes(lesson.subjectID)){
-        subjectList.push({
-          "subject": lesson.subject,
-          "id": lesson.subjectID,
-          "color": lesson.color
-        });
-        subjectListCounter.push(lesson.subjectID);
+  //Folder Methodes
+  addFolder(folder: Folder) {
+    this.folder.push(folder);
+  }
+
+  getAllFolders() {
+    let folderObjectCount = [];
+    let folderObject = [];
+    for (let i = 0; i < this.folder.length; i++) {
+      if(!folderObjectCount.includes(this.folder[i].subjectID)) {
+        folderObject.push(this.folder[i]);
       }
+      folderObjectCount.push(this.folder[i].subjectID);
     }
-    subjectList.push({
+    folderObject.push({
+      "id": 1111111,
       "subject": "Other",
-      "id": "OTHER",
+      "subjectID": 1111111,
       "color": "primary"
     });
-    return subjectList;
+    return folderObject;
+  }
+
+  removeFolderbySubjectID(subjectID: number){
+    let currentFolders= this.folder.filter(el => el.subjectID != subjectID);
+    this.folder = [];
+    return currentFolders;
   }
 }
 
 export interface Lesson {
   id:  number;
   subject: string;
-  subjectID: string;
+  subjectID: number;
   weekDay: string;
   color: string;
   repeatWeek: number;
   timeframe: TimeFrame;
-  codeTimeFrame:CodeTimeFrame;
+  codeTimeFrame: CodeTimeFrame;
 }
 
 export interface TimeFrame {
@@ -87,4 +107,11 @@ export interface TimeFrame {
 export interface CodeTimeFrame {
   fromTime: string;
   toTime: string;
+}
+
+export interface Folder {
+  id: number;
+  subject: string;
+  subjectID: number;
+  color: string;
 }

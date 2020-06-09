@@ -3,6 +3,13 @@
     <ion-card-title>{{ item.subject }}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    {{item.timeFrame.fromTime | date:'H:mm'}} - {{item.timeFrame.toTime | date:'H:mm'}}
+    <ion-grid>
+        <ion-col>
+          {{item.timeFrame.fromTime | date:'H:mm'}} - {{item.timeFrame.toTime | date:'H:mm'}}
+        </ion-col>
+        <ion-col>
+          <h2 class="ion-float-right">{{ item.repeatWeek }}<ion-icon name="repeat"></ion-icon></h2>
+        </ion-col>
+    </ion-grid>
   </ion-card-content>
 </ion-card>

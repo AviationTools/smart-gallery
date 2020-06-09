@@ -13,7 +13,7 @@ import { ToastController } from '@ionic/angular';
 export class ImageFolderPage {
   weekDay: string;
   subject: string;
-  subjectId: string;
+  subjectId: number;
   imagesList: any[];
   lessonList: any[];
   
@@ -78,7 +78,7 @@ export class ImageFolderPage {
     });
   }
 
-  getImagesForSubject(subjectId: string) {
+  getImagesForSubject(subjectId: number) {
     let win: any = window; //Necessary!
     let imageTable = this.imageStorageService.getImageTable();
     let subjectImageList = [];
@@ -87,7 +87,7 @@ export class ImageFolderPage {
     for (const images of imageTable) {
       i++;
       // console.log(images.src);
-      if(images.subject == subjectId) {
+      if(images.subjectID == subjectId) {
         //safeURL for DOM/Android
         let safeURL = win.Ionic.WebView.convertFileSrc(images.src);
         //base64 for Browser
