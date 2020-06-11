@@ -4,7 +4,6 @@ import { ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
-import { ImageStorageService } from '../service/image-storage.service';
 import { SettingsService  } from '../service/settings.service';
 import { TimeTable } from '../models/timetable';
 import { Platform } from '@ionic/angular';
@@ -37,7 +36,6 @@ export class HomePage{
     public tableStorageService: TableStorageService,
     public settingsService: SettingsService,
     public toastController: ToastController,
-    private imageStorageService: ImageStorageService,
     private platform: Platform
   ){
     this.todayDay = this.getTodaysDay();
@@ -169,6 +167,7 @@ export class HomePage{
           'subjectID': array.subjectID,
           'color': array.color,
           'repeatWeek': array.repeatWeek,
+          'startingWeek': array.startingWeek,
           'fromTime': array.timeFrame.fromTime,
           'toTime': array.timeFrame.toTime,
           'disableCloseBtn': true,
@@ -252,6 +251,7 @@ export class HomePage{
         this.timetable.addLesson(newLessons[i]);
       }
     }
+    
     this.tableStorageService.updateTimeTable(this.timetable);
     this.getTableDay();
   }

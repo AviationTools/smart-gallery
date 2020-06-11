@@ -54,7 +54,6 @@ export class TimeTable {
   }
 
   getLessonById(id: number){
-    console.log(this.lessons);
     return this.lessons.filter(el => el.id == id);
   }
 
@@ -81,7 +80,7 @@ export class TimeTable {
     return folderObject;
   }
 
-  removeFolderbySubjectID(subjectID: number){
+  removeFolderbySubjectID(subjectID: number) {
     let currentFolders= this.folder.filter(el => el.subjectID != subjectID);
     this.folder = [];
     return currentFolders;
@@ -95,6 +94,7 @@ export interface Lesson {
   weekDay: string;
   color: string;
   repeatWeek: number;
+  startingWeek: number;
   timeframe: TimeFrame;
   codeTimeFrame: CodeTimeFrame;
 }

@@ -14,7 +14,7 @@
 
     <ion-item>
       <ion-label>Subject:</ion-label>
-      <ion-input type="text" [(ngModel)]="subject" id="input" ngModel pattern="[a-zA-Z ]*"></ion-input>
+      <ion-input class="ion-padding-end" type="text" [(ngModel)]="subject" id="input" ngModel pattern="[a-zA-Z ]*"></ion-input><ion-icon color="primary" name="text"></ion-icon>
     </ion-item>
     
     <ion-item lines="full" (click)="setWeekCycle($event)">
@@ -22,16 +22,21 @@
       <ion-text class="ion-padding-end">{{ repeatWeekText }}</ion-text><ion-icon color="primary" name="repeat"></ion-icon>
     </ion-item>
 
+    <ion-item lines="full" (click)="setStartingWeek($event)">
+      <ion-label class="ion-no-padding">Beginning:</ion-label>
+      <ion-text class="ion-padding-end">{{ startingWeekText }}</ion-text><ion-icon color="primary" name="return-up-forward"></ion-icon>
+    </ion-item>
+
     <ion-item>
-      <ion-label>From:</ion-label>
-      <ion-datetime *ngIf="!defaultTime" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime>
-      <ion-datetime *ngIf="defaultTime" displayFormat="HH:mm" [(ngModel)]="fromTime"></ion-datetime>
+      <ion-label>Start:</ion-label>
+      <ion-datetime *ngIf="!defaultTime" class="ion-padding-end" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime"></ion-datetime><ion-icon *ngIf="!defaultTime" color="primary" name="time"></ion-icon>
+      <ion-datetime *ngIf="defaultTime" class="ion-padding-end" displayFormat="HH:mm" [(ngModel)]="fromTime"></ion-datetime><ion-icon *ngIf="defaultTime" color="primary" name="time"></ion-icon>
     </ion-item>
     
     <ion-item>
-      <ion-label>To:</ion-label>
-      <ion-datetime *ngIf="!defaultTime" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime>
-      <ion-datetime *ngIf="defaultTime" displayFormat="HH:mm" [(ngModel)]="toTime"></ion-datetime>
+      <ion-label>End:</ion-label>
+      <ion-datetime *ngIf="!defaultTime" class="ion-padding-end" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime><ion-icon *ngIf="!defaultTime" color="primary" name="timer"></ion-icon>
+      <ion-datetime *ngIf="defaultTime" class="ion-padding-end" displayFormat="HH:mm" [(ngModel)]="toTime"></ion-datetime><ion-icon *ngIf="defaultTime"color="primary" name="timer"></ion-icon>
     </ion-item>
     
     <ion-item>

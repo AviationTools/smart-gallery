@@ -36,9 +36,11 @@ export class ModalAddPage implements OnInit {
   checkedOrange: boolean;
   colorPicked: string;
 
-  defaultTime: boolean;
-  repeatWeek: number;
+  @Input() startingWeek: number;
+  @Input() repeatWeek: number;
   repeatWeekText: string;
+  startingWeekText: string;
+  defaultTime: boolean;
   
 
   constructor(
@@ -50,9 +52,12 @@ export class ModalAddPage implements OnInit {
       if(this.repeatWeek == undefined) {
         this.repeatWeek = 1;
       }
+      if(this.startingWeek == undefined) {
+        this.startingWeek = 0;
+      }
         setTimeout(() => {
-          console.log(this.lessonList);
           this.setRepeatWeekText(this.repeatWeek);
+          this.setStartingWeekText(this.startingWeek);
           this.defaultTime = this.settingsService.getSettings().defaultTime;
           this.setColorFromChange(this.color);
         }, 500);
@@ -91,7 +96,8 @@ export class ModalAddPage implements OnInit {
         "weekDay": this.weekDay,
         "color": this.validateColor(this.colorPicked),
         "repeatWeek": this.repeatWeek,
-        "timeFrame":{
+        "startingWeek": this.startingWeek,
+        "timeFrame": {
           "fromTime": this.validateTime(this.fromTime),
           "toTime": this.validateTime(this.toTime)
         },
@@ -109,7 +115,6 @@ export class ModalAddPage implements OnInit {
 
   checkIfSubjectExists(subject: string) {
     let returnID;
-    console.log(this.lessonList);
     for (const lesson of this.lessonList) {
       if(lesson.subject == subject) {
         returnID = lesson.subjectID;
@@ -381,6 +386,50 @@ export class ModalAddPage implements OnInit {
     await picker.present();
   }
 
+  async setStartingWeek() {
+    const picker = await this.pickerController.create({
+      columns: [
+        {
+          name: 'weekCycleList',
+          options: [
+            {
+              text: 'this week',
+              value: 0
+            },
+            {
+              text: 'next week',
+              value: 1
+            },
+            {
+              text: 'in three weeks',
+              value: 2
+            },
+            {
+              text: 'in four weeks',
+              value: 3
+            }
+          ],
+          selectedIndex: this.startingWeek
+        }
+    ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: (value) => {
+            this.startingWeek = value.weekCycleList.value;
+            this.startingWeekText = value.weekCycleList.text;
+          }
+        }
+      ]
+    });
+
+    await picker.present();
+  }
+
   setRepeatWeekText(weekNumber: number) {
     if(weekNumber == 1) {
       this.repeatWeekText = "every week";
@@ -393,6 +442,21 @@ export class ModalAddPage implements OnInit {
     }
     if(weekNumber == 4) {
       this.repeatWeekText = "every fourth week";
+    }
+  }
+
+  setStartingWeekText(startWeek: number) {
+    if(startWeek == 0) {
+      this.startingWeekText = "this week";
+    }
+    if(startWeek == 1) {
+      this.startingWeekText = "next week";
+    }
+    if(startWeek == 2) {
+      this.startingWeekText = "in three weeks";
+    }
+    if(startWeek == 3) {
+      this.startingWeekText = "in four weeks";
     }
   }
 }

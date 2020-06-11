@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-// import { IonSlides } from '@ionic/angular';
+import { IonSlides } from '@ionic/angular';
 
 
 @Component({
@@ -9,19 +9,17 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./modal-slides.page.scss'],
 })
 export class ModalSlidesPage implements OnInit {
-  slideOpts = {
-    initialSlide: 0,
-    speed: 400,
-  };
+ 
+  @ViewChild(IonSlides, {read: IonSlides, static: true}) slidesElement: IonSlides;
+  
   constructor(public modalCtrl: ModalController) { }
 
 
   ngOnInit() {
+    this.slidesElement.update();
   }
 
   dismissModal() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.modalCtrl.dismiss({
       'dismissed': true
     });

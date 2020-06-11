@@ -34,14 +34,20 @@
 
 .swiper-slide img {
     margin: auto;
-    width: 10rem;
-    height: 20rem;
+    width: 50%;
+    // width: 10rem;
+    // height: 20rem;
 }
 
 #firstSlide {
     margin: auto;
-    width: 10rem;
-    height: 15rem;
+    width: 50%;
+    // width: 10rem;
+    // height: 15rem;
+}
+
+ion-slides {
+    height: 100%;
 }
 
 ion-segment-button {
@@ -55,4 +61,8 @@ ion-segment-button {
 .segment-ion-item {
     --inner-padding-end: 0px;
     --padding-start:0px;
+}
+
+ion-input {
+    text-align: right;
 }

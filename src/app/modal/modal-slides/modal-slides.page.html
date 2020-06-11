@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides pager="true" [options]="slideOpts">
+  <ion-slides pager="true" [options]="{ initialSlide: 0, speed: 400 }">
 
     <ion-slide>
       <ion-grid>
@@ -18,7 +18,7 @@
           <img id="firstSlide" src="assets/slides/welcome.svg"/>
           <div class="ion-margin">
             <h2><u>Welcome!</u></h2>
-            <p>Smart Gallery lets you sort your <b>new</b> images by using your created schedule. All of the images and lessons are stored locally!</p>
+            <p>Smart Gallery lets you sort your <b>new</b> images by using your created schedule. All of the images and lessons are <u>stored locally</u>!</p>
           </div>
         </ion-row>
       </ion-grid>
@@ -39,10 +39,10 @@
     <ion-slide>
       <ion-grid>
         <ion-row>
-          <img src="assets/slides/shedule.png"/>
+          <img src="assets/slides/secondWeek.png"/>
           <div class="ion-margin">
-            <h2 class="ion-margin"><u>Schedule</u></h2>
-            <p class="ion-margin">Change or delete lessons by pressing & holding it.</p>
+            <h2 class="ion-margin"><u>Customize Schedule</u></h2>
+            <p class="ion-margin">When adding a lesson pick one of the <b>Repeat</b> options to repeat that lesson accordingly.</p>
           </div>
         </ion-row>
       </ion-grid>
@@ -51,10 +51,22 @@
     <ion-slide>
       <ion-grid>
         <ion-row>
-          <img src="assets/slides/secondWeek.png"/>
+          <img src="assets/slides/repeat.png"/>
           <div class="ion-margin">
-            <h2 class="ion-margin"><u>Customize Schedule</u></h2>
-            <p class="ion-margin">Change between weeks to allow different schedules. In the settings choose the amount of weeks after wich the schedule gets repeated.</p>
+            <h2 class="ion-margin"><u>Starting Week</u></h2>
+            <p class="ion-margin">Pick a week so the Lesson <b>Starts</b> when you want it.</p>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <img src="assets/slides/shedule.png"/>
+          <div class="ion-margin">
+            <h2 class="ion-margin"><u>Schedule</u></h2>
+            <p class="ion-margin">Change or delete lessons by <b>pressing & holding it</b>.</p>
           </div>
         </ion-row>
       </ion-grid>
@@ -66,7 +78,7 @@
           <img src="assets/slides/camera.png"/>
           <div class="ion-margin">
             <h2 class="ion-margin"><u>Camera</u></h2>
-            <p class="ion-margin">Create & manage your sorted images by entering a folder.</p>
+            <p class="ion-margin">Create & manage your sorted images by entering a folder or deleting it.</p>
           </div>
         </ion-row>
      </ion-grid>
@@ -78,7 +90,7 @@
           <img src="assets/slides/folder.png"/>
           <div class="ion-margin">
             <h2 class="ion-margin"><u>Folder</u></h2>
-            <p class="ion-margin">View images and edit or delete them by pressing & holding the image.</p>
+            <p class="ion-margin">View images and edit or delete them by <b>pressing & holding</b> the image.</p>
           </div>
           <br>
         </ion-row>
@@ -91,7 +103,7 @@
           <img src="assets/slides/changeImages.png"/>
           <div class="ion-margin">
             <h2><u>Edit</u></h2>
-            <p>Change the images folders in order for you to customize your gallery</p>
+            <p>Move the images to other folders in order for you to customize your gallery</p>
           </div>
           <br>
         </ion-row>

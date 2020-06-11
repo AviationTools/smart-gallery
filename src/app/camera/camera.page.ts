@@ -101,7 +101,7 @@ export class CameraPage {
     let tableList = [];
     this.timetable = this.tableStorageService.getTimeTable();
 
-    for(const folder of this.timetable.getAllFolders()){
+    for(const folder of this.timetable.getAllFolders()) {
       tableList.push({
         "id": folder.id,
         "subject": folder.subject,
@@ -199,9 +199,9 @@ function determineSubjectIDForImage(table, folderList) {
         end.add(1, "day");
         // timeNow.add(1, "day");
       }
-      
+
       if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
-        if(checkLesson(lesson.repeatWeek, table.creationDate)) {
+        if(checkLesson(lesson.repeatWeek, table.creationDate , lesson.startingWeek)) {
           if(checkIfFolderExists(folderList, lesson.subjectID)) {
             returnValue = lesson.subjectID;
           }
@@ -229,11 +229,15 @@ function checkDay(timeNow, weekDay) {
 }
 
 
-function checkLesson(fachrythmus: number, creationDate: Date) {
+function checkLesson(fachrythmus: number, creationDate: Date, startingWeek: number) {
     const date = moment();
     // .add(21, "day");
     let weekOfYear = date.isoWeek(); //Kalender Woche
-    let creationWeek = moment(creationDate).isoWeek() //Woche wann StundenPlan kreiert wurde
+    let creationWeek = moment(creationDate).isoWeek(); //Woche wann StundenPlan kreiert wurde
+
+    if(moment(creationDate).add(startingWeek, "w").isoWeek() > weekOfYear) {
+      return false;
+    }
     let modulo = (weekOfYear-creationWeek)+1%(fachrythmus);
 
     if(fachrythmus == 1) {

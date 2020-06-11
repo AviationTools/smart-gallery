@@ -17,8 +17,8 @@ export class ImagesComponent {
   @Input("rawImage") rawImage: string;
   @Input("id") id: number;
   @Input("lessonList") lessonList: any[];
-  @Output() removeCurrentLesson = new EventEmitter();
-  @Output() editCurrentLesson = new EventEmitter();
+  @Output() removeSpecificImage = new EventEmitter();
+  @Output() editSpecificImage = new EventEmitter();
 
   @ViewChild("img", {read: ElementRef, static: true}) imgElement: ElementRef;
   
@@ -72,19 +72,18 @@ export class ImagesComponent {
   }
 
   async presentAlert() {
-    let newSubject;
+    let newSubjectID;
     let input = []
     for (const lesson of this.lessonList) {
-
       if(lesson.subject != this.subject) {
         input.push({
           name: lesson.subject,
           type: 'radio',
           label: lesson.subject,
-          value: lesson.id,
+          value: lesson.subjectID,
           checked: false,
           handler: (el) => {
-            newSubject = el.value;
+            newSubjectID = el.value;
           }
         })
       }
@@ -104,9 +103,9 @@ export class ImagesComponent {
           text: 'Save',
           handler: () => {
             console.log('Save');
-            let emitObject = [this.id, newSubject]
+            let emitObject = [this.id, newSubjectID]
             if(emitObject[1] != undefined){
-              this.editCurrentLesson.emit(emitObject);
+              this.editSpecificImage.emit(emitObject);
             }
           }
         },
@@ -114,7 +113,7 @@ export class ImagesComponent {
           text: 'Delete',
           handler: () => {
             console.log('Delete');
-            this.removeCurrentLesson.emit(this.id);
+            this.removeSpecificImage.emit(this.id);
           }
         }
       ],

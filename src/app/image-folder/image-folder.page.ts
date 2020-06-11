@@ -36,7 +36,7 @@ export class ImageFolderPage {
     });
   }
 
-  removeSpecificLesson(id: number) {
+  removeSpecificImage(id: number) {
     let newImageList = this.imageStorageService.removeSpecificImage(id)
     for (const newImage of newImageList) {
       this.imageStorageService.updateImageTable(newImage);
@@ -45,20 +45,20 @@ export class ImageFolderPage {
     this.getImagesForSubject(this.subjectId);
   }
 
-  editSpecificLesson(emitObject: any) {
+  editSpecificImage(emitObject: any) {
     let id = emitObject[0];
-    let subject = emitObject[1];
+    let subjecID = emitObject[1];
     let thisImage = this.imageStorageService.getSpecificImage(id);
 
     let imageObject = {
       "id": id,
-      "subject": subject,
+      "subjectID": subjecID,
       "weekDay": thisImage[0].weekDay,
       "src": thisImage[0].src,
       "creationDate": thisImage[0].creationDate
     }
 
-    this.removeSpecificLesson(id);
+    this.removeSpecificImage(id);
     this.imageStorageService.updateImageTable(imageObject);
   }
 
