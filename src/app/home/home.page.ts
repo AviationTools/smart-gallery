@@ -5,7 +5,7 @@ import { ToastController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
 import { TableStorageService } from '../service/table-storage.service';
 import { SettingsService  } from '../service/settings.service';
-import { TimeTable } from '../models/timetable';
+import { TimeTable, Lesson } from '../models/timetable';
 import { Platform } from '@ionic/angular';
 import * as moment from 'moment';
 
@@ -24,7 +24,7 @@ export class HomePage{
   fromTime: Date;
   toTime: Date;
   timetable: TimeTable;
-  lessonList: any[];
+  lessonList: Lesson[];
   allLessons: any[];
   fullWeek: boolean;
   modalOpen: boolean;

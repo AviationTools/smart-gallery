@@ -20,6 +20,7 @@ import { LessonComponent } from '../lesson/lesson.component'
     IonicModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage, HomePage, LessonComponent, CameraPage, SettingsPage]
+  exports:[ HomePage, LessonComponent, CameraPage, SettingsPage],
+  declarations: [ TabsPage, HomePage, LessonComponent, CameraPage, SettingsPage ]
 })
 export class TabsPageModule {}

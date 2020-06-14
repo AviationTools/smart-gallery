@@ -1,14 +1,14 @@
-<ion-card #card color="{{ color }}" [id]="id">
+<ion-card #card color="{{ lesson.color }}" [id]="lesson.id">
   <ion-card-header>
-    <ion-card-title>{{ item.subject }}</ion-card-title>
+    <ion-card-title>{{ lesson.subject }}</ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <ion-grid>
         <ion-col>
-          {{item.timeFrame.fromTime | date:'H:mm'}} - {{item.timeFrame.toTime | date:'H:mm'}}
+          {{lesson.timeFrame.fromTime | date:'H:mm'}} - {{lesson.timeFrame.toTime | date:'H:mm'}}
         </ion-col>
         <ion-col>
-          <h2 class="ion-float-right">{{ item.repeatWeek }}<ion-icon name="repeat"></ion-icon></h2>
+          <h2 class="ion-float-right">{{ lesson.repeatWeek }}<ion-icon name="repeat"></ion-icon></h2>
         </ion-col>
     </ion-grid>
   </ion-card-content>

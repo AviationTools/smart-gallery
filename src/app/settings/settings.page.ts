@@ -82,6 +82,10 @@ export class SettingsPage {
     await alert.present();
   }
 
+  appTeilen() {
+    console.log("teilen");
+  }
+
   rateApp() {
     // set certain preferences
     this.appRate.preferences.storeAppURL = {

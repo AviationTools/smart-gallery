@@ -17,12 +17,12 @@
       <ion-input class="ion-padding-end" type="text" [(ngModel)]="subject" id="input" ngModel pattern="[a-zA-Z ]*"></ion-input><ion-icon color="primary" name="text"></ion-icon>
     </ion-item>
     
-    <ion-item lines="full" (click)="setWeekCycle($event)">
+    <ion-item lines="full" (click)="setWeekCycle()">
       <ion-label class="ion-no-padding">Repeat:</ion-label>
       <ion-text class="ion-padding-end">{{ repeatWeekText }}</ion-text><ion-icon color="primary" name="repeat"></ion-icon>
     </ion-item>
 
-    <ion-item lines="full" (click)="setStartingWeek($event)">
+    <ion-item lines="full" (click)="setStartingWeek()">
       <ion-label class="ion-no-padding">Beginning:</ion-label>
       <ion-text class="ion-padding-end">{{ startingWeekText }}</ion-text><ion-icon color="primary" name="return-up-forward"></ion-icon>
     </ion-item>

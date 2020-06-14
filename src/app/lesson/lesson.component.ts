@@ -10,14 +10,8 @@ import { Vibration } from '@ionic-native/vibration/ngx';
   styleUrls: ['./lesson.component.scss'],
 })
 export class LessonComponent implements OnInit {
-  @Input("weekDay") weekDay: string;
   @Input("lessonList") lessonList: any[];
-  @Input("item") item: {};
-  @Input("id") id: number;
-  @Input("repeatWeek") repeatWeek: number;
-  @Input("color") color: string;
-  @Input("subject") subject: string;
-  @Input("subjectID") subjectID: number;
+  @Input("lesson") lesson: any;
   @Output() removingCurrentLesson = new EventEmitter();
   @Output() changeCurrentLesson = new EventEmitter();
 
@@ -66,7 +60,7 @@ export class LessonComponent implements OnInit {
 
   async presentAlert() {
     const alertct = await this.alertController.create({
-      header: this.weekDay,
+      header: this.lesson.weekDay,
       subHeader: 'Configure',
       buttons: [
         {
@@ -79,14 +73,14 @@ export class LessonComponent implements OnInit {
           text: 'Change',
           handler: () => {
             console.log('Change');
-            this.changeCurrentLesson.emit(this.id);
+            this.changeCurrentLesson.emit(this.lesson.id);
           }
         },
         {
           text: 'Delete',
           handler: () => {
             console.log('Delete');
-            this.removingCurrentLesson.emit(this.id);
+            this.removingCurrentLesson.emit(this.lesson.id);
           }
         }
       ]

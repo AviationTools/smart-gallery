@@ -10,8 +10,8 @@ import { CameraPage } from './camera.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    CameraPageRoutingModule
+    CameraPageRoutingModule,
   ],
-  declarations: [CameraPage]
+  // declarations: [ CameraPage ]
 })
 export class CameraPageModule {}

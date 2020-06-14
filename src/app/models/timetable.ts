@@ -95,7 +95,7 @@ export interface Lesson {
   color: string;
   repeatWeek: number;
   startingWeek: number;
-  timeframe: TimeFrame;
+  timeFrame: TimeFrame;
   codeTimeFrame: CodeTimeFrame;
 }
 

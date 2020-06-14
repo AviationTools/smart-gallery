@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TabsPageRoutingModule } from './home-routing.module';
-import { LessonComponent } from '../lesson/lesson.component';
+// import { LessonComponent } from '../lesson/lesson.component';
 
 import { HomePage } from './home.page';
 
@@ -22,6 +22,6 @@ import { HomePage } from './home.page';
       }
     ])
   ],
-  declarations: [HomePage, LessonComponent]
+  // declarations: [HomePage, LessonComponent]
 })
 export class HomePageModule {}
