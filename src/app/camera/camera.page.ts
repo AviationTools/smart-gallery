@@ -234,15 +234,9 @@ function checkLesson(fachrythmus: number, creationDate: Date, startingWeek: numb
     // .add(21, "day");
     let weekOfYear = date.isoWeek(); //Kalender Woche
     let creationWeek = moment(creationDate).isoWeek(); //Woche wann StundenPlan kreiert wurde
-
-    if(moment(creationDate).add(startingWeek, "w").isoWeek() > weekOfYear) {
-      return false;
-    }
-    let modulo = (weekOfYear-creationWeek)+1%(fachrythmus);
-
-    if(fachrythmus == 1) {
-      return true;
-    } else if(modulo == fachrythmus) {
+    let modulo = Math.abs(weekOfYear-(creationWeek + startingWeek)) % fachrythmus;
+    
+    if(modulo == 0) {
       return true;
     } else {
       return false;

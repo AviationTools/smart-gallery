@@ -33,7 +33,7 @@ export class AppComponent {
         let returnSettings = {
           "defaultTime": false,
           "firstStart": true,
-          "fullWeek": false
+          "fullWeek": true
         }
         this.settingsService.updateSettings(returnSettings);
       }

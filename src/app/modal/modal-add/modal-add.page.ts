@@ -401,12 +401,16 @@ export class ModalAddPage implements OnInit {
               value: 1
             },
             {
-              text: 'in three weeks',
+              text: 'in two weeks',
               value: 2
             },
             {
-              text: 'in four weeks',
+              text: 'in three weeks',
               value: 3
+            },
+            {
+              text: 'in four weeks',
+              value: 4
             }
           ],
           selectedIndex: this.startingWeek
@@ -453,9 +457,12 @@ export class ModalAddPage implements OnInit {
       this.startingWeekText = "next week";
     }
     if(startWeek == 2) {
-      this.startingWeekText = "in three weeks";
+      this.startingWeekText = "in two weeks";
     }
     if(startWeek == 3) {
+      this.startingWeekText = "in three weeks";
+    }
+    if(startWeek == 4) {
       this.startingWeekText = "in four weeks";
     }
   }

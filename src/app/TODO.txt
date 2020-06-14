@@ -61,6 +61,7 @@ this.ionSlides.update()
   - check why getImageCountForSubject() & getTableSubjectList() get called that often [Performance Issue]
   - subject suggestion (autocomplete or selection) for existing Subjects [No Priority!]
   - Edit Lesson doesnt Change color Folder [No Priority!]
+  - vorselektierung Color (prüfen welche Farben) || vorselektierung schwarz [No Priority!]
 
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).

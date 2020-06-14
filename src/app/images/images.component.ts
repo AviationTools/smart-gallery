@@ -52,7 +52,7 @@ export class ImagesComponent {
         // this.vibration.vibrate(500);
         this.presentAlert();
         alertOpend = true;
-      }, 1000);
+      }, 500);
     }
 
     const onEnd = (ev: any) => {
