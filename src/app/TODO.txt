@@ -54,6 +54,7 @@ this.ionSlides.update()
   - repeatWeek select in Modal (maualy switching week of Month) [No Priority!]
   - check operation with a couple Devices exp (Tablets etc)
   - FAQ Topic: when subject names arent identical ! [When Website is ready!]
+  - Impressum [Low Priority!]
   - check coliding Lessons (same time) [No Priority!]
   - evtl vor dem Foto auswählen welcher Ordner ausgewählt werden soll. [No Priority!]
   - Badge showing if lesson is comming up next or is active now. [No Priority!]
