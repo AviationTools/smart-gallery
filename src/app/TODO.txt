@@ -1,12 +1,3 @@
-/**
-* Returns the average of two numbers.
-*
-* @remarks
-* This method is part of the {@link core-library#Statistics | Statistics subsystem}.
-*
-* @param weekDay - The weekday
-* @returns The arithmetic mean of `x` and `y`
-*/
 
 //Testing Command 
 - npm run ng test
@@ -63,6 +54,7 @@ this.ionSlides.update()
   - subject suggestion (autocomplete or selection) for existing Subjects [No Priority!]
   - Edit Lesson doesnt Change color Folder [No Priority!]
   - vorselektierung Color (prüfen welche Farben) || vorselektierung schwarz [No Priority!]
+  - option to save all images into Native Gallery [Low Priority!]
 
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).

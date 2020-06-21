@@ -5,9 +5,10 @@ import { SettingsService } from '../service/settings.service';
 import { AlertController } from '@ionic/angular';
 import { AppRate } from '@ionic-native/app-rate/ngx';
 import { ToastController } from '@ionic/angular';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ModalSlidesPage } from '../modal/modal-slides/modal-slides.page';
 import { ModalController } from '@ionic/angular';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-settings',
@@ -25,6 +26,8 @@ export class SettingsPage {
     public alertController: AlertController,
     public modalController: ModalController,
     public toastController: ToastController,
+    private iab: InAppBrowser,
+    private socialSharing: SocialSharing,
     private appRate: AppRate
     ) {
       setTimeout(() => {
@@ -83,30 +86,27 @@ export class SettingsPage {
   }
 
   appTeilen() {
-    console.log("teilen");
+    this.socialSharing.share("Try this app out and start organizing your images ", null, null, "https://play.google.com/store/apps/details?id=com.smartgallery.app");
   }
 
   rateApp() {
-    // set certain preferences
+    
     this.appRate.preferences.storeAppURL = {
-      ios: '<app_id>',
-      android: 'market://details?id=<package_name>',
-      windows: 'ms-windows-store://review/?ProductId=<store_id>'
+      android: 'market://details?id=com.smartgallery.app'
     }
-
+    this.appRate.preferences.displayAppName = 'Smart Gallery';
+    this.appRate.preferences.usesUntilPrompt = 5;
+    
+    this.appRate.preferences.callbacks = {
+      handleNegativeFeedback: (() => {
+        this.socialSharing.shareViaEmail(null, "Problem or Bug", ["smartgallery@web.de"]);
+      }),
+      onRateDialogShow: ((callback) => {
+        callback(1); // cause immediate click on 'Rate Now' button
+      })
+    }
+    
     this.appRate.promptForRating(true);
-
-    // or, override the whole preferences object
-    this.appRate.preferences = {
-      usesUntilPrompt: 3,
-      storeAppURL: {
-      ios: '<app_id>',
-      android: 'market://details?id=<package_name>',
-      windows: 'ms-windows-store://review/?ProductId=<store_id>'
-      }
-    }
-
-    this.appRate.promptForRating(false);
   }
 
   settingsToggle($event , option: string){
