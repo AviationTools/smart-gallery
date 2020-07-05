@@ -16,8 +16,8 @@ export class ModalAddPage implements OnInit {
   @Input() subject: string;
   @Input() subjectID: number;
   @Input() color: string;
-  @Input() fromTime:Date;
-  @Input() toTime: Date;
+  @Input() fromTime: string;
+  @Input() toTime: string;
   @Input() disableCloseBtn: boolean;
   @Input() lessonList: any[];
 
@@ -280,13 +280,13 @@ export class ModalAddPage implements OnInit {
     }
   }
 
-  validateTime(time: Date) {
+  validateTime(time: string) {
     if(time){
       this.validatorTime = false
       return time;
     }else{
       this.validatorTime = true
-      this.presentToast("Please pick the Time!");
+      this.presentToast("Please pick a start & end time!");
     }
   }
 
@@ -296,7 +296,7 @@ export class ModalAddPage implements OnInit {
       return color;
     }else{
       this.validatorColor = true
-      this.presentToast("Please choose a Color!");
+      this.presentToast("Please choose a color!");
     }
   }
 
@@ -407,11 +407,7 @@ export class ModalAddPage implements OnInit {
             {
               text: 'in three weeks',
               value: 3
-            },
-            // {
-            //   text: 'in four weeks',
-            //   value: 4
-            // }
+            }
           ],
           selectedIndex: this.startingWeek
         }
@@ -462,8 +458,11 @@ export class ModalAddPage implements OnInit {
     if(startWeek == 3) {
       this.startingWeekText = "in three weeks";
     }
-    // if(startWeek == 4) {
-    //   this.startingWeekText = "in four weeks";
-    // }
+  }
+
+  addDefaultTime() {
+    let newTime = moment(this.fromTime);
+    newTime.add(45, "minutes")
+    this.toTime = newTime.toISOString();
   }
 }

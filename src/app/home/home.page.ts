@@ -28,6 +28,7 @@ export class HomePage{
   allLessons: any[];
   fullWeek: boolean;
   modalOpen: boolean;
+  noChanges: boolean;
 
 
   constructor(
@@ -41,6 +42,7 @@ export class HomePage{
     this.todayDay = this.getTodaysDay();
     this.weekDay = this.getTodaysDay();
     this.getTableDay();
+    this.noChanges = true;
 
     this.tableStorageService.remove.subscribe(() => {
       this.lessonList = [];
@@ -54,7 +56,8 @@ export class HomePage{
     //Hardware Back Button (blocks unsaved changes)
     this.platform.backButton.subscribeWithPriority(101, (processNextHandler) => {
       if(this.modalOpen) {
-        this.presentToast("Please Save or Close!");
+        // this.presentToast("Please Save or Close!");
+        this.noChanges = false;
       } else {
         processNextHandler();
       }
@@ -174,7 +177,9 @@ export class HomePage{
           'lessonList': this.allLessons
         }
       }
-      this.removeSpecificLesson(array.id);
+      if(this.noChanges) {
+        this.removeSpecificLesson(array.id);
+      }
     } else {
       //New Lesson 
       modalObject = {

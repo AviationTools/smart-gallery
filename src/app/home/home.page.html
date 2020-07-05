@@ -16,14 +16,20 @@
       <ion-col size-md>  
         <ion-button expand="block" (click)="setWeekDay()">{{ weekDay }}</ion-button>
         <ion-card >
-          <ion-card-header>
-            <ion-card-title>{{ weekDay }}</ion-card-title>
-          </ion-card-header>
           <app-lesson *ngFor="let lesson of lessonList" (removingCurrentLesson)='removeSpecificLesson($event)' (changeCurrentLesson)="changeCurrentLesson($event)" [lesson]="lesson" [lessonList]="lessonList"></app-lesson>
         </ion-card>
-        
       </ion-col>
     </ion-row>
+    
+    <ion-row *ngIf="lessonList == 0" class="ion-justify-content-center align-items-center">
+      <ion-icon size="large" style="zoom:3.0;" name="calendar-sharp" color="medium"></ion-icon>
+    </ion-row>
+    <ion-row *ngIf="lessonList == 0" class="ion-justify-content-center">
+      <ion-text color="medium">
+        <h2>No Lesson</h2>
+      </ion-text>
+    </ion-row>
+
   </ion-grid>
   
 </ion-content>

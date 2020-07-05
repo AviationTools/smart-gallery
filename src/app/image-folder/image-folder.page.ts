@@ -101,9 +101,6 @@ export class ImageFolderPage {
       }
     }
     this.imagesList = subjectImageList;
-    if(subjectImageList.length == 0) {
-      this.presentToast("No Images for this Subject found!");
-    }
   }
 
   async presentToast(message: string) {
