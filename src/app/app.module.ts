@@ -21,6 +21,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { AppRate } from '@ionic-native/app-rate/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +44,7 @@ import { Vibration } from '@ionic-native/vibration/ngx';
     AppRate,
     InAppBrowser,
     Vibration,
+    AppVersion,
     SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

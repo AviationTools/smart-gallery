@@ -52,8 +52,6 @@ this.ionSlides.update()
   - ion-reorder Items (Folder & Lessons) [No Priority!]
   - check why getImageCountForSubject() & getTableSubjectList() get called that often [Performance Issue]
   - subject suggestion (autocomplete or selection) for existing Subjects [No Priority!]
-  - Edit Lesson doesnt Change color Folder [No Priority!]
-  - vorselektierung Color (prüfen welche Farben) || vorselektierung schwarz [No Priority!]
   - option to save all images into Native Gallery [Low Priority!]
 
   //Added but not Finished
@@ -89,6 +87,3 @@ this.ionSlides.update()
   - feaute Request set add lesson and ask how lesson should be repeated.[Done!]
   - 1 bis 4 wochen Table erstellen [small Problem with Month = 3 weeks] (RepeatSetting) [Done!]
   - optional start Lesson time (creationDat) [start 1,2,3,4] [Done!]
-
-  //Produkt Beschreibung Play Store
-  - schnell und einfach Bilder finden

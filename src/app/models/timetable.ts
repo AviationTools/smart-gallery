@@ -24,19 +24,6 @@ export class TimeTable {
     this.lessons.push(lesson);
   }
 
-  getSpecificLessons(weekDay: string) {
-    //Später filter() einbauen.
-    let object = [];
-    for (let i = 0; i < this.lessons.length; i++) {
-      if(this.lessons[i] != null){
-        if(this.lessons[i].weekDay == weekDay){
-          object.push(this.lessons[i]);
-        }
-      }
-    }
-    return object;
-  }
-
   getAllLessons() {
     let object = [];
     for (let i = 0; i < this.lessons.length; i++) {
@@ -94,7 +81,7 @@ export interface Lesson {
   weekDay: string;
   color: string;
   repeatWeek: number;
-  startingWeek: number;
+  startingDate: string;
   timeFrame: TimeFrame;
   codeTimeFrame: CodeTimeFrame;
 }

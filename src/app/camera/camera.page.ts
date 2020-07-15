@@ -50,6 +50,10 @@ export class CameraPage {
       this.tableStorageService.updated.subscribe(() => {
         this.getTableSubjectList();
       });
+
+      this.tableStorageService.remove.subscribe(() => {
+        this.folderList = [];
+      })
     }
 
   ionViewDidEnter() {
@@ -200,13 +204,12 @@ function determineSubjectIDForImage(table, folderList) {
         // timeNow.add(1, "day");
       }
 
-      if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)) {
-        if(checkLesson(lesson.repeatWeek, table.creationDate , lesson.startingWeek)) {
-          if(checkIfFolderExists(folderList, lesson.subjectID)) {
-            returnValue = lesson.subjectID;
-          }
-        }
-
+      if(start.isSameOrBefore(timeNow) && end.isAfter(timeNow)
+          && checkLesson(lesson.repeatWeek, table.creationDate)
+          && checkIfFolderExists(folderList, lesson.subjectID)
+          && moment(lesson.startingDate).isSameOrBefore(timeNow)) {
+          
+          returnValue = lesson.subjectID;
       }
     }
   }
@@ -229,12 +232,12 @@ function checkDay(timeNow, weekDay) {
 }
 
 
-function checkLesson(fachrythmus: number, creationDate: Date, startingWeek: number) {
+function checkLesson(fachrythmus: number, creationDate: Date) {
     const date = moment();
-    // .add(21, "day");
+    //.add(0, "day");
     let weekOfYear = date.isoWeek(); //Kalender Woche
     let creationWeek = moment(creationDate).isoWeek(); //Woche wann StundenPlan kreiert wurde
-    let modulo = Math.abs(weekOfYear-(creationWeek + startingWeek)) % fachrythmus;
+    let modulo = (weekOfYear-creationWeek) % fachrythmus;
     
     if(modulo == 0) {
       return true;

@@ -9,6 +9,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ModalSlidesPage } from '../modal/modal-slides/modal-slides.page';
 import { ModalController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'app-settings',
@@ -18,6 +19,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 export class SettingsPage {
   defaultTime: boolean;
   fullWeek: boolean;
+  appVersionNumber: string;
 
   constructor(
     public tableStorageService: TableStorageService,
@@ -28,12 +30,17 @@ export class SettingsPage {
     public toastController: ToastController,
     private iab: InAppBrowser,
     private socialSharing: SocialSharing,
-    private appRate: AppRate
+    private appRate: AppRate,
+    private appVersion: AppVersion
     ) {
       setTimeout(() => {
         this.defaultTime = this.settingsService.getSettings().defaultTime;
         this.fullWeek = this.settingsService.getSettings().fullWeek;
       }, 500);
+      //Retrive App Version
+      this.appVersion.getVersionNumber().then((version) => {
+        this.appVersionNumber = version;
+      });
     }
 
   async deleteTableStorage() {

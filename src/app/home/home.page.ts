@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PickerController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { ModalAddPage } from '../modal/modal-add/modal-add.page';
@@ -18,21 +17,16 @@ import * as moment from 'moment';
 export class HomePage{
   
   weekDay: string;
-  weekIndex: number;
   todayDay: string;
   subject: string;
   fromTime: Date;
   toTime: Date;
   timetable: TimeTable;
   lessonList: Lesson[];
-  allLessons: any[];
-  fullWeek: boolean;
   modalOpen: boolean;
-  noChanges: boolean;
 
 
   constructor(
-    private pickerController: PickerController,
     public modalController: ModalController,
     public tableStorageService: TableStorageService,
     public settingsService: SettingsService,
@@ -42,121 +36,30 @@ export class HomePage{
     this.todayDay = this.getTodaysDay();
     this.weekDay = this.getTodaysDay();
     this.getTableDay();
-    this.noChanges = true;
 
     this.tableStorageService.remove.subscribe(() => {
       this.lessonList = [];
       this.timetable = new TimeTable("test");
     });
 
-    setTimeout(() => {
-      this.fullWeek = this.settingsService.getSettings().fullWeek;
-    }, 500);
-
     //Hardware Back Button (blocks unsaved changes)
     this.platform.backButton.subscribeWithPriority(101, (processNextHandler) => {
       if(this.modalOpen) {
-        // this.presentToast("Please Save or Close!");
-        this.noChanges = false;
+        this.modalController.dismiss({
+          'dismissed': true,
+          'noChanges': false
+        });
       } else {
         processNextHandler();
       }
     });
   }
 
-  ionViewDidEnter(){
-    setTimeout(() => {
-      this.fullWeek = this.settingsService.getSettings().fullWeek;
-    }, 500);
-  }
-
   getTodaysDay(){
     var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     return nameWeekDays[moment().isoWeekday()-1]; 
   }
-
-  getTodaysIndex() {
-    var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    for(let i = 0; i < nameWeekDays.length; i++) {
-      if(nameWeekDays[i] == this.weekDay) {
-        return i;
-      }
-    }
-  }
-
-  async setWeekDay() {
-    this.weekIndex = this.getTodaysIndex();
-    if(this.fullWeek) {
-      var weekList = [
-        {
-          text: 'Monday'
-        },
-        {
-          text: 'Tuesday'
-        },
-        {
-          text: 'Wednesday'
-        },
-        {
-          text: 'Thursday'
-        },
-        {
-          text: 'Friday'
-        },
-        {
-          text: 'Saturday'
-        },
-        {
-          text: 'Sunday'
-        }
-      ]
-    } else {
-      var weekList = [
-        {
-          text: 'Monday'
-        },
-        {
-          text: 'Tuesday'
-        },
-        {
-          text: 'Wednesday'
-        },
-        {
-          text: 'Thursday'
-        },
-        {
-          text: 'Friday'
-        }
-      ]
-    }
-
-    const picker = await this.pickerController.create({
-      columns: [
-        {
-          name: 'weekDayList',
-          options: weekList,
-          selectedIndex: this.weekIndex
-        }
-    ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Confirm',
-          handler: (value) => {
-            this.weekDay = value.weekDayList.text;
-            
-            this.getTableDay();
-          }
-        }
-      ]
-    });
-
-    await picker.present();
-  }
-    
+ 
   async presentModal(array?: any) {
     let modalObject: any;
     //When Changes are made for Lesson
@@ -165,20 +68,17 @@ export class HomePage{
         component: ModalAddPage,
         cssClass: 'my-custom-modal-css',
         componentProps: {
-          'weekDay': this.weekDay,
+          'weekDay': array.weekDay,
           'subject': array.subject,
           'subjectID': array.subjectID,
           'color': array.color,
           'repeatWeek': array.repeatWeek,
-          'startingWeek': array.startingWeek,
+          'startingDate': array.startingDate,
           'fromTime': array.timeFrame.fromTime,
           'toTime': array.timeFrame.toTime,
-          'disableCloseBtn': true,
-          'lessonList': this.allLessons
+          'lessonList': this.lessonList,
+          'edit': true
         }
-      }
-      if(this.noChanges) {
-        this.removeSpecificLesson(array.id);
       }
     } else {
       //New Lesson 
@@ -186,9 +86,8 @@ export class HomePage{
         component: ModalAddPage,
         cssClass: 'my-custom-modal-css',
         componentProps: {
-          'weekDay': this.weekDay,
-          'disableCloseBtn': false,
-          'lessonList': this.allLessons
+          'lessonList': this.lessonList,
+          'edit': false
         }
       }
     }
@@ -200,6 +99,9 @@ export class HomePage{
       .then((data) => {
         this.modalOpen = false;
         const dataObject = data['data'];
+        if(dataObject.noChanges && array) {
+          this.removeSpecificLesson(array.id);
+        }
         //Send Data to Storage
         if(dataObject == undefined) {
           return;
@@ -229,21 +131,50 @@ export class HomePage{
   }
 
   getTableDay() {
+    var nameWeekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     this.timetable = this.tableStorageService.getTimeTable();
-    if(this.timetable == undefined){
+    if (this.timetable == undefined) {
       this.tableStorageService.isReady.subscribe(() => {
         this.timetable = this.tableStorageService.getTimeTable();
-        this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
-        this.allLessons = this.timetable.getAllLessons();
+        this.lessonList = this.timetable.getAllLessons();
         //Sort LessonList
-        let sortedArray = this.lessonList.sort((a, b) => moment(a.timeFrame.fromTime).diff(moment(b.timeFrame.fromTime)))
+        let sortedArray = this.lessonList.sort((a, b) => {
+          if(nameWeekDays.indexOf(a.weekDay) < nameWeekDays.indexOf(b.weekDay)) {
+            return -1;
+          }
+          if(nameWeekDays.indexOf(a.weekDay) > nameWeekDays.indexOf(b.weekDay)) {
+            return 1;
+          }
+          if(nameWeekDays.indexOf(a.weekDay) == nameWeekDays.indexOf(b.weekDay)) {
+            let temp =  moment(a.timeFrame.fromTime).diff(moment(b.timeFrame.fromTime));
+            if(temp == 0) {
+              return 0;
+            }else {
+              return temp;
+            }
+          }
+        });
         this.lessonList = sortedArray;
       });
-    }else{
-      this.lessonList = this.timetable.getSpecificLessons(this.weekDay);
-      this.allLessons = this.timetable.getAllLessons();
+    } else {
+      this.lessonList = this.timetable.getAllLessons();
       //Sort LessonList
-      let sortedArray = this.lessonList.sort((a, b) => moment(a.timeFrame.fromTime).diff(moment(b.timeFrame.fromTime)))
+      let sortedArray = this.lessonList.sort((a, b) => {
+        if(nameWeekDays.indexOf(a.weekDay) < nameWeekDays.indexOf(b.weekDay)) {
+          return -1;
+        }
+        if(nameWeekDays.indexOf(a.weekDay) > nameWeekDays.indexOf(b.weekDay)) {
+          return 1;
+        }
+        if(nameWeekDays.indexOf(a.weekDay) == nameWeekDays.indexOf(b.weekDay)) {
+          let temp =  moment(a.timeFrame.fromTime).diff(moment(b.timeFrame.fromTime));
+          if(temp == 0) {
+            return 0;
+          }else {
+            return temp;
+          }
+        }
+      });
       this.lessonList = sortedArray;
     }
   }

@@ -6,6 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SettingsService } from './service/settings.service';
 import { ModalSlidesPage } from './modal/modal-slides/modal-slides.page';
 import { ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { TableStorageService } from './service/table-storage.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -20,12 +23,19 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     public settingsService: SettingsService,
     public modalController: ModalController,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public tableStorageService: TableStorageService,
+    public alertController: AlertController,
+    public toastController: ToastController,
   ) {
     this.initializeApp();
 
     this.settingsService.isReady.subscribe(() => {
       let settings = this.settingsService.getSettings();
+
+      if(settings.firstStart) {
+        this.presentAlertConfirm();
+      }
 
       if(settings == undefined || !settings.firstStart) {
         this.presentModal();
@@ -52,5 +62,37 @@ export class AppComponent {
       component: ModalSlidesPage
     });
     return await modal.present();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'All existing lessons get deleted',
+      message: 'Because of this new update the exsisting <strong>lesson</strong> structure has changed.<br> Now users can choose a <strong>date</strong> when the lesson should begin, rather then picking the week.<br> If you choose <strong>not to reset</strong> all lessons, every individual lesson needs to be edited!',
+      buttons: [
+        {
+          text: 'Manually',
+          role: 'cancel',
+          handler: () => {
+            this.presentToast("Please edit all exsisting lessons!");
+          }
+        }, {
+          text: 'Reset (Recommended)',
+          handler: () => {
+            this.tableStorageService.removeFromStorage();
+            this.presentToast("Storage Schedule Cleared");
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 1500
+    });
+    toast.present();
   }
 }

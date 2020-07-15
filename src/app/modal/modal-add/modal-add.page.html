@@ -1,9 +1,9 @@
 <ion-header>
   
   <ion-toolbar>
-    <ion-title>{{ weekDay }}</ion-title>
+    <ion-title>Lesson</ion-title>
     <ion-buttons slot="end">
-      <ion-button disabled="{{ disableCloseBtn }}" (click)="dismissModal()">
+      <ion-button (click)="dismissModal()">
         <ion-icon name="close-sharp"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -13,84 +13,53 @@
 
 <ion-content>
   <ion-list>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Required</ion-label>
+      </ion-item-divider>
 
-    <ion-item>
-      <ion-label>Subject:</ion-label>
-      <ion-input class="ion-padding-end" type="text" [(ngModel)]="subject" id="input" ngModel pattern="[a-zA-Z ]*"></ion-input><ion-icon color="primary" name="text"></ion-icon>
-    </ion-item>
+      <ion-item (click)="setWeekDay()">
+        <ion-label>weekday <ion-text color="danger">*</ion-text></ion-label>
+        <ion-text class="ion-padding-end">{{ weekDay }}</ion-text>
+        <ion-icon color="primary" name="today-sharp"></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>subject <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input autocomplete="on" class="ion-padding-end" type="text" [(ngModel)]="subject" id="input" ngModel pattern="[a-zA-Z ]*"></ion-input><ion-icon color="primary" name="text"></ion-icon>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>start <ion-text color="danger">*</ion-text></ion-label>
+        <ion-datetime *ngIf="!defaultTime" class="ion-padding-end" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime" (ionChange)="addDefaultTime()"></ion-datetime><ion-icon *ngIf="!defaultTime" color="primary" name="time"></ion-icon>
+        <ion-datetime *ngIf="defaultTime" class="ion-padding-end" displayFormat="HH:mm" [(ngModel)]="fromTime" (ionChange)="addDefaultTime()"></ion-datetime><ion-icon *ngIf="defaultTime" color="primary" name="time"></ion-icon>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>end <ion-text color="danger">*</ion-text></ion-label>
+        <ion-datetime *ngIf="!defaultTime" class="ion-padding-end" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime><ion-icon *ngIf="!defaultTime" color="primary" name="timer"></ion-icon>
+        <ion-datetime *ngIf="defaultTime" class="ion-padding-end" displayFormat="HH:mm" [(ngModel)]="toTime" ></ion-datetime><ion-icon *ngIf="defaultTime"color="primary" name="timer"></ion-icon>
+      </ion-item>
+    </ion-item-group>
+
     
-    <ion-item lines="full" (click)="setWeekCycle()">
-      <ion-label class="ion-no-padding">Repeat:</ion-label>
-      <ion-text class="ion-padding-end">{{ repeatWeekText }}</ion-text><ion-icon color="primary" name="repeat"></ion-icon>
-    </ion-item>
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>Optional</ion-label>
+      </ion-item-divider>
 
-    <ion-item lines="full" (click)="setStartingWeek()">
-      <ion-label class="ion-no-padding">Begin:</ion-label>
-      <ion-text class="ion-padding-end">{{ startingWeekText }}</ion-text><ion-icon color="primary" name="return-up-forward"></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Start:</ion-label>
-      <ion-datetime *ngIf="!defaultTime" class="ion-padding-end" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="fromTime" (ionChange)="addDefaultTime()"></ion-datetime><ion-icon *ngIf="!defaultTime" color="primary" name="time"></ion-icon>
-      <ion-datetime *ngIf="defaultTime" class="ion-padding-end" displayFormat="HH:mm" [(ngModel)]="fromTime" (ionChange)="addDefaultTime()"></ion-datetime><ion-icon *ngIf="defaultTime" color="primary" name="time"></ion-icon>
-    </ion-item>
+        <ion-item lines="full" (click)="setWeekCycle()">
+          <ion-label class="ion-no-padding">repeat</ion-label>
+          <ion-text class="ion-padding-end">{{ repeatWeekText }}</ion-text><ion-icon color="primary" name="repeat"></ion-icon>
+        </ion-item>
     
-    <ion-item>
-      <ion-label>End:</ion-label>
-      <ion-datetime *ngIf="!defaultTime" class="ion-padding-end" displayFormat="HH:mm" minuteValues="0,15,30,45" [(ngModel)]="toTime"></ion-datetime><ion-icon *ngIf="!defaultTime" color="primary" name="timer"></ion-icon>
-      <ion-datetime *ngIf="defaultTime" class="ion-padding-end" displayFormat="HH:mm" [(ngModel)]="toTime" ></ion-datetime><ion-icon *ngIf="defaultTime"color="primary" name="timer"></ion-icon>
-    </ion-item>
-    
-    <ion-item>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-button (click)="setLessonColor('checkedBlue')" color="secondary" shape="round" size="large">
-              <ng-template [ngIf]="checkedBlue"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedBlue"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
+        <ion-item lines="full">
+          <ion-label class="ion-no-padding">begin</ion-label>
+          <ion-datetime class="ion-padding-end" displayFormat="MMM DD, YYYY" [(ngModel)]="startingDate" min="{{ minTime }}" max="{{ maxTime }}"></ion-datetime>
+          <ion-icon color="primary" name="calendar-sharp"></ion-icon>
+        </ion-item>
+    </ion-item-group>
 
-            <ion-button (click)="setLessonColor('checkedRed')" color="danger" shape="round" size="large">
-              <ng-template [ngIf]="checkedRed"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedRed"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
-
-            <ion-button (click)="setLessonColor('checkedBlack')" color="dark" shape="round" size="large">
-              <ng-template [ngIf]="checkedBlack"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedBlack"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
-
-            <ion-button (click)="setLessonColor('checkedPink')" color="tertiary" shape="round" size="large">
-              <ng-template [ngIf]="checkedPink"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedPink"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-button (click)="setLessonColor('checkedGreen')" color="success" shape="round" size="large">
-              <ng-template [ngIf]="checkedGreen"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedGreen"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
-
-            <ion-button (click)="setLessonColor('checkedYellow')" color="warning" shape="round" size="large">
-              <ng-template [ngIf]="checkedYellow"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedYellow"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
-
-            <ion-button (click)="setLessonColor('checkedGrey')" color="medium" shape="round" size="large">
-              <ng-template [ngIf]="checkedGrey"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedGrey"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
-
-            <ion-button (click)="setLessonColor('checkedOrange')" color="light" shape="round" size="large">
-              <ng-template [ngIf]="checkedOrange"><ion-icon name="checkmark-circle-outline"></ion-icon></ng-template>
-              <ng-template [ngIf]="!checkedOrange"><ion-icon name="ellipse-outline"></ion-icon></ng-template>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
     <ion-button (click)="setStorage()" expand="block">Save</ion-button> 
   </ion-list>
 </ion-content>
