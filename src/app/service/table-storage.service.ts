@@ -53,8 +53,8 @@ export class TableStorageService {
 
   async removeFromStorage(){
     await this.storage.remove("timetable").then(() => {
-      this.remove.emit();
       this.timetable = new TimeTable("test");
+      this.remove.emit();
     });
   }
   

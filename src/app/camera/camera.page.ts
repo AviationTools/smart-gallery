@@ -39,10 +39,8 @@ export class CameraPage {
       this.timetable = this.tableStorageService.getTimeTable();
  
       this.imageStorageService.isReady.subscribe(() => {
-        this.imageStorageService.isReady.subscribe(() => {
-          this.imageTable = this.imageStorageService.getImageTable();
-          this.getTableSubjectList();
-        });
+        this.imageTable = this.imageStorageService.getImageTable();
+        this.getTableSubjectList();
       });
       
       this.imageStorageService.updated.subscribe(() => {
@@ -59,9 +57,7 @@ export class CameraPage {
     }
 
   ionViewDidEnter() {
-    setTimeout(() => {
-      this.getTableSubjectList();
-    }, 500);
+    this.getTableSubjectList();
   }
   
   getTodaysDay() {
@@ -104,19 +100,21 @@ export class CameraPage {
   }
 
   getTableSubjectList() {
-    let tableList = [];
-    this.timetable = this.tableStorageService.getTimeTable();
+    setTimeout(() => {
+      let tableList = [];
+      this.timetable = this.tableStorageService.getTimeTable();
 
-    for(const folder of this.timetable.getAllFolders()) {
-      tableList.push({
-        "id": folder.id,
-        "subject": folder.subject,
-        "subjectID": folder.subjectID,
-        "color": folder.color,
-        "count": this.imageStorageService.getImageCountForSubject(folder.subjectID)
-      });
-    }
-    this.folderList = tableList;
+      for(const folder of this.timetable.getAllFolders()) {
+        tableList.push({
+          "id": folder.id,
+          "subject": folder.subject,
+          "subjectID": folder.subjectID,
+          "color": folder.color,
+          "count": this.imageStorageService.getImageCountForSubject(folder.subjectID)
+        });
+      }
+      this.folderList = tableList;
+    }, 500);
   }
 
   navigateToImageFolder(subjectID, subject) {

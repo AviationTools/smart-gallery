@@ -42,6 +42,10 @@ export class HomePage{
       this.timetable = new TimeTable("test");
     });
 
+    this.tableStorageService.updated.subscribe(() => {
+      this.getTableDay();
+    })
+
     //Hardware Back Button (blocks unsaved changes)
     this.platform.backButton.subscribeWithPriority(101, (processNextHandler) => {
       if(this.modalOpen) {
