@@ -103,8 +103,8 @@ export class AppComponent {
           "repeatWeek": lesson.repeatWeek,
           "startingDate": updatedDate,
           "timeFrame": {
-            "fromTime": lesson.timeFrame.fromTime,
-            "toTime": lesson.timeFrame.fromTime
+            "fromTime": moment(lesson.timeFrame.fromTime).toISOString(),
+            "toTime": moment(lesson.timeFrame.toTime).toISOString()
           },
           "codeTimeFrame": {
             "fromTime": lesson.codeTimeFrame.fromTime,

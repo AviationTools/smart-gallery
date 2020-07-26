@@ -88,8 +88,8 @@ export interface Lesson {
 }
 
 export interface TimeFrame {
-  fromTime: number;
-  toTime: number;
+  fromTime: string;
+  toTime: string;
 }
 
 export interface CodeTimeFrame {
