@@ -198,7 +198,8 @@ export class ModalAddPage implements OnInit {
         "codeTimeFrame": {
           "fromTime": new Date(this.fromTime).getHours() + ":" + new Date(this.fromTime).getMinutes(),
           "toTime": new Date(this.toTime).getHours() + ":" + new Date(this.toTime).getMinutes()
-         }
+         },
+         "creationDate": new Date().toISOString()
       }
     }
 
@@ -241,10 +242,10 @@ export class ModalAddPage implements OnInit {
   }
 
   validateTime(time: string) {
-    if(time){
+    if(time) {
       this.validatorTime = false
       return time;
-    }else{
+    } else {
       this.validatorTime = true
       this.presentToast("Please pick a start & end time!");
     }

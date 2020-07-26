@@ -39,8 +39,10 @@ export class CameraPage {
       this.timetable = this.tableStorageService.getTimeTable();
  
       this.imageStorageService.isReady.subscribe(() => {
-        this.imageTable = this.imageStorageService.getImageTable();
-        this.getTableSubjectList();
+        this.imageStorageService.isReady.subscribe(() => {
+          this.imageTable = this.imageStorageService.getImageTable();
+          this.getTableSubjectList();
+        });
       });
       
       this.imageStorageService.updated.subscribe(() => {

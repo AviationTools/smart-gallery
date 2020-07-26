@@ -15,10 +15,10 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="imagesList == 0" class="ion-justify-content-center align-items-center">
+    <ion-row *ngIf="imagesList.length == 0" class="ion-justify-content-center align-items-center">
       <ion-icon size="large" style="zoom:3.0;" name="images-sharp" color="medium"></ion-icon>
     </ion-row>
-    <ion-row *ngIf="imagesList == 0" class="ion-justify-content-center align-items-center">
+    <ion-row *ngIf="imagesList.length == 0" class="ion-justify-content-center align-items-center">
       <ion-text color="medium">
         <h4>No Image Found</h4>
       </ion-text>

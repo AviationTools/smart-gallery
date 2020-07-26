@@ -84,6 +84,7 @@ export interface Lesson {
   startingDate: string;
   timeFrame: TimeFrame;
   codeTimeFrame: CodeTimeFrame;
+  creationDate: string,
 }
 
 export interface TimeFrame {

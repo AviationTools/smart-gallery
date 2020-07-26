@@ -66,8 +66,8 @@ export class AppComponent {
 
   async presentAlertConfirm() {
     const alert = await this.alertController.create({
-      header: 'All existing lessons get deleted',
-      message: 'Because of this new update the exsisting <strong>lesson</strong> structure has changed.<br> Now users can choose a <strong>date</strong> when the lesson should begin, rather then picking the week.<br> If you choose <strong>not to reset</strong> all lessons, every individual lesson needs to be edited!',
+      header: 'Select the next step',
+      message: '<img src="assets/slides/updatePreview.png"/>Now users can choose a <strong><u>Date</u></strong> when the lesson should begin, rather then picking the week.<br> If you choose <strong><u>Not To Reset</u></strong> all lessons, every individual lesson needs to be edited!',
       buttons: [
         {
           text: 'Manually',
