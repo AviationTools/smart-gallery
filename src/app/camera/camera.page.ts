@@ -23,6 +23,7 @@ export class CameraPage {
   timetable: TimeTable;
   folderList: any[];
   alertOpened: boolean;
+  deleteFolder: boolean;
 
   constructor(
     public tableStorageService: TableStorageService,
@@ -35,6 +36,7 @@ export class CameraPage {
     private router: Router
     ) { 
       this.alertOpened = false;
+      this.deleteFolder = false;
       this.weekDay = this.getTodaysDay();
       this.timetable = this.tableStorageService.getTimeTable();
  
@@ -110,7 +112,8 @@ export class CameraPage {
           "subject": folder.subject,
           "subjectID": folder.subjectID,
           "color": folder.color,
-          "count": this.imageStorageService.getImageCountForSubject(folder.subjectID)
+          "count": this.imageStorageService.getImageCountForSubject(folder.subjectID),
+          "preview": this.imageStorageService.getNewestImageBySubject(folder.subjectID)
         });
       }
       this.folderList = tableList;
@@ -179,6 +182,14 @@ export class CameraPage {
       duration: 2000
     });
     toast.present();
+  }
+
+  toggleForDelete() {
+    if(this.deleteFolder) {
+      this.deleteFolder = false;
+    } else{
+      this.deleteFolder = true;
+    }
   }
 }
 

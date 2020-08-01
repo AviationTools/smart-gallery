@@ -3,8 +3,8 @@
   <ion-toolbar>
     <ion-title>Today is {{this.todayDay}}</ion-title>
 
-    <ion-button class="ion-margin-end" (click)="presentModal()" slot="end">
-      <ion-icon name="add-outline"></ion-icon>  
+    <ion-button fill="clear" class="ion-margin-end" (click)="presentModal()" slot="end">
+      <ion-icon size="large" name="add-outline"></ion-icon>  
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -14,9 +14,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md>  
-        <ion-card >
-          <app-lesson *ngFor="let lesson of lessonList" (removingCurrentLesson)='removeSpecificLesson($event)' (changeCurrentLesson)="changeCurrentLesson($event)" [lesson]="lesson" [lessonList]="lessonList"></app-lesson>
-        </ion-card>
+        <app-lesson (removingCurrentLesson)='removeSpecificLesson($event)' (changeCurrentLesson)="changeCurrentLesson($event)" [lessonList]="lessonList"></app-lesson>
       </ion-col>
     </ion-row>
     

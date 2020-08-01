@@ -3,6 +3,10 @@
     <ion-title>
       Camera & Images
     </ion-title>
+    <ion-button fill="clear" class="ion-margin-end" (click)="toggleForDelete()" slot="end">
+      <ion-icon *ngIf="!deleteFolder" size="large" name="ellipsis-horizontal"></ion-icon>
+      <ion-text *ngIf="deleteFolder">Cancel</ion-text>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -10,12 +14,25 @@
 
   <ion-list>
     <ion-item #folder *ngFor="let item of folderList" lines="full" (click)="navigateToImageFolder(item.subjectID, item.subject)" routerDirection="forward">    
-      <ion-button (click)="presentAlert(item.subject, item.subjectID)" color="dark" slot="start" size="small"><ion-icon  name="trash"></ion-icon></ion-button>
+      <ion-button *ngIf="deleteFolder" (click)="presentAlert(item.subject, item.subjectID)" color="dark" slot="start" size="small"><ion-icon  name="trash"></ion-icon></ion-button>
+        <ion-thumbnail slot="start">
+          <img [src]="item.preview" onerror="this.onerror=null;this.src='assets/image-outline.svg';">
+        </ion-thumbnail>
       <ion-badge color="{{ item.color }}" slot="end">{{ item.count }}</ion-badge>
       <ion-label>{{ item.subject }}</ion-label>
+
       <ion-icon color="{{ item.color }}" slot="end" name="arrow-forward-outline"></ion-icon>
     </ion-item>
   </ion-list>
+
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of folderList" size="6">
+        <ion-label>{{ item.subject }}</ion-label>
+        <ion-icon name="folder-open-outline"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
 
 </ion-content>
 

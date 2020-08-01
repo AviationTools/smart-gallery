@@ -158,7 +158,8 @@ export class HomePage{
             }
           }
         });
-        this.lessonList = sortedArray;
+        // this.lessonList = sortedArray;
+        this.sortByGroup(sortedArray);
       });
     } else {
       this.lessonList = this.timetable.getAllLessons();
@@ -179,8 +180,23 @@ export class HomePage{
           }
         }
       });
-      this.lessonList = sortedArray;
+      // this.lessonList = sortedArray;
+      this.sortByGroup(sortedArray);
     }
+  }
+
+  sortByGroup(sortedArray: any) {
+    let groupedList = [];
+    let result = sortedArray.reduce(function (r, a) {
+      r[a.weekDay] = r[a.weekDay] || [];
+      r[a.weekDay].push(a);
+      return r;
+    }, Object.create(null));
+
+    for (const key in result) {
+      groupedList.push(result[key]);
+    }
+    this.lessonList = groupedList;
   }
 
   removeSpecificLesson(id: number) {

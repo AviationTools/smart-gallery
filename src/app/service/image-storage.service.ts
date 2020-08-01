@@ -19,7 +19,6 @@ export class ImageStorageService {
   }
   
   //Image Methodes
-
   getImageCountForSubject(subjectID: number) {
     let count = 0;
     for (const image of this.images) {
@@ -28,6 +27,14 @@ export class ImageStorageService {
       }
     }
     return count;
+  }
+
+  getNewestImageBySubject(subjectID: number) {
+    for (const image of this.images) {
+      if(image.subjectID == subjectID){
+        return image.src;
+      }
+    }
   }
 
   removeSpecificImage(id: number) {

@@ -48,18 +48,20 @@ export class AppComponent {
             "version": version
           });
         });
-        this.presentToast("Storage Updated");
       }
 
       if(settings == undefined || !settings.firstStart) {
         this.presentModal();
         this.firstStart = true;
-        let returnSettings = {
-          "defaultTime": false,
-          "firstStart": true,
-          "fullWeek": true
-        }
-        this.settingsService.updateSettings(returnSettings);
+        this.appVersion.getVersionNumber().then((version) => {
+          let returnSettings = {
+            "defaultTime": false,
+            "firstStart": true,
+            "fullWeek": true,
+            "version": version
+          }
+          this.settingsService.updateSettings(returnSettings);
+        });
       }
     });
   }
@@ -90,45 +92,49 @@ export class AppComponent {
     this.tableStorageService.isReady.subscribe(() => {
       let oldStorage = this.tableStorageService.getTimeTable();
       this.timetable = new TimeTable("test");
-      for (const lesson of oldStorage.getAllLessons()) {
-        let oldDate = moment(lesson.timeFrame.fromTime);
-        let updatedDate = oldDate.add(lesson.startingWeek, "weeks").toISOString();
-        
-        this.timetable.addLesson({
-          "id": lesson.id,
-          "subject": lesson.subject,
-          "subjectID": lesson.subjectID,
-          "weekDay": lesson.weekDay,
-          "color": this.getNewColor(lesson.weekDay),
-          "repeatWeek": lesson.repeatWeek,
-          "startingDate": updatedDate,
-          "timeFrame": {
-            "fromTime": moment(lesson.timeFrame.fromTime).toISOString(),
-            "toTime": moment(lesson.timeFrame.toTime).toISOString()
-          },
-          "codeTimeFrame": {
-            "fromTime": lesson.codeTimeFrame.fromTime,
-            "toTime": lesson.codeTimeFrame.toTime
-          },
-          "creationDate": oldDate.toISOString()
-        });
-      }
-
-      for (const folder of oldStorage.getAllFolders()) {
-        if(folder.id != 1111111) {
-          this.timetable.addFolder({
-            'id': folder.id,
-            'subject': folder.subject,
-            'subjectID': folder.subjectID,
-            'color': folder.color
+      
+      if(oldStorage) {
+        for (const lesson of oldStorage.getAllLessons()) {
+          let oldDate = moment(lesson.timeFrame.fromTime);
+          let updatedDate = oldDate.add(lesson.startingWeek, "weeks").toISOString();
+          
+          this.timetable.addLesson({
+            "id": lesson.id,
+            "subject": lesson.subject,
+            "subjectID": lesson.subjectID,
+            "weekDay": lesson.weekDay,
+            "color": this.getNewColor(lesson.weekDay),
+            "repeatWeek": lesson.repeatWeek,
+            "startingDate": updatedDate,
+            "timeFrame": {
+              "fromTime": moment(lesson.timeFrame.fromTime).toISOString(),
+              "toTime": moment(lesson.timeFrame.toTime).toISOString()
+            },
+            "codeTimeFrame": {
+              "fromTime": lesson.codeTimeFrame.fromTime,
+              "toTime": lesson.codeTimeFrame.toTime
+            },
+            "creationDate": oldDate.toISOString()
           });
         }
+  
+        for (const folder of oldStorage.getAllFolders()) {
+          if(folder.id != 1111111) {
+            this.timetable.addFolder({
+              'id': folder.id,
+              'subject': folder.subject,
+              'subjectID': folder.subjectID,
+              'color': folder.color
+            });
+          }
+        }
+        this.tableStorageService.removeFromStorage();
+        this.tableStorageService.remove.subscribe(() => {
+          //Update old with new
+          this.tableStorageService.updateTimeTable(this.timetable);
+        })
+        this.presentToast("Storage Updated");
       }
-      this.tableStorageService.removeFromStorage();
-      this.tableStorageService.remove.subscribe(() => {
-        //Update old with new
-        this.tableStorageService.updateTimeTable(this.timetable);
-      })
     })
   }
 

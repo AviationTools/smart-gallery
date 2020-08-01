@@ -11,7 +11,8 @@ import { TabsPage } from './tabs.page';
 import { HomePage } from '../home/home.page';
 import { CameraPage } from '../camera/camera.page';
 import { SettingsPage } from '../settings/settings.page';
-import { LessonComponent } from '../lesson/lesson.component'
+import { LessonComponent } from '../lesson/lesson.component';
+import { SubLessonComponent } from '../sub-lesson/sub-lesson.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { LessonComponent } from '../lesson/lesson.component'
     IonicModule,
     TabsPageRoutingModule
   ],
-  exports:[ HomePage, LessonComponent, CameraPage, SettingsPage],
-  declarations: [ TabsPage, HomePage, LessonComponent, CameraPage, SettingsPage ]
+  exports:[ HomePage, LessonComponent, CameraPage, SettingsPage, SubLessonComponent],
+  declarations: [ TabsPage, HomePage, LessonComponent, CameraPage, SettingsPage, SubLessonComponent ]
 })
 export class TabsPageModule {}

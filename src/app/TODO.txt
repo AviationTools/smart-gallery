@@ -53,8 +53,6 @@ this.ionSlides.update()
   - check why getImageCountForSubject() & getTableSubjectList() get called that often [Performance Issue]
   - subject suggestion (autocomplete or selection) for existing Subjects [No Priority!]
   - option to save all images into Native Gallery [Low Priority!]
-  - change ion Card too background by Monday, Tuesday...
-  - upgrade lesson Folders with preview of last image (kachel Format)
 
   //Added but not Finished
   - Add Bewertung or Review Prompt(App Rate) (First Deploy App to get URL).
@@ -89,3 +87,5 @@ this.ionSlides.update()
   - feaute Request set add lesson and ask how lesson should be repeated.[Done!]
   - 1 bis 4 wochen Table erstellen [small Problem with Month = 3 weeks] (RepeatSetting) [Done!]
   - optional start Lesson time (creationDat) [start 1,2,3,4] [Done!]
+  - upgrade lesson Folders with preview of last image (kachel Format) [Done!]
+  - change ion Card too background by Monday, Tuesday... [Done!]

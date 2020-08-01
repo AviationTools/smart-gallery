@@ -1,0 +1,23 @@
+<ion-card #card [id]="item.id">
+  <ion-card-header class="text-center">
+    <ion-grid>
+      <ion-row>
+        <ion-col><ion-card-title><ion-text color="{{ item.color }}"><u>{{ item.subject }}</u></ion-text></ion-card-title></ion-col>
+        <ion-col class="ion-text-end"><ion-text color="{{ item.color }}">{{ item.weekDay }}</ion-text></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+        <ion-col>
+          <ion-text color="{{ item.color }}">{{item.timeFrame.fromTime | date:'HH:mm'}} - {{item.timeFrame.toTime | date:'HH:mm'}}</ion-text>
+        </ion-col>
+        <ion-col>
+          <div class="ion-float-right">
+            <ion-icon color="{{ item.color }}" size="large" name="repeat"></ion-icon>
+            <ion-badge color="{{ item.color }}" style="position: absolute; top: -3px;">{{ item.repeatWeek }}</ion-badge>
+          </div>
+        </ion-col>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

@@ -24,7 +24,7 @@ import { Vibration } from '@ionic-native/vibration/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [ AppComponent ],
   entryComponents: [],
   imports: [
     BrowserModule,
