@@ -16,7 +16,7 @@
     <ion-item #folder *ngFor="let item of folderList" lines="full" (click)="navigateToImageFolder(item.subjectID, item.subject)" routerDirection="forward">    
       <ion-button *ngIf="deleteFolder" (click)="presentAlert(item.subject, item.subjectID)" color="dark" slot="start" size="small"><ion-icon  name="trash"></ion-icon></ion-button>
         <ion-thumbnail slot="start">
-          <img [src]="item.preview" onerror="this.onerror=null;this.src='assets/image-outline.svg';">
+          <img [src]="item.preview" onerror="this.onerror=null;this.src='assets/image-outline.svg';" >
         </ion-thumbnail>
       <ion-badge color="{{ item.color }}" slot="end">{{ item.count }}</ion-badge>
       <ion-label>{{ item.subject }}</ion-label>

@@ -30,9 +30,10 @@ export class ImageStorageService {
   }
 
   getNewestImageBySubject(subjectID: number) {
+    let win: any = window;
     for (const image of this.images) {
-      if(image.subjectID == subjectID){
-        return image.src;
+      if(image.subjectID == subjectID) {
+        return win.Ionic.WebView.convertFileSrc(image.src);
       }
     }
   }

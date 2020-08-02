@@ -122,6 +122,7 @@ export class SettingsPage {
         "defaultTime": $event.detail.checked,
         "firstStart": true,
         "fullWeek": this.fullWeek,
+        "version": this.appVersionNumber
       }
       this.settingsService.updateSettings(settings);
     }
@@ -130,6 +131,7 @@ export class SettingsPage {
         "defaultTime": this.defaultTime,
         "firstStart": true,
         "fullWeek": $event.detail.checked,
+        "version": this.appVersionNumber
       }
       this.settingsService.updateSettings(settings);
     }

@@ -18,7 +18,6 @@ export class LessonComponent {
   ) {}
 
   async presentAlert(emitObject: any) {
-    console.log(emitObject);
     const alertct = await this.alertController.create({
       header: emitObject.weekDay,
       subHeader: 'Configure',

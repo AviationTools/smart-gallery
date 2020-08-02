@@ -37,8 +37,7 @@ export class AppComponent {
 
     this.settingsService.isReady.subscribe(() => {
       let settings = this.settingsService.getSettings();
-
-      if(settings.version == undefined) {
+      if(!settings.version) {
         this.updateStorageToCurrent();
         this.appVersion.getVersionNumber().then((version) => {
           this.settingsService.updateSettings({

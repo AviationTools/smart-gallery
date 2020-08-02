@@ -80,7 +80,7 @@ export class HomePage{
           'startingDate': array.startingDate,
           'fromTime': array.timeFrame.fromTime,
           'toTime': array.timeFrame.toTime,
-          'lessonList': this.lessonList,
+          'lessonList': this.timetable.getAllLessons(),
           'edit': true
         }
       }
@@ -90,7 +90,7 @@ export class HomePage{
         component: ModalAddPage,
         cssClass: 'my-custom-modal-css',
         componentProps: {
-          'lessonList': this.lessonList,
+          'lessonList': this.timetable.getAllLessons(),
           'edit': false
         }
       }
@@ -158,7 +158,6 @@ export class HomePage{
             }
           }
         });
-        // this.lessonList = sortedArray;
         this.sortByGroup(sortedArray);
       });
     } else {
@@ -180,7 +179,6 @@ export class HomePage{
           }
         }
       });
-      // this.lessonList = sortedArray;
       this.sortByGroup(sortedArray);
     }
   }
